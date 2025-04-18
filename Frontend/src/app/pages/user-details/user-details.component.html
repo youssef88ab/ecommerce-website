@@ -1,0 +1,67 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+  <main class="content flex-grow-1">
+    <!-- Content Navigation Bar -->
+    <app-navbar></app-navbar>
+
+    <div class="card p-3 rounded-0 h-auto d-flex flex-column justify-content-between gap-4">
+      <div class="row d-flex justify-content-start gap-0">
+        <div class="col-lg-2 d-flex align-items-center">
+          <img class="img-fluid h-75" src="assets/images/profile.png" alt="" />
+        </div>
+        <div
+          class="col-lg-6 pt-3 d-flex flex-column justify-content-start gap-3"
+        >
+          <h3>{{ User.username }}</h3>
+          <div class="d-flex flex-row justify-content-start gap-3">
+            <p>Id : {{ User.id }}</p>
+            <p><i class="fas fa-envelope"></i> {{ User.email }}</p>
+            <p><i class="fas fa-envelope"></i> {{ User.phone }}</p>
+          </div>
+          <div class="d-flex flex-row justify-content-start gap-3">
+            <p>
+              <i class="fas fa-envelope"></i> {{User.address}}
+            </p>
+          </div>
+          <div class="d-flex flex-row justify-content-start gap-3">
+            <p><i class="fas fa-envelope"></i>{{User.gender}}</p>
+            <p><i class="fas fa-envelope"></i>{{User.birthDate}}</p>
+          </div>
+        </div>
+        <div class="col-lg-4 d-flex flex-column justify-content-between gap-2">
+          <h4 class="text-center">Account Status</h4>
+          <div
+            class="card account-status d-flex flex-column justify-content-between gap-2"
+          >
+            <p class="">Status : Active</p>
+            <p class="">Registration Date : Jul 5, 2024</p>
+            <p class="">Last Login (IP & Location) : 192.168.1.1 | Rabat</p>
+          </div>
+        </div>
+      </div>
+      <div class="section d-flex flex-column justify-content-start gap-2">
+        <h6 class="fw-bold">Order History</h6>
+        <table class="order-table w-100">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of Orders">
+              <td>{{order.orderId}}</td>
+              <td>{{order.orderDate}}</td>
+              <td>{{order.totalPrice}}</td>
+              <td><span class="status-cancelled">{{order.status}}</span></td>
+              <td><button class="view-btn  btn btn-dark p-1" [routerLink]="['/order-details' , order.orderId]">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

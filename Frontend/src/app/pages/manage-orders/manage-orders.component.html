@@ -1,0 +1,108 @@
+<!-- emart.component.html -->
+<div class="main d-flex">
+  <app-sidebar></app-sidebar>
+  <main class="content flex-grow-1">
+    <!-- Content Navigation Bar -->
+    <app-navbar></app-navbar>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card p-3 rounded-0 d-flex flex-column gap-3 flex-start">
+          <div class="utils d-flex justify-content-between align-items-center">
+            <p class="fw-bold m-0">
+              All Orders <span class="text-black-50">{{ordersCount}}</span> 
+            </p>
+            <div class="d-flex align-items-center gap-3">
+              <form class="d-flex gap-2">
+                <button class="btn btn-dark" id="export-btn">Export</button>
+                <input class="form-control p-2" type="search" name="keyword" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-dark">Search</button>
+              </form>
+            </div>
+          </div>
+          <table class="product-table">
+            <thead class="">
+              <tr class="p-3">
+                <th class="text-start p-3">Order ID</th>
+                <th class="text-start p-3">Customer</th>
+                <th class="text-center p-3">Total Price</th>
+                <th class="text-center p-3">Status</th>
+                <th class="text-center p-3">Order Date</th>
+                <th class="text-center p-3">Payment ID</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of Orders">
+                <td class="p-3 text-center">{{order.orderId}}</td>
+                <td class="p-3">
+                  <div class="d-flex flex-row justify-content-start gap-2 align-items-center">
+                    <img src="assets/images/profile.png" id="user-profile" alt="" class="img-fluid" />
+                    <div class="d-flex flex-column">
+                      <p class="text-start fw-bold">{{order.username}}</p>
+                      <p class="text-start text-black text-opacity-75">
+                        {{order.email}}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td class="p-3">{{order.totalPrice}}</td>
+                <td class="p-3">
+                  <span class="badge bg-warning rounded-pill p-2 text-center">
+                    {{order.status}}
+                  </span>
+                </td>
+                <td class="p-3">{{ formatDate(order.orderDate)}}</td>
+                <td class="p-3">{{order.paymentId}}</td>
+                <td class="p-3">
+                  <button mat-icon-button [matMenuTriggerFor]="orderMenu" class="no-shadow border-0">
+                    <mat-icon>&#8942;</mat-icon>
+                  </button>
+                  
+                  <mat-menu #orderMenu="matMenu" class="custom-menu">
+                    <button [routerLink]="['/order-details' , order.orderId]" mat-menu-item class="custom-menu-item mb-2">
+                      View Details
+                    </button>
+                    <button mat-menu-item class="custom-menu-item">
+                      Cancel Order
+                    </button>
+                    <button mat-menu-item class="custom-menu-item mt-2">
+                      Assign Delivery
+                    </button>
+                  </mat-menu>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7" class="border-0">
+                  <div class="pagination d-flex justify-content-center">
+                    <ul class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3">
+                      <li>1</li>
+                      <li>2</li>
+                      <li>3</li>
+                      <li>4</li>
+                      <li>5</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Dynamic version comments for reference -->
+<!-- 
+  *ngFor="let order of Orders"
+  [src]="order.userImage || 'assets/images/profile.png'"
+  {{order.userName}}
+  {{order.userType}}
+  {{order.totalPrice | currency}}
+  [ngClass]="getStatusBadgeClass(order.status)"
+  {{order.orderDate | date}}
+  {{order.paymentId}}
+  [routerLink]="['/order-details', order.orderId]"
+-->

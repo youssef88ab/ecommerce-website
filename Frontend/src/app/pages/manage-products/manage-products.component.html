@@ -1,0 +1,104 @@
+<!-- emart.component.html -->
+<div class="main d-flex">
+ <app-sidebar></app-sidebar>
+  <main class="content flex-grow-1">
+    <!-- Content Navigation Bar -->
+    <app-navbar></app-navbar>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card p-3 rounded-0 d-flex flex-column gap-3 flex-start">
+          <div class="utils d-flex justify-content-between align-items-center">
+            <p class="fw-bold m-0">
+              All Users <span class="text-black-50">{{productsNumber}}</span>
+            </p>
+            <div class="d-flex align-items-center gap-3">
+              <form class="d-flex gap-2">
+                <button class="btn btn-dark d-flex flex-row align-items-center" id="export-btn">Upload</button>
+                <button class="btn btn-dark" id="export-btn">Export</button>
+                <input class="form-control p-2" type="search" name="keyword" placeholder="Search" aria-label="Search" [(ngModel)]="keyword" />
+                <button class="btn btn-dark" (click)="onSearch(keyword)">Search</button>
+              </form>
+
+              <button class="btn btn-dark p-2" [routerLink]="['/add-product']">
+                <span>+</span> Add User
+              </button>
+            </div>
+          </div>
+          <table class="product-table">
+            <thead class="">
+              <tr class="p-3">
+                <th class="text-start p-3">Username</th>
+                <th class="text-start p-3">Role</th>
+                <th class="text-start p-3">Last Activated</th>
+                <th class="text-start p-3">Date Adeed</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of products">
+                <td class="p-3 text-center">
+                  <div class="d-flex flex-row justify-content-start gap-2 align-items-center">
+                    <img [src]="product.imageUrl" id="user-profile" alt="" class="img-fluid" />
+                    <div class="d-flex flex-column">
+                      <p class="text-start fw-bold">{{ product.name }}</p>
+                      <p class="text-start text-black text-opacity-75">
+                        Clothes
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td [ngSwitch]="product.stockStatus">
+                  <span *ngSwitchCase="'LOW'" class="badge bg-primary rounded-pill p-2 text-center">
+                    LOW
+                  </span>
+                  <span *ngSwitchCase="'MID'" class="badge bg-secondary rounded-pill p-2 text-center">
+                    MID
+                  </span>
+                  <span *ngSwitchDefault>HIGH</span>
+                </td>
+                <td class="text-center">
+                  <p>{{ product.price }}</p>
+                </td>
+                <td class="text-center">
+                  <p>{{ product.price }}</p>
+                </td>
+                <td>
+                  <button mat-icon-button [matMenuTriggerFor]="menu" class="no-shadow border-0">
+                    <mat-icon>&#8942;</mat-icon>
+                  </button>
+                  
+                  <mat-menu #menu="matMenu" class="custom-menu">
+                    <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['/edit-product', product.productId]">
+                      Edit
+                    </button>
+                    <button mat-menu-item class="custom-menu-item" [routerLink]="['/product-details', product.productId]">
+                      View Details
+                    </button>
+                    <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteProduct(product.productId)">
+                      Delete
+                    </button>
+                  </mat-menu>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="5" class="border-0">
+                  <div class="pagination d-flex justify-content-center">
+                    <ul class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3">
+                      <li>1</li>
+                      <li>2</li>
+                      <li>3</li>
+                      <li>4</li>
+                      <li>5</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

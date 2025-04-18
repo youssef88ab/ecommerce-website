@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    
+}
+
+body , html{
+    overflow-x: hidden;
+
+}
+
+
+.content {
+    margin-left: 250px; /* Match the sidebar width */
+    background-color: #f6fbfe;
+    min-height: 100vh;
+}
+
+
+/* Start Form */ 
+
+#product-image {
+    width: 400px;
+    height: 400px;
+}
+
+.product-form input {
+    outline: none;
+}
+
+.product-form #reset-btn {
+    background: #dc3545;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.product-form #submit-btn {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.product-form #image {
+    padding: 10px;
+}

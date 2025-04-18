@@ -1,0 +1,40 @@
+<div class="overlay">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-6 col-lg-8 min-vh-100 d-flex justify-center align-items-center">
+                <div class="signup-form">
+                    <div class="row d-flex flex-row">
+                        <div class="m-auto">
+                            <div class="logo-div">
+                                <img src="Images/Cyberlife.JPG" height="" width="">
+                                <pre> Cybershop</pre>
+                            </div>
+                            <div class="hr-with-image">
+                                <hr>
+                                <div class="image-container">
+                                    <img src="Images/ch-pass.jpg" alt="Round Image">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="">    
+                         <h4 class="text-center mb-1">Log in</h4>
+                        <form (ngSubmit)="onLogin()">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email </label>
+                                <input type="text" class="form-control mb-3" id="username" name="username" placeholder="Enter Username" required [(ngModel)]="credentials.username">
+                                <label for="email" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required [(ngModel)]="credentials.password">
+                            </div>
+                            <div class="submit-container">
+                                <button type="submit">Login</button>
+                            </div>
+                            <a style="margin-left: 15px; display:block; margin-bottom: 10px;"href="forgot-pass.html">Forgot password ?</a>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

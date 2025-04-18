@@ -1,0 +1,80 @@
+<div class="d-flex">
+    <app-sidebar></app-sidebar>
+    <main class="content flex-grow-1">
+      <!-- Content Navigation Bar -->
+      <app-navbar></app-navbar>
+  
+      <div class="card p-3 rounded-0 h-auto d-flex flex-column justify-content-between gap-4">
+        <div class="row d-flex justify-content-start gap-0">
+          <div class="col-lg-2 d-flex align-items-center">
+            <img class="img-fluid h-75" [src]="product.imageUrl" alt="Product Image" />
+          </div>
+          <div class="col-lg-6 pt-3 d-flex flex-column justify-content-start gap-3">
+            <h3>{{ product.name }}</h3>
+            <div class="d-flex flex-row justify-content-start gap-3">
+              <p>ID: {{ product.productId }}</p>
+              <p><i class="fas fa-tag"></i> </p>
+              <p><i class="fas fa-box"></i> Stock: </p>
+            </div>
+            <div class="d-flex flex-row justify-content-start gap-3">
+              <p><i class="fas fa-dollar-sign"></i> Price: {{ product.price | currency }}</p>
+              <p><i class="fas fa-percent"></i></p>
+            </div>
+            <div class="d-flex flex-column justify-content-start gap-2">
+              <h6 class="fw-bold">Description</h6>
+              <p>{{ product.description }}</p>
+            </div>
+          </div>
+          <div class="col-lg-4 d-flex flex-column justify-content-between gap-2">
+            <h4 class="text-center">Product Status</h4>
+            <div class="card account-status d-flex flex-column justify-content-between gap-2">
+              <p>Status: <span class="">
+              </span></p>
+              <p>Created Date: </p>
+              <p>Last Updated:</p>
+              <p>Rating: 
+                <span *ngFor="let star of [1,2,3,4,5]">
+                  <i class="fas fa-star"></i>
+                </span>
+                reviews
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="section d-flex flex-column justify-content-start gap-2">
+          <h6 class="fw-bold">Purchase History</h6>
+          <table class="order-table w-100">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Customer</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                <!--
+              <tr *ngFor="let order of productOrders">
+                <td>{{ order.orderId }}</td>
+                <td>{{ order.orderDate | date }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.totalPrice | currency }}</td>
+                <td>{{ order.customerName }}</td>
+                <td>
+                  <button class="view-btn btn btn-dark p-1" [routerLink]="['/order-details', order.orderId]">
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="!productOrders || productOrders.length === 0">
+                <td colspan="6" class="text-center">No purchase history found</td>
+              </tr>
+              -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>

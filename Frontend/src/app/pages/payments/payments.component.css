@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+body,
+html {
+  overflow-x: hidden;
+}
+
+/* Start Content */
+
+.content {
+  margin-left: 250px; /* Match the sidebar width */
+  background-color: #f6fbfe;
+  min-height: 100vh;
+}
+
+td,
+th,
+td p {
+  font-size: 14px !important;
+}
+
+table p {
+  font-size: 14px;
+}
+
+tbody {
+  border-style: hidden !important;
+  padding: 10px 0px !important;
+}
+
+thead {
+  background-color: #dbdbdbbf;
+  border-radius: 10px;
+}
+
+table {
+  font-size: 14px !important;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0; /* Remove spacing between table cells */
+  border-radius: 10px; /* Rounded corners for the table */
+  overflow: hidden; /* Ensure rounded corners are visible */
+}
+
+.col-btn div {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 5px;
+  border-radius: 10px;
+  border: solid 1px black;
+}
+
+#user-profile {
+  width: 10%;
+  height: 10%;
+}
+
+p {
+}
+
+td {
+  border-bottom: solid rgb(213, 211, 211) 1px;
+}
+
+th,
+td p {
+  width: 100%;
+  white-space: nowrap; /* Prevents wrapping */
+  overflow: hidden; /* Hides overflow */
+  text-overflow: ellipsis; /* Adds "..." if text overflows */
+}
+
+input[type="search"] {
+  border: solid 1px rgb(214, 214, 214);
+}
+
+li {
+  list-style: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+li:hover {
+  background-color: #eee;
+}

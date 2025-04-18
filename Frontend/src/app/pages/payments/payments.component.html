@@ -1,0 +1,93 @@
+<div class="d-flex">
+    <app-sidebar></app-sidebar>
+    <main class="content flex-grow-1">
+        <app-navbar></app-navbar>
+
+        <div class="row d-flex justify-content-start gap-0">
+            <div class="col-lg-12">
+                <div class="card p-3 rounded-0 d-flex flex-column gap-3 flex-start">
+                    <div class="utils d-flex justify-content-between align-items-center">
+                        <p class="fw-bold m-0">
+                            All Users <span class="text-black-50"></span>
+                        </p>
+                        <div class="d-flex align-items-center gap-3">
+                            <form class="d-flex gap-2">
+                                <button class="btn btn-dark" id="export-btn">Export</button>
+                                <input class="form-control p-2" type="search" name="keyword" placeholder="Search"
+                                    aria-label="Search" />
+                                <button class="btn btn-dark">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="user-table">
+                        <thead class="">
+                            <tr class="p-3">
+                                <th class="text-start p-3">Id</th>
+                                <th class="taxt-center px-5">Customer</th>
+                                <th class="text-center p-3">Payment Date</th>
+                                <th class="text-center p-3">Payment Methode</th>
+                                <th class="text-center p-3">Payment Status</th>
+                                <th class="text-center p-3">Transaction Id</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let payment of payments">
+                                <td><p class="text-start p-2">{{payment.id}}</p></td>
+                                <td class="d-flex flex-row gap-2 px-5 align-items-center py-3">
+                                    <div >
+                                        <img  style="min-width: 60px !important; max-width: 60px !important;" class="img-fluid" src="assets/images/profile.png" alt="">
+                                    </div>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <p class="text-start ">{{payment.order.username}}</p>
+                                        <p class="text-start text-black opacity-75 ">{{payment.order.email}}</p>
+                                    </div>
+                                </td>
+                                <td><p class="text-center p-2">{{formatDate(payment.paymentDate)}}</p></td>
+                                <td><p class="text-center p-2">{{payment.paymentMethod}}</p></td>
+                                <td>
+                                    <p class="text-center p-2" 
+
+                                    class="badge status-badge p-2" [ngClass]="{
+                                        'bg-warning ': payment.paymentStatus === 'PENDING',
+                                        'bg-success ': payment.paymentStatus === 'COMPLETED',
+                                        'bg-danger ': payment.paymentStatus === 'FAILED'}"
+                                     
+                                    >{{payment.paymentStatus}}</p></td>
+                                <td><p class="text-center p-2">{{payment.transactionId}}</p></td>
+                                <button mat-icon-button [matMenuTriggerFor]="orderMenu" class="no-shadow border-0">
+                                    <mat-icon>&#8942;</mat-icon>
+                                  </button>
+                                  
+                                  <mat-menu #orderMenu="matMenu" class="custom-menu">
+                                    <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['/payment-details', payment.id]">
+                                      View Details
+                                    </button>
+                                    <button mat-menu-item class="custom-menu-item">
+                                      Export Payment
+                                    </button>
+                                  </mat-menu>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="border-0">
+                                    <div class="pagination d-flex justify-content-center align-items-center m-auto">
+                                        <ul
+                                            class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3">
+                                            <li>1</li>
+                                            <li>2</li>
+                                            <li>3</li>
+                                            <li>4</li>
+                                            <li>5</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
