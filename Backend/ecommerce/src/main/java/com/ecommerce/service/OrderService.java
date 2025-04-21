@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.ecommerce.Dto.ShippingDetailsDTO;
 import com.ecommerce.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,7 @@ public class OrderService {
 
     public List<OrderDTO> getAllOrders() {
 
-        List<Order> orders = orderRepo.findAll();
+        List<Order> orders = orderRepo.findAll(Sort.by(Sort.Direction.DESC, "orderDate"));
 
         return orders.stream()
                 .map(this::convertToDTO) // Convert each Order to OrderDTO
