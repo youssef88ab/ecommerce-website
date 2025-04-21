@@ -25,8 +25,8 @@ import { PaymentDetailsComponent } from './pages/payment-details/payment-details
 import { DelivrerComponent } from './pages/delivrer/delivrer.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',

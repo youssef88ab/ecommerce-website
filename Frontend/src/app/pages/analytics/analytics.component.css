@@ -1,147 +1,126 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
 
 .main {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .content {
-    margin-left: 250px; /* Match the sidebar width */
-    background-color: #f6fbfe;
-    min-height: 100vh;
+  margin-left: 250px; /* Match the sidebar width */
+  background-color: #f6fbfe;
+  min-height: 100vh;
 }
 
 /* dashboard.component.scss */
 .dashboard-container {
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    
-    h1 {
-      margin-bottom: 24px;
-      color: #333;
-      font-weight: 500;
-    }
-  }
-  
-  .summary-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
-    
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .summary-card {
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    
-    .card-content {
-      padding: 20px;
-    }
-    
-    .card-title {
-      font-size: 14px;
-      color: #6c757d;
-      margin-bottom: 8px;
-    }
-    
-    .card-value {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    
-    .card-change {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 8px;
-      border-radius: 4px;
-      display: inline-block;
-    }
-  }
-  
-  .positive-growth {
-    color: #28a745;
-    background-color: rgba(40, 167, 69, 0.1);
-  }
-  
-  .negative-growth {
-    color: #dc3545;
-    background-color: rgba(220, 53, 69, 0.1);
-  }
-  
-  .charts-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-    
-    @media (max-width: 992px) {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .chart-card, .products-card {
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    margin-bottom: 16px;
-    
-    .card-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid #eee;
-      
-      h3.card-title {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 500;
-        color: #333;
-      }
-    }
-    
-    .card-content {
-      padding: 20px;
-      
-      canvas {
-        max-height: 300px;
-        width: 100%;
-      }
-    }
-  }
-  
-  .products-table {
-    width: 100%;
-    border-collapse: collapse;
-    
-    th, td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-    
-    th {
-      font-weight: 500;
-      color: #495057;
-      background-color: #f8f9fa;
-    }
-    
-    .product-image {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-  }
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+h1 {
+  margin-bottom: 24px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Styles for the Summary Cards */
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.summary-card {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  background-color: #eee;
+}
+
+.card-icon {
+  font-size: 36px;
+  color: #007bff; 
+  margin-left: 10px;
+}
+
+.card-content {
+  text-align: left;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.card-change {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.positive-growth {
+  color: green;
+}
+
+.negative-growth {
+  color: red;
+}
+
+
+.charts-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.chart-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+}
+
+
+
+
+.product-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}

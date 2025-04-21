@@ -8,6 +8,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { OrderItems } from '../../services/order.service';
 import { OrderItemsService } from '../../services/order-items.service';
 import { Product, ProductService } from '../../services/product.service';
+import { AnalyticsService } from '../../services/analytics.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { Product, ProductService } from '../../services/product.service';
 })
 export class DashboardComponent {
 
-  constructor(private orderItemsService: OrderItemsService , private productService: ProductService) { }
+  constructor(private orderItemsService: OrderItemsService , private productService: ProductService , private analyticsService : AnalyticsService ) { }
 
   username: string | null = localStorage.getItem("username");
 
@@ -30,10 +31,13 @@ export class DashboardComponent {
 
   ordersCount: number = 0 ;
 
+  totalSales: number = 0 ;
+
+  totalUsers: number = 0 ;
 
 
   xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  yValues = [200, 400, 550, 600, 300, 200, 250, 230, 500, 600, 400, 600];
+  yValues = [0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0];
 
   categories = ["Electronics", "Fashion", "Furniture", "Sports", "Toys"];
   salesByCategory = [120, 90, 50, 30, 80];
@@ -47,27 +51,46 @@ export class DashboardComponent {
   ];
 
   ngOnInit() {
-
     this.fetchRecentOrders();
     this.fetchTopProducts();
     this.fetchProductsCount();
     this.fetchOrdersCount();
-
+    this.fetchTotalSales();
+    this.fetchTotalUsers();
+    
+    // Fetch yearly sales last and create chart after data arrives
+    this.fetchYearlySales();
+  }
+  
+  fetchYearlySales(): void {
+    this.analyticsService.getYearlySales().subscribe({
+      next: (data) => {
+        this.yValues = data;
+        console.log(data);
+        this.createChart(); // Create chart after data is loaded
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+  
+  createChart(): void {
     new Chart("myChart", {
       type: "line",
       data: {
         labels: this.xValues,
         datasets: [{
-          label: 'Sales Trend',  // Add label for clarity
+          label: 'Sales Trend',
           fill: false,
           borderColor: "rgba(0,0,255,1.0)",
           backgroundColor: "rgba(0,0,255,0.1)",
           data: this.yValues,
-          tension: 0.1 // Change from lineTension to tension
+          tension: 0.1
         }]
       },
       options: {
-        responsive: true, // Ensure responsiveness
+        responsive: true,
         plugins: {
           legend: {
             display: false
@@ -76,7 +99,7 @@ export class DashboardComponent {
         scales: {
           y: {
             min: 0,
-            max: 800,
+            max: Math.max(...this.yValues) + 100, // Dynamic max based on data
           }
         }
       }
@@ -128,5 +151,28 @@ export class DashboardComponent {
       }
     })
   }
+
+  fetchTotalSales(): void {
+    this.analyticsService.getTotalSales().subscribe({
+      next: (data) => {
+        this.totalSales = data ; 
+      }, 
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
+
+  fetchTotalUsers(): void {
+    this.analyticsService.getTotalUsers().subscribe({
+      next: (data) => {
+        this.totalUsers = data; 
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
+
 
 }

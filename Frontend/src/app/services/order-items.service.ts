@@ -17,4 +17,8 @@ export class OrderItemsService {
       return this.http.get<OrderItems[]>(this.apiUrl);
     }
 
+    getTopOrders(): Observable<OrderItems[]> {
+      return this.http.get<OrderItems[]>(`${this.apiUrl}/topOrderItems`);
+    }
+
 }

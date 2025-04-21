@@ -1,7 +1,9 @@
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import { CommonModule } from '@angular/common';
+import { Chart } from 'chart.js';;
+import { ProductService , Product } from '../../services/product.service';
 
 interface SalesSummary {
   revenue: number;
@@ -10,21 +12,17 @@ interface SalesSummary {
   conversionRate: number;
 }
 
-interface TopProduct {
-  id: string;
-  name: string;
-  sales: number;
-  revenue: number;
-  image: string;
-}
 
 @Component({
   selector: 'app-analytics',
-  imports: [SidebarComponent , NavbarComponent],
+  imports: [SidebarComponent , NavbarComponent , CommonModule],
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.css'
 })
 export class AnalyticsComponent implements OnInit  {
+
+  constructor(private productService : ProductService ) { }
+
 
   salesSummary: SalesSummary = {
     revenue: 152490,
@@ -33,12 +31,7 @@ export class AnalyticsComponent implements OnInit  {
     conversionRate: 3.2
   };
 
-  topProducts: TopProduct[] = [
-    { id: 'P001', name: 'Wireless Headphones', sales: 142, revenue: 7100, image: 'assets/products/headphones.jpg' },
-    { id: 'P002', name: 'Smart Watch', sales: 98, revenue: 12740, image: 'assets/products/watch.jpg' },
-    { id: 'P003', name: 'Bluetooth Speaker', sales: 87, revenue: 4350, image: 'assets/products/speaker.jpg' },
-    { id: 'P004', name: 'Laptop Backpack', sales: 76, revenue: 3040, image: 'assets/products/backpack.jpg' }
-  ];
+  topProducts: Product[] = [] ; 
 
   revenueData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -61,10 +54,10 @@ export class AnalyticsComponent implements OnInit  {
     }]
   };
 
-  constructor() { }
 
   ngOnInit(): void {
     this.initCharts();
+    this.fetchTopProducts();
   }
 
   initCharts(): void {
@@ -105,5 +98,16 @@ export class AnalyticsComponent implements OnInit  {
 
   getGrowthClass(value: number): string {
     return value >= 0 ? 'positive-growth' : 'negative-growth';
+  }
+
+  fetchTopProducts() : void {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.topProducts = data.slice(0 , 3) ;
+      }, 
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 }
