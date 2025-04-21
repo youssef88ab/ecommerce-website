@@ -26,6 +26,8 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ManageOrdersComponent implements OnInit {
 
+  keyword: string = '';
+
   ordersCount: number = 0 ;
 
   Orders: Order[] = [];
@@ -128,5 +130,8 @@ export class ManageOrdersComponent implements OnInit {
     return (`${year}, ${monthstr}, ${day}`);
   }
 
+  onSearch(keyword: string) {
+    
+  }
   
 }

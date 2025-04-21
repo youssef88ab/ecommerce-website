@@ -1,6 +1,6 @@
 <!-- emart.component.html -->
 <div class="main d-flex">
- <app-sidebar></app-sidebar>
+  <app-delivrer-sidebar></app-delivrer-sidebar>
   <main class="content flex-grow-1">
     <!-- Content Navigation Bar -->
     <app-navbar></app-navbar>
@@ -9,30 +9,34 @@
         <div class="card p-3 rounded-0 d-flex flex-column gap-3 flex-start">
           <div class="utils d-flex justify-content-between align-items-center">
             <p class="fw-bold m-0">
-              All Products <span class="text-black-50">{{ productsNumber }}</span>
+              All Products <span class="text-black-50">90</span>
             </p>
             <div class="d-flex align-items-center gap-3">
               <form class="row g-2 align-items-center w-100">
                 <div class="col-auto mx-2">
-                  <button class="btn btn-primary px-4">Upload</button>
-                </div>
-                <div class="col-auto mx-2">
                   <button class="btn btn-success px-4">Export</button>
                 </div>
                 <div class="col-auto mx-2">
-                  <input 
-                    type="search" 
-                    class="form-control px-3 py-2" 
-                    name="keyword" 
-                    placeholder="Search product.." 
+                  <input
+                    type="search"
+                    class="form-control px-3 py-2"
+                    name="keyword"
+                    placeholder="Search product.."
                     [(ngModel)]="keyword"
                   />
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-dark px-4" (click)="onSearch(keyword)">Search</button>
+                  <button class="btn btn-dark px-4" (click)="onSearch(keyword)">
+                    Search
+                  </button>
                 </div>
-              </form>   
-              <button class="btn btn-dark col-auto px-4 py-2" [routerLink]="['/add-user']">Add User</button>
+              </form>
+              <button
+                class="btn btn-dark col-auto px-4 py-2"
+                [routerLink]="['/add-user']"
+              >
+                Add User
+              </button>
             </div>
           </div>
           <table class="user-table">
@@ -45,44 +49,66 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let product of products">
+              <tr *ngFor="let order of orders">
                 <td class="p-3 text-center">
-                  <div class="d-flex flex-row justify-content-start gap-2 align-items-center">
-                    <img src="assets/images/product1.png" id="user-profile" alt="" class="img-fluid" />
+                  <div
+                    class="d-flex flex-row justify-content-start gap-2 align-items-center"
+                  >
+                    <img
+                      src="assets/images/product1.png"
+                      id="user-profile"
+                      alt=""
+                      class="img-fluid"
+                    />
                     <div class="d-flex flex-column">
-                      <p class="text-start fw-bold">{{ product.name }}</p>
+                      <p class="text-start fw-bold">{{ order.orderId }}</p>
                       <p class="text-start text-black text-opacity-75">
                         Clothes
                       </p>
                     </div>
                   </div>
                 </td>
-                <td [ngSwitch]="product.stockStatus">
-                  <span *ngSwitchCase="'LOW'" class="badge bg-primary rounded-pill p-2 text-center">
+                <td [ngSwitch]="order.orderDate">
+                  <span
+                    *ngSwitchCase="'LOW'"
+                    class="badge bg-primary rounded-pill p-2 text-center"
+                  >
                     LOW
                   </span>
-                  <span *ngSwitchCase="'MID'" class="badge bg-secondary rounded-pill p-2 text-center">
+                  <span
+                    *ngSwitchCase="'MID'"
+                    class="badge bg-secondary rounded-pill p-2 text-center"
+                  >
                     MID
                   </span>
                   <span *ngSwitchDefault>HIGH</span>
                 </td>
                 <td class="text-center">
-                  <p>{{ product.price }}</p>
+                  <p>{{ order.totalPrice }}</p>
                 </td>
                 <td>
-                  <button mat-icon-button [matMenuTriggerFor]="menu" class="no-shadow border-0">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    class="no-shadow border-0"
+                  >
                     <mat-icon>&#8942;</mat-icon>
                   </button>
-                  
+
                   <mat-menu #menu="matMenu" class="custom-menu">
-                    <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['/edit-product', product.productId]">
-                      Edit
-                    </button>
-                    <button mat-menu-item class="custom-menu-item" [routerLink]="['/product-details', product.productId]">
+                    <button
+                      mat-menu-item
+                      class="custom-menu-item"
+                      [routerLink]="['/product-details', order.orderId]"
+                    >
                       View Details
                     </button>
-                    <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteProduct(product.productId)">
-                      Delete
+                    <button
+                      mat-menu-item
+                      class="custom-menu-item"
+                      (click)="livraison(order.orderId)"
+                    >
+                      Delivred Confirmation
                     </button>
                   </mat-menu>
                 </td>
@@ -92,7 +118,9 @@
               <tr>
                 <td colspan="5" class="border-0">
                   <div class="pagination d-flex justify-content-center">
-                    <ul class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3">
+                    <ul
+                      class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3"
+                    >
                       <li>1</li>
                       <li>2</li>
                       <li>3</li>

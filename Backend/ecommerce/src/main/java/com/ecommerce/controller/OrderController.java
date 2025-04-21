@@ -3,15 +3,11 @@ package com.ecommerce.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ecommerce.model.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ecommerce.Dto.OrderDTO;
 import com.ecommerce.model.Order;
@@ -56,5 +52,17 @@ public class OrderController {
     public ResponseEntity<Long> getOrdersCount() {
         return new ResponseEntity<>(orderService.getOrdersCount() , HttpStatus.OK);
     }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity <List<OrderDTO>> findbyStatus(@PathVariable String status) {
+        return  new ResponseEntity<>(orderService.getOrdersByStatus(OrderStatus.valueOf(status)) , HttpStatus.OK);
+    }
+
+    @PutMapping("/livraison/{id}")
+    public ResponseEntity <Void> delivrerOrder(@PathVariable Long id) {
+        orderService.delivrerOrder(id);
+        return  new ResponseEntity<>( HttpStatus.OK);
+    }
+
 
 }

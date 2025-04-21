@@ -22,6 +22,7 @@ import { PaymentsComponent } from './pages/payments/payments.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { PaymentDetailsComponent } from './pages/payment-details/payment-details.component';
+import { DelivrerComponent } from './pages/delivrer/delivrer.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -117,6 +118,11 @@ export const routes: Routes = [
   {
     path: 'payment-details/:paymentId',
     component: PaymentDetailsComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'delivrer' , 
+    component: DelivrerComponent , 
     canActivate: [AuthGuardService]
   }
 ];

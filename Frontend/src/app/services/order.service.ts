@@ -63,4 +63,12 @@ export class OrderService {
     return this.http.get<number>(`${this.apiUrl}/count`);
   }
 
+  findByStatus(status : string): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/status/${status}`);
+  }
+
+  livraison(id : number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/livraison/${id}` , {});
+  }
+
 }

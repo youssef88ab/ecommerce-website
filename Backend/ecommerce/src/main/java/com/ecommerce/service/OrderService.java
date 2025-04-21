@@ -161,6 +161,13 @@ public class OrderService {
     }
 
 
+    public void delivrerOrder(Long id) {
+        if (orderRepo.findById(id).isPresent()) {
+            Order order = orderRepo.findById(id).orElseThrow(()-> new RuntimeException() );
+            order.setStatus(OrderStatus.DELIVERED);
+            orderRepo.save(order);
+        }
+    }
 
     public Long getOrdersCount() {
         return orderRepo.count();

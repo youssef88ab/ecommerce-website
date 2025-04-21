@@ -1,8 +1,12 @@
 body {
     font-family: 'Poppins' , sans-serif;
     background: #a7caff;
+    min-width: 100%;
 }
 
+.main {
+    overflow-x: hidden;
+}
 
 /* Start Content */ 
 

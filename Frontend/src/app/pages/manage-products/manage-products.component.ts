@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-manage-products',
-  imports: [FormsModule, CommonModule, RouterModule, SidebarComponent, NavbarComponent , MatMenuModule , MatIconModule , MatButtonModule],
+  imports: [FormsModule, CommonModule, RouterModule, SidebarComponent, NavbarComponent , MatMenuModule , MatIconModule , MatButtonModule ],
   templateUrl: './manage-products.component.html',
   styleUrl: './manage-products.component.css' ,
   
