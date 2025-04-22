@@ -92,4 +92,10 @@ public class UserController {
         }
         return  null ;
     }
+
+    @PostMapping("/signUp")
+    public ResponseEntity<Void> signUp(@RequestBody User user) {
+        userService.signUp(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

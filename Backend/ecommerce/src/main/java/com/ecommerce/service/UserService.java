@@ -47,8 +47,6 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
     public List<User> getAllUsers() {
         List<User> usersRepo = userRepo.findAll();
 
@@ -130,5 +128,23 @@ public class UserService {
 
         return userRepo.findByUsernameLike(keyword);
 
+    }
+
+    public void signUp(User user) {
+
+        // Set Id To Null
+        user.setId(null);
+
+        // Find Role
+        Role role = roleRepo.findByName("CUSTOMER").orElseThrow(() -> new RuntimeException("Role Dosent Exist"));
+
+        System.out.println("ROLE NAME : "  + role.getName());
+        // Encrypt Password
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        // Assign Role
+        user.setRoles(Collections.singleton(role)); // Assign a single role
+
+        userRepo.save(user);
     }
 }
