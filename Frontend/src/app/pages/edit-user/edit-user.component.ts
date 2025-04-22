@@ -29,7 +29,8 @@ export class EditUserComponent {
       address: '' , 
       gender: '', 
       birthDate: '',
-      dateAdded: ''
+      dateAdded: '',
+      password: ''
     };
   
 

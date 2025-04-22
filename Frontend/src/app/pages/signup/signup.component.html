@@ -1,0 +1,51 @@
+<div class="overlay">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="signup-form">
+                    <div class="logo-div">
+                        <img src="Images/Cyberlife.JPG" height="40px" width="40px">
+                        <pre> Cybershop</pre>
+                    </div>
+                    <hr>
+                    <h4 class="text-center mb-4">Create Account</h4>
+                    <form>
+                        <div class="mb-3">
+                            <div class="paragraph">* indicates required field</div>
+                            <label for="username" class="form-label">Username *</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" [(ngModel)]="user.username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" [(ngModel)]="user.email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Gender *</label>
+                            <input type="text" class="form-control" name="gender" id="gender" placeholder="Confirm password" [(ngModel)]="user.gender" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password *</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" [(ngModel)]="user.password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Confirm Password *</label>
+                            <input type="password" class="form-control" name="password2" id="confirm-password" placeholder="Confirm password" [(ngModel)]="password2" required>
+                        </div>
+
+                        <div class="term-p">
+                            By creating an account you agree to the <a href="#" class="condition-a">Cyberlife site terms and conditions.</a>
+                        </div>
+                        <div class="submit-container">
+                            <button type="submit" (click)="signUp(this.user)">Register</button>
+                        </div>
+                        <hr>
+                        <div class="login-container">
+                            Already have an account ? <a href="login.html" class="condition-a">Log in</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,7 @@ export interface User {
   birthDate : string;
   gender : string;
   dateAdded : string;
+  password : string ;
 }
 
 @Injectable({
@@ -49,5 +50,9 @@ export class UserService {
 
   searchUser(keyword: string) : Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/search/keyword/${keyword}`);
+  }
+
+  signUp(User : User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/signUp`, User);
   }
 }

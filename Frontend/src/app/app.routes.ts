@@ -23,6 +23,7 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { PaymentDetailsComponent } from './pages/payment-details/payment-details.component';
 import { DelivrerComponent } from './pages/delivrer/delivrer.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -124,5 +125,10 @@ export const routes: Routes = [
     path: 'delivrer' , 
     component: DelivrerComponent , 
     canActivate: [AuthGuardService]
+  }, 
+  {
+    path: 'signUp' , 
+    component: SignupComponent , 
+  
   }
 ];

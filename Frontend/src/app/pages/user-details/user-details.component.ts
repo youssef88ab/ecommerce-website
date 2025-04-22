@@ -35,7 +35,8 @@ export class UserDetailsComponent implements OnInit {
     address: '' , 
     gender: '', 
     birthDate: '', 
-    dateAdded: ''
+    dateAdded: '',
+    password: ''
   };
 
   Orders : Order[] = []; 
