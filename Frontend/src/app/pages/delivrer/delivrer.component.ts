@@ -22,6 +22,8 @@ export class DelivrerComponent implements OnInit {
   keyword: string = '';
   orders: Order[] = []; // Added orders array to store fetched orders
 
+  ordersNumber: number = 0 ; 
+
   // Fixed order type declaration
   order: Order = {
     orderId: 0,
@@ -57,6 +59,7 @@ export class DelivrerComponent implements OnInit {
   fetchOrders(): void { // Added return type and implementation
     this.orderService.findByStatus('SHIPPED').subscribe({
       next: (orders) => {
+        console.log(orders);
         this.orders = orders;
       },
       error: (error) => {

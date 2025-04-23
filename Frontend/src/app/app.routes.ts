@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { Component } from '@angular/core';
+
+// Pages
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { ManageProductsComponent } from './pages/manage-products/manage-products.component';
@@ -8,7 +11,6 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
-import { AuthGuardService } from './services/auth-guard.service'; // Import Auth Guard
 import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { ManageOrdersComponent } from './pages/manage-orders/manage-orders.component';
@@ -24,111 +26,65 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { PaymentDetailsComponent } from './pages/payment-details/payment-details.component';
 import { DelivrerComponent } from './pages/delivrer/delivrer.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { AccesDeniedComponent } from './pages/acces-denied/acces-denied.component';
+import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
+
+
+// Services
+import { AuthGuardService } from './services/auth-guard.service';
+import { DelivererLayoutComponent } from './components/deliverer-layout/deliverer-layout.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+
   { path: 'login', component: LoginComponent },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: 'manage-products',
-    component: ManageProductsComponent,
-    canActivate: [AuthGuardService],
-  },
-  { path: 'cart', component: CartComponent, canActivate: [AuthGuardService] },
-  {
-    path: 'checkout',
-    component: CheckoutComponent,
-    canActivate: [AuthGuardService],
-  },
+  { path: 'signUp', component: SignupComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'products', component: ProductsComponent },
+  { path: 'contact-us', component: ContactUsComponent },
+  { path: 'acces-denied' , component: AccesDeniedComponent},
+
+  // Admin-protected routes
   {
-    path: 'add-product',
-    component: AddProductComponent,
+    path: 'admin',
+    component: AdminLayoutComponent,
     canActivate: [AuthGuardService],
+    data: { role: 'ADMIN' },
+    children: [
+      { path: '' , component: DashboardComponent }, 
+      { path: 'manage-products', component: ManageProductsComponent },
+      { path: 'add-product', component: AddProductComponent },
+      { path: 'edit-product/:productId', component: EditProductComponent },
+      { path: 'manage-orders', component: ManageOrdersComponent },
+      { path: 'order-details/:orderId', component: OrderDetailsComponent },
+      { path: 'manage-users', component: ManageUsersComponent },
+      { path: 'add-user', component: AddUserComponent },
+      { path: 'edit-user/:userId', component: EditUserComponent },
+      { path: 'user-details/:userId', component: UserDetailsComponent },
+      { path: 'product-details/:productId', component: ProductDetailsComponent },
+      { path: 'payments', component: PaymentsComponent },
+      { path: 'payment-details/:paymentId', component: PaymentDetailsComponent },
+      { path: 'analytics', component: AnalyticsComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'delivrer', component: DelivrerComponent },
+    ],
   },
-  {
-    path: 'edit-product/:productId',
-    component: EditProductComponent,
-    canActivate: [AuthGuardService],
-  },
+
   {
     path: 'logout',
-    component: LogoutComponent,
-    canActivate: [AuthGuardService],
+    component: LogoutComponent
   },
+
+  // Delivrer Protected Routes
   {
-    path: 'manage-orders',
-    component: ManageOrdersComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: 'order-details/:orderId',
-    component: OrderDetailsComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: 'user-details/:userId' , 
-    component: UserDetailsComponent , 
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'edit-user/:userId' , 
-    component: EditUserComponent , 
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'manage-users',
-    component: ManageUsersComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'add-user', 
-    component: AddUserComponent , 
-    canActivate: [AuthGuardService]
-  }, 
-  {
-    path: 'product-details/:productId',
-    component: ProductDetailsComponent , 
-    canActivate: [AuthGuardService]
-  }, 
-  {
-    path: 'payments', 
-    component: PaymentsComponent ,
-    canActivate: [AuthGuardService]
-  }, 
-  {
-    path: 'analytics', 
-    component: AnalyticsComponent, 
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'settings',
-    component: SettingsComponent, 
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'contact-us', 
-    component: ContactUsComponent, 
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'payment-details/:paymentId',
-    component: PaymentDetailsComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'delivrer' , 
-    component: DelivrerComponent , 
-    canActivate: [AuthGuardService]
-  }, 
-  {
-    path: 'signUp' , 
-    component: SignupComponent , 
-  
+    path: 'deliverer' , 
+    component: DelivererLayoutComponent , 
+    canActivate: [AuthGuardService] , 
+    data: {role : 'DELIVERER' } ,
+    children: [
+      { path: '' , component: DelivrerComponent }
+    ]
   }
 ];

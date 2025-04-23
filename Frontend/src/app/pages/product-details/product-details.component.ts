@@ -29,6 +29,7 @@ export class ProductDetailsComponent implements OnInit {
     price: 0 , 
     stockStatus: '' , 
     imageUrl: '' , 
+    categoryName: ''
   }
   
   ngOnInit(): void {

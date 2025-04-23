@@ -10,6 +10,7 @@ export interface Product {
   price: number;
   stockStatus: string;
   imageUrl: string;
+  categoryName: string;
 }
 
 @Injectable({

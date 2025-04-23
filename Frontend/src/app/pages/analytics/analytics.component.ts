@@ -1,9 +1,10 @@
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Chart } from 'chart.js';;
-import { ProductService , Product } from '../../services/product.service';
+import { Chart } from 'chart.js';
+import { ProductService, Product } from '../../services/product.service';
+import { AnalyticsService } from '../../services/analytics.service';
 
 interface SalesSummary {
   revenue: number;
@@ -12,17 +13,18 @@ interface SalesSummary {
   conversionRate: number;
 }
 
-
 @Component({
   selector: 'app-analytics',
-  imports: [SidebarComponent , NavbarComponent , CommonModule],
+  standalone: true,
+  imports: [SidebarComponent, NavbarComponent, CommonModule],
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.css'
 })
-export class AnalyticsComponent implements OnInit  {
-
-  constructor(private productService : ProductService ) { }
-
+export class AnalyticsComponent implements OnInit, AfterViewInit {
+  constructor(
+    private productService: ProductService,
+    private AnalyticsService: AnalyticsService
+  ) { }
 
   salesSummary: SalesSummary = {
     revenue: 152490,
@@ -31,18 +33,31 @@ export class AnalyticsComponent implements OnInit  {
     conversionRate: 3.2
   };
 
-  topProducts: Product[] = [] ; 
+  topProducts: Product[] = [];
 
-  revenueData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [{
-      label: 'Revenue',
-      data: [65000, 59000, 80000, 81000, 56000, 152490],
-      backgroundColor: 'rgba(54, 162, 235, 0.2)',
-      borderColor: 'rgba(54, 162, 235, 1)',
-      borderWidth: 1
-    }]
-  };
+  revenueChart: Chart<'line'> | null = null;
+  categoryChart: Chart<'doughnut'> | null = null;
+
+  revenueData: {
+    labels: string[],
+    datasets: {
+      label: string,
+      data: number[],
+      backgroundColor: string,
+      borderColor: string,
+      borderWidth: number
+    }[]
+  } = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Revenue',
+        data: [],
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    };
+
 
   salesByCategory = {
     labels: ['Electronics', 'Clothing', 'Home & Kitchen', 'Books', 'Beauty'],
@@ -54,21 +69,41 @@ export class AnalyticsComponent implements OnInit  {
     }]
   };
 
-
   ngOnInit(): void {
-    this.initCharts();
     this.fetchTopProducts();
+    this.fetchYearlySales();
+  }
+
+  ngAfterViewInit(): void {
+    this.initCharts();
+  }
+
+  fetchYearlySales() {
+    this.AnalyticsService.getYearlySales().subscribe({
+      next: (data) => {
+        this.revenueData.datasets[0].data = data;
+
+        // ✅ Update chart with new data
+        if (this.revenueChart) {
+          this.revenueChart.update();
+        }
+      },
+      error: (err) => {
+        console.error('Failed to fetch yearly sales:', err);
+      }
+    });
   }
 
   initCharts(): void {
-    // Revenue trend chart
     const revenueCanvas = document.getElementById('revenueChart') as HTMLCanvasElement;
-    if (revenueCanvas) {
-      new Chart(revenueCanvas, {
+
+    if (revenueCanvas && !this.revenueChart) {
+      this.revenueChart = new Chart(revenueCanvas, {
         type: 'line',
         data: this.revenueData,
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           scales: {
             y: {
               beginAtZero: true
@@ -78,7 +113,6 @@ export class AnalyticsComponent implements OnInit  {
       });
     }
 
-    // Sales by category chart
     const categoryCanvas = document.getElementById('categoryChart') as HTMLCanvasElement;
     if (categoryCanvas) {
       new Chart(categoryCanvas, {
@@ -100,14 +134,14 @@ export class AnalyticsComponent implements OnInit  {
     return value >= 0 ? 'positive-growth' : 'negative-growth';
   }
 
-  fetchTopProducts() : void {
+  fetchTopProducts(): void {
     this.productService.getProducts().subscribe({
       next: (data) => {
-        this.topProducts = data.slice(0 , 3) ;
-      }, 
+        this.topProducts = data.slice(0, 3);
+      },
       error: (err) => {
         console.error(err);
       }
-    })
+    });
   }
 }

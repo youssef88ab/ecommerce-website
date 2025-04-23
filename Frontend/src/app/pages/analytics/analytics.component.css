@@ -124,3 +124,8 @@ th, td {
   object-fit: cover;
   border-radius: 4px;
 }
+
+canvas {
+  height: 300px !important;
+  width: 100% !important;
+}

@@ -23,7 +23,8 @@ export class EditProductComponent implements OnInit {
     description: '',
     price: 0,
     stockStatus: '',
-    imageUrl: ''
+    imageUrl: '' , 
+    categoryName: ''
   };
 
 

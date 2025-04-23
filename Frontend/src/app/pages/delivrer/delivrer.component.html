@@ -9,13 +9,10 @@
         <div class="card p-3 rounded-0 d-flex flex-column gap-3 flex-start">
           <div class="utils d-flex justify-content-between align-items-center">
             <p class="fw-bold m-0">
-              All Products <span class="text-black-50">90</span>
+              Orders to delivery <span class="text-black-50">{{ orders.length }}</span>
             </p>
             <div class="d-flex align-items-center gap-3">
               <form class="row g-2 align-items-center w-100">
-                <div class="col-auto mx-2">
-                  <button class="btn btn-success px-4">Export</button>
-                </div>
                 <div class="col-auto mx-2">
                   <input
                     type="search"
@@ -31,21 +28,17 @@
                   </button>
                 </div>
               </form>
-              <button
-                class="btn btn-dark col-auto px-4 py-2"
-                [routerLink]="['/add-user']"
-              >
-                Add User
-              </button>
             </div>
           </div>
           <table class="user-table">
             <thead class="">
               <tr class="p-3">
-                <th class="text-start p-3">Name</th>
-                <th class="text-center p-3">Stock Status</th>
-                <th class="text-center p-3">Price</th>
-                <th class="text-center p-3">Date Adeed</th>
+                <th class="text-start p-3">Id</th>
+                <th class="text-center p-3">Status</th>
+                <th class="text-center p-3">Total Price</th>
+                <th class="text-start p-3">Address</th>
+                <th class="text-start p-3">Recipient Phone</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -54,38 +47,51 @@
                   <div
                     class="d-flex flex-row justify-content-start gap-2 align-items-center"
                   >
-                    <img
-                      src="assets/images/product1.png"
-                      id="user-profile"
-                      alt=""
-                      class="img-fluid"
-                    />
                     <div class="d-flex flex-column">
                       <p class="text-start fw-bold">{{ order.orderId }}</p>
-                      <p class="text-start text-black text-opacity-75">
-                        Clothes
-                      </p>
                     </div>
                   </div>
                 </td>
-                <td [ngSwitch]="order.orderDate">
+                <td [ngSwitch]="order.status">
                   <span
-                    *ngSwitchCase="'LOW'"
+                    *ngSwitchCase="'CANCELED'"
+                    class="badge bg-danger rounded-pill p-2 text-center"
+                  >
+                    {{ order.status }}
+                  </span>
+                  <span
+                    *ngSwitchCase="'DELIVERED'"
+                    class="badge bg-success rounded-pill p-2 text-center"
+                  >
+                    {{ order.status }}
+                  </span>
+                  <span
+                    *ngSwitchCase="'PENDING'"
                     class="badge bg-primary rounded-pill p-2 text-center"
                   >
-                    LOW
+                    {{ order.status }}
                   </span>
                   <span
-                    *ngSwitchCase="'MID'"
-                    class="badge bg-secondary rounded-pill p-2 text-center"
+                    *ngSwitchCase="'SHIPPED'"
+                    class="badge bg-primary rounded-pill p-2 text-center"
                   >
-                    MID
+                    {{ order.status }}
                   </span>
-                  <span *ngSwitchDefault>HIGH</span>
+
+                  <span *ngSwitchDefault>ERROR</span>
                 </td>
                 <td class="text-center">
                   <p>{{ order.totalPrice }}</p>
                 </td>
+
+                <td class="text-start">
+                  {{ order.shippingDetails.address }}
+                </td>
+
+                <td class="text-start">
+                  {{ order.shippingDetails.recipient_phone }}
+                </td>
+
                 <td>
                   <button
                     mat-icon-button
