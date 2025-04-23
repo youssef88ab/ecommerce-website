@@ -3,15 +3,13 @@ package com.ecommerce.model;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "products")
@@ -34,6 +32,17 @@ public class Product {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    @JsonIgnore // This hides the full Category object from the response
+    private Category category;
+
+    // This will expose only the category name in JSON
+    @JsonProperty("categoryName")
+    public String getCategoryName() {
+        return category != null ? category.getName() : null;
+    };
 
 
     // Getters

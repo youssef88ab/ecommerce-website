@@ -79,7 +79,6 @@ public class ProductController {
 
     // Exporter les produits au format CSV
     @GetMapping("/export")
-
     public ResponseEntity<String> exportProductscsv() {
         List<Product> products = productService.getAllProducts();
 
