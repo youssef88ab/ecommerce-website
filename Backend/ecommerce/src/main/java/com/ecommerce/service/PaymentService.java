@@ -62,7 +62,8 @@ public class PaymentService {
                 orderItem.getId(),
                 orderItem.getProduct().getName(), // Assuming OrderItem has a Product
                 orderItem.getQuantity(),
-                orderItem.getPrice()
+                orderItem.getPrice() ,
+                orderItem.getProduct().getCategoryName()
         );
     }
 

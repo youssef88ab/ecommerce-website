@@ -78,6 +78,10 @@ public class Product {
         return updatedAt;
     }
 
+    public Category getCategory() {
+        return  category;
+    }
+
     // Setters
     public void setProductId(Long Id) {
         this.Id = Id;
