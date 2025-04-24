@@ -22,7 +22,7 @@ export class EditProductComponent implements OnInit {
     name: '',
     description: '',
     price: 0,
-    stockStatus: '',
+    stockQuantity : 0,
     imageUrl: '' , 
     categoryName: ''
   };
@@ -68,5 +68,58 @@ export class EditProductComponent implements OnInit {
         alert('Error updating product.');
       }
     });
+  }
+
+  formatDate(fulldate: string): string {
+    var arr: string[] = fulldate.split('T');
+    var date = arr[0].split('-');
+    var year = date[0];  
+    var monthnum : number = parseInt(date[1],10);
+    var day = date[2];
+    var monthstr : string = '' ;
+
+    switch (monthnum) {
+      case 1: 
+        monthstr = 'January';
+        break;
+      case 2: 
+        monthstr = 'February';
+        break;
+      case 3: 
+        monthstr = 'March';
+        break;
+      case 4: 
+        monthstr = 'April';
+        break;
+      case 5: 
+        monthstr = 'May';
+        break;
+      case 6: 
+        monthstr = 'June';
+        break;
+      case 7: 
+        monthstr = 'July';
+        break;
+      case 8: 
+        monthstr = 'August';
+        break;
+      case 9: 
+        monthstr = 'September';
+        break;
+      case 10: 
+        monthstr = 'October';
+        break;
+      case 11: 
+        monthstr = 'November';
+        break;
+      case 12: 
+        monthstr = 'December';
+        break;
+      default: 
+        monthstr = 'Invalid month'; 
+    }
+    
+
+    return (`${year}, ${monthstr}, ${day}`);
   }
 }

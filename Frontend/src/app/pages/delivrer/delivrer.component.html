@@ -18,7 +18,7 @@
                     type="search"
                     class="form-control px-3 py-2"
                     name="keyword"
-                    placeholder="Search product.."
+                    placeholder="Search Order..."
                     [(ngModel)]="keyword"
                   />
                 </div>
@@ -81,7 +81,7 @@
                   <span *ngSwitchDefault>ERROR</span>
                 </td>
                 <td class="text-center">
-                  <p>{{ order.totalPrice }}</p>
+                  <p>${{ order.totalPrice }}</p>
                 </td>
 
                 <td class="text-start">

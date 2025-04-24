@@ -2,17 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    
-}
-
-body , html{
-    overflow-x: hidden;
-
 }
 
 /* Start Content */
-
 .content {
     margin-left: 250px; /* Match the sidebar width */
     background-color: #f6fbfe;
@@ -20,8 +12,6 @@ body , html{
 }
 
 /* End Content */
-
-/* Start Form */ 
 
 #product-image {
     width: 400px;
@@ -49,18 +39,16 @@ body , html{
 }
 
 .account-status p {
-    border: solid black 1px;
     padding: 10px;
-    border-radius: 5px;
+
 }
 
-.account-status {
-    border: none;
-    font-size: 14px;
+fa-icon {
+    font-size: 16px;
+
 }
 
 .order-table tr {
-    border: solid 1px black;
     font-size: 14px;
 
 }
@@ -68,4 +56,10 @@ body , html{
 .order-table td , .order-table th {
     padding: 10px;
 }
+
+
+thead {
+    background-color: #eee;
+}
+
 

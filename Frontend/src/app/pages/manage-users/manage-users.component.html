@@ -86,7 +86,7 @@
                     <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['/edit-user', User.id]">
                       Edit
                     </button>
-                    <button mat-menu-item class="custom-menu-item" [routerLink]="['/user-details', User.id]">
+                    <button mat-menu-item class="custom-menu-item" [routerLink]="['../user-details', User.id]">
                       View Details
                     </button>
                     <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteUser(User.id)">

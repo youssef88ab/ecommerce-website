@@ -15,49 +15,58 @@
           <h3>{{ User.username }}</h3>
           <div class="d-flex flex-row justify-content-start gap-3">
             <p>Id : {{ User.id }}</p>
-            <p><i class="fas fa-envelope"></i> {{ User.email }}</p>
-            <p><i class="fas fa-envelope"></i> {{ User.phone }}</p>
+            <p><fa-icon [icon]="faPhone"></fa-icon> {{ User.phone }}</p>
           </div>
+
+          <div class="d-flex flex-row justify-content-start gap-3">
+          <p><fa-icon [icon]="faEnvelope"></fa-icon> {{ User.email }}</p>
+          </div>
+
           <div class="d-flex flex-row justify-content-start gap-3">
             <p>
-              <i class="fas fa-envelope"></i> {{User.address}}
+              <fa-icon [icon]="faLocationDot"></fa-icon> {{User.address}}
             </p>
           </div>
           <div class="d-flex flex-row justify-content-start gap-3">
-            <p><i class="fas fa-envelope"></i>{{User.gender}}</p>
-            <p><i class="fas fa-envelope"></i>{{User.birthDate}}</p>
+            <p><fa-icon [icon]="faVenusMars"></fa-icon> {{User.gender}}</p>
+            <p><fa-icon [icon]="faCalendarDays"></fa-icon> {{User.birthDate}}</p>
           </div>
         </div>
-        <div class="col-lg-4 d-flex flex-column justify-content-between gap-2">
-          <h4 class="text-center">Account Status</h4>
+        <div class="col-lg-4 d-flex flex-column justify-content-between gap-2 align-items-center">
           <div
-            class="card account-status d-flex flex-column justify-content-between gap-2"
+            class="card account-status d-flex flex-column justify-content-between gap-2 border shadow-sm px-3 py-2 m-auto"
           >
-            <p class="">Status : Active</p>
-            <p class="">Registration Date : Jul 5, 2024</p>
-            <p class="">Last Login (IP & Location) : 192.168.1.1 | Rabat</p>
+            <p class="text-align-middle"><fa-icon [icon]="faBox"></fa-icon> Total Orders : 8 </p>
+            <p class=""><fa-icon [icon]="faCalendarDay"></fa-icon> Registration Date : {{ formateDate(User.dateAdded) }}</p>
+            <p class=""><fa-icon [icon]="faDollarSign"></fa-icon> Lifetime Spend : $742.50</p>
           </div>
         </div>
       </div>
       <div class="section d-flex flex-column justify-content-start gap-2">
-        <h6 class="fw-bold">Order History</h6>
-        <table class="order-table w-100">
-          <thead>
+        <h6 class="fw-bold"><fa-icon [icon]="faCartShopping"></fa-icon> Order History</h6>
+        <table class="order-table w-100 rounded-top border shadow-sm">
+          <thead class="rounded-top">
             <tr>
               <th>Order ID</th>
               <th>Date</th>
               <th>Amount</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th class="text-center">Status</th>
+              <th class="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let order of Orders">
-              <td>{{order.orderId}}</td>
-              <td>{{order.orderDate}}</td>
-              <td>{{order.totalPrice}}</td>
-              <td><span class="status-cancelled">{{order.status}}</span></td>
-              <td><button class="view-btn  btn btn-dark p-1" [routerLink]="['/order-details' , order.orderId]">View</button></td>
+              <td>#{{order.orderId}}</td>
+              <td><fa-icon [icon]="faCalendarDay"></fa-icon> {{ formatDate(order.orderDate) }}</td>
+              <td><fa-icon [icon]="faDollarSign"></fa-icon> {{order.totalPrice}}</td>
+              <td class="text-center" [ngSwitch]="order.status">
+                <span *ngSwitchCase="'PENDING'" class="text-white bg-primary p-2 rounded">{{ order.status }}</span>
+                <span *ngSwitchCase="'SHIPPED'" class="text-white bg-success p-2 rounded">{{ order.status }}</span>
+                <span *ngSwitchCase="'CANCELLED'" class="text-white bg-danger p-2">{{ order.status }}</span>
+                <span *ngSwitchDefault class="bg-secondary text-white p-2 rounded">{{ order.status }}</span>
+              </td>
+              
+              <td class="text-center"><button class="view-btn btn btn-dark p-1" [routerLink]="['../order-details' , order.orderId]"><fa-icon [icon]="faEye"></fa-icon> View</button></td>
             </tr>
           </tbody>
         </table>

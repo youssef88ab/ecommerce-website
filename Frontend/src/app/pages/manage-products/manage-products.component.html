@@ -57,17 +57,13 @@
                     </div>
                   </div>
                 </td>
-                <td [ngSwitch]="product.stockStatus">
-                  <span *ngSwitchCase="'LOW'" class="badge bg-primary rounded-pill p-2 text-center">
-                    LOW
-                  </span>
-                  <span *ngSwitchCase="'MID'" class="badge bg-secondary rounded-pill p-2 text-center">
-                    MID
-                  </span>
-                  <span *ngSwitchDefault>HIGH</span>
-                </td>
+                <td>
+                  <span *ngIf="product.stockQuantity < 15" class="badge bg-primary rounded-pill p-2 text-center">LOW</span>
+                  <span *ngIf="product.stockQuantity >= 15 && product.stockQuantity < 30" class="badge bg-secondary rounded-pill p-2 text-center">MID</span>
+                  <span *ngIf="product.stockQuantity >= 30" class="badge bg-success rounded-pill p-2 text-center">HIGH</span>
+                </td>                
                 <td class="text-center">
-                  <p>{{ product.price }}</p>
+                  <p>${{ product.price }}</p>
                 </td>
                 <td>
                   <button mat-icon-button [matMenuTriggerFor]="menu" class="no-shadow border-0">

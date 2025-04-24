@@ -23,7 +23,7 @@ export class DashboardComponent {
 
   username: string | null = localStorage.getItem("username");
 
-  topSellingProducts: Product[] = [];
+  topSellingProducts: OrderItems[] = [];
 
   recentOrders: OrderItems[] = [];
 
@@ -106,9 +106,7 @@ export class DashboardComponent {
     });
   }
 
-
   fetchRecentOrders(): void {
-
     this.orderItemsService.getOrders().subscribe({
       next: (data) => {
         this.recentOrders = data.slice(0, 3);
@@ -120,9 +118,9 @@ export class DashboardComponent {
   }
 
   fetchTopProducts(): void {
-    this.productService.getProducts().subscribe({
+    this.orderItemsService.getOrders().subscribe({
       next: (data) => {
-        this.topSellingProducts = data.slice(0 , 3) ;
+        this.topSellingProducts = data.slice(0 , 5) ;
       }, 
       error: (err) => {
         console.error(err);
