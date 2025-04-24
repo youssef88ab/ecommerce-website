@@ -8,7 +8,7 @@
                 <div class="card p-3 rounded-0 d-flex flex-column gap-3 flex-start">
                     <div class="utils d-flex justify-content-between align-items-center">
                         <p class="fw-bold m-0">
-                          All Products <span class="text-black-50">0</span>
+                          All Payments <span class="text-black-50">{{ payments.length }}</span>
                         </p>
                         <div class="d-flex align-items-center gap-3">
                           <form class="row g-2 align-items-center w-100">
@@ -23,8 +23,7 @@
                                 type="search" 
                                 class="form-control px-3 py-2" 
                                 name="keyword" 
-                                placeholder="Search product.." 
-                    
+                                placeholder="Search payment..." 
                               />
                             </div>
                             <div class="col-auto">
@@ -40,7 +39,7 @@
                                 <th class="text-start p-3">Id</th>
                                 <th class="taxt-center px-5">Customer</th>
                                 <th class="text-center p-3">Payment Date</th>
-                                <th class="text-center p-3">Payment Methode</th>
+                                <th class="text-center p-3">Payment Method</th>
                                 <th class="text-center p-3">Payment Status</th>
                                 <th class="text-center p-3">Transaction Id</th>
                                 <th></th>
@@ -51,16 +50,16 @@
                                 <td><p class="text-start p-2">{{payment.id}}</p></td>
                                 <td class="d-flex flex-row gap-2 px-5 align-items-center justify-content-start py-3">
                                     <div >
-                                        <img class="img-fluid  w-75" src="assets/images/profile.png" alt="">
+                                        <img class="img-fluid" style="min-width: 40px; max-width: 40px; max-height: 40px; min-height: 40px;" src="assets/images/profile.png" alt="">
                                     </div>
                                     <div class="d-flex flex-column ">
-                                        <p class="text-start">{{payment.order.username}}</p>
+                                        <p class="text-start fw-bold">{{payment.order.username}}</p>
                                         <p class="text-start text-black opacity-75 ">{{payment.order.email}}</p>
                                     </div>
                                 </td>
                                 <td><p class="text-center p-2">{{formatDate(payment.paymentDate)}}</p></td>
                                 <td><p class="text-center p-2">{{payment.paymentMethod}}</p></td>
-                                <td>
+                                <td class="text-center">
                                     <p class="text-center p-2" 
 
                                     class="badge status-badge p-2" [ngClass]="{
