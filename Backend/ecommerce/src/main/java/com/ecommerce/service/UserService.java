@@ -20,23 +20,6 @@ import com.ecommerce.repository.UserRepo;
 @Service
 public class UserService {
 
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    private final EcommerceApplication ecommerceApplication;
-
-    private final CustomUserDetailsService customUserDetailsService;
-
-    private final AuthService authService;
-
-    private final AuthController authController;
-
-    UserService(AuthController authController, AuthService authService, CustomUserDetailsService customUserDetailsService, EcommerceApplication ecommerceApplication, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
-        this.authController = authController;
-        this.authService = authService;
-        this.customUserDetailsService = customUserDetailsService;
-        this.ecommerceApplication = ecommerceApplication;
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-    } 
 
     @Autowired
     private UserRepo userRepo;

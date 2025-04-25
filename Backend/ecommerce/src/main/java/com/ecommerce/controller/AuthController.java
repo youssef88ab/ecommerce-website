@@ -1,5 +1,7 @@
 package com.ecommerce.controller;
 
+import com.ecommerce.model.User;
+import com.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,10 @@ import com.ecommerce.service.AuthService;
 public class AuthController {
     
     @Autowired
-    private AuthService authService; 
+    private AuthService authService;
+
+    @Autowired
+    private UserService userService;
 
     // Build Login REST API 
     @PostMapping("/login") 
@@ -43,6 +48,13 @@ public class AuthController {
 
         //03 - Return the response to the user
         return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
+    }
+
+    // SignUp API
+    @PostMapping("/signUp")
+    public ResponseEntity<Void> signUp(@RequestBody User user) {
+        userService.signUp(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

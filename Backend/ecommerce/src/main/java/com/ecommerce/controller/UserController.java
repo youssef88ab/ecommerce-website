@@ -72,6 +72,7 @@ public class UserController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         try {
+            System.out.println("USER TO UPDATE " + updatedUser.toString());
             userService.updateUser(id, updatedUser);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
