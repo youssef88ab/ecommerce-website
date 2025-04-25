@@ -1,111 +1,200 @@
 <div class="d-flex">
-    <app-sidebar></app-sidebar>
-    <main class="content flex-grow-1">
-      <app-navbar></app-navbar>
-      <div class="card p-3 rounded-0 h-auto">
-        <form class="row d-flex flex-row justify-content-between product-form" id="add-product-form"
-          (ngSubmit)="onSubmit()">
-  
-          <div class="col-lg-4 image-container d-flex flex-column flex-start">
-            <p class="text-center fw-bold">Profile Picture</p>
-            <div class="d-flex flex-column gap-2">
-              <img src="assets/images/avatar.png" class="img-fluid w-75 ms-auto me-auto" alt="">
-              <button type="button" class="img-btn btn btn-dark m-auto p-2">Upload</button>
+  <app-sidebar></app-sidebar>
+  <main class="content flex-grow-1">
+    <app-navbar></app-navbar>
+      <div class="container ">
+        <div class="card animate-in">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+            
             </div>
           </div>
-  
-          <div class="col-lg-8 d-flex flex-column justify-content-center gap-1 ms-auto p-1 ">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control p-2" name="username" placeholder="Username" aria-label="Username"
-                aria-describedby="basic-addon1" [(ngModel)]="User.username" required>
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text p-2 border-0 bg-grey" id="basic-addon1">&#64;</span>
+        
+          <div class="card-body p-4">
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="profile">
+                <form class="row" id="edit-user-form" (ngSubmit)="onSubmit()">
+                  <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                      <h5 class="section-title">Profile Picture</h5>
+                      <div class="profile-img-container">
+                        <img src="assets/images/avatar.png" class="profile-img" alt="Profile picture">
+                        <div class="upload-overlay">
+                          <fa-icon [icon]="faCamera" class="me-2"></fa-icon>Change Photo
+                        </div>
+                      </div>
+                      <div class="mt-4">
+                        <h6 class="mb-3 fw-bold">User ID: #{{User.id}}</h6>
+                        <p class="mb-1 text-muted"><fa-icon [icon]="faCalendar" class="me-2"></fa-icon>Member since: {{User.dateAdded}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-8">
+                    <h5 class="section-title">Personal Information</h5>
+                    <div class="row g-3 d-flex">
+                      <!-- Username & Email -->
+                      <div class="col-md-6 pe-1">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Username</label>
+                          <div class="input-with-icon">
+                            <fa-icon [icon]="faUser"></fa-icon>
+                            <input type="text" class="form-control" name="username" placeholder="Enter username" [(ngModel)]="User.username" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Email Address</label>
+                          <div class="input-with-icon">
+                            <fa-icon [icon]="faEnvelope"></fa-icon>
+                            <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="User.email" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Phone & Birth Date -->
+                      <div class="col-md-6 pe-1">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Phone Number</label>
+                          <div class="input-with-icon">
+                            <fa-icon [icon]="faPhone"></fa-icon>
+                            <input type="tel" name="phone" class="form-control" placeholder="Enter phone number" [(ngModel)]="User.phone" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group mb-3">
+                          <label class="form-label">Birth Date</label>
+                          <div class="input-with-icon">
+                            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                            <input type="date" class="form-control" name="birthDate" [(ngModel)]="User.birthDate">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Gender & Role -->
+                      <div class="col-md-6 pe-1">
+                        <div class="form-group mb-3">
+                          <label class="form-label">Gender</label>
+                          <div class="input-with-icon">
+                            <fa-icon [icon]="faVenusMars"></fa-icon>
+                            <select class="form-select" name="gender" [(ngModel)]="User.gender">
+                              <option [ngValue]="''" disabled>Select gender</option>
+                              <option [ngValue]="'MALE'">Male</option>
+                              <option [ngValue]="'FEMALE'">Female</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Role</label>
+                          <div class="input-with-icon">
+                            <fa-icon [icon]="faUserTag"></fa-icon>
+                            <select class="form-select" name="role" [(ngModel)]="User.roles[0].name" required>
+                              <option [ngValue]="" disabled>Select Role</option>
+                              <option [ngValue]="'ADMIN'">Admin</option>
+                              <option [ngValue]="'CUSTOMER'">User</option>
+                              <option [ngValue]="'DELIVERER'">Deliverer</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Address Section -->
+                    <h5 class="section-title mt-4">Address Information</h5>
+                    
+                    <div class="address-section">
+                      <div class="row g-3">
+                        <div class="col-md-12">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">Street</label>
+                            <input type="text" class="form-control" name="street" placeholder="Enter street address" [(ngModel)]="Street" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6 pe-1">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">City</label>
+                            <input type="text" class="form-control" name="city" placeholder="Enter city" [(ngModel)]="City" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">State/Province</label>
+                            <input type="text" class="form-control" name="state" placeholder="Enter state/province" [(ngModel)]="State" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6 pe-1">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">ZIP/Postal Code</label>
+                            <input type="number" class="form-control no-spinner" name="zip" placeholder="Enter ZIP/postal code" [(ngModel)]="ZIP" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">Country</label>
+                            <select class="form-select" name="country" [(ngModel)]="Country" required>
+                              <option [ngValue]="" disabled>Select Country</option>
+                              <option [ngValue]="'US'">🇺🇸 United States</option>
+                              <option [ngValue]="'GB'">🇬🇧 United Kingdom</option>
+                              <option [ngValue]="'CA'">🇨🇦 Canada</option>
+                              <option [ngValue]="'AU'">🇦🇺 Australia</option>
+                              <option [ngValue]="'DE'">🇩🇪 Germany</option>
+                              <option [ngValue]="'FR'">🇫🇷 France</option>
+                              <option [ngValue]="'JP'">🇯🇵 Japan</option>
+                              <option [ngValue]="'IN'">🇮🇳 India</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Form Buttons -->
+                    <div class="d-flex justify-content-between mt-4">
+                      <button type="button" class="btn btn-outline-secondary" [routerLink]="['/admin/manage-users']">
+                        <fa-icon [icon]="faChevronLeft" class="me-2"></fa-icon>Back to Users
+                      </button>
+                      
+                      <div class="d-flex gap-3">
+                        <button type="reset" class="btn btn-danger">
+                          <fa-icon [icon]="faTimes" class="me-2"></fa-icon>Cancel
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                          <fa-icon [icon]="faSave" class="me-2"></fa-icon>Save Changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
-              <input type="email" class="form-control p-2" name="email" placeholder="Email" aria-label="Username"
-                aria-describedby="basic-addon1" [(ngModel)]="User.email" required>
-            </div>
-            <div class="input-group mb-3">
-              <input class="p-2" type="password" name="password" id="price-input" [(ngModel)]="User" required
-                class="form-control p-2" placeholder="Password" aria-label="password" aria-describedby="basic-addon1">
-                <input class="p-2" type="password" name="password2" id="price-input" [(ngModel)]="User" required
-                class="form-control p-2" placeholder="Confirm Password" aria-label="password"
-                aria-describedby="basic-addon1">
-  
-            </div>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control p-2" name="street" placeholder="Street" aria-label="Username"
-                aria-describedby="basic-addon1" [(ngModel)]="Street" required>
-                <input type="text" class="form-control p-2" name="city" placeholder="City" aria-label="Username"
-                aria-describedby="basic-addon1" [(ngModel)]="City" required>
-                <input type="text" class="form-control p-2" name="state" placeholder="State" aria-label="Username"
-                aria-describedby="basic-addon1" [(ngModel)]="State" required>
-                <input type="number"  class="form-control no-spinner p-2" name="zip" placeholder="ZIP" aria-label="Username"
-                aria-describedby="basic-addon1" [(ngModel)]="ZIP" required>
-                <select class="form-select country-select px-3" name="country" [(ngModel)]="Country">
-                  <option [ngValue]="" selected disabled>Country</option>
-                  <option [ngValue]="'US'" data-flag="🇺🇸">United States</option>
-                  <option [ngValue]="'GB'" data-flag="🇬🇧">United Kingdom</option>
-                  <option [ngValue]="'CA'" data-flag="🇨🇦">Canada</option>
-                  <option [ngValue]="'AU'" data-flag="🇦🇺">Australia</option>
-                  <option [ngValue]="'DE'" data-flag="🇩🇪">Germany</option>
-                  <option [ngValue]="'FR'" data-flag="🇫🇷">France</option>
-                  <option [ngValue]="'JP'" data-flag="🇯🇵">Japan</option>
-                  <option [ngValue]="'IN'" data-flag="🇮🇳">India</option>
-                  <!-- Add more countries as needed -->
-                </select>
-               
-                
-            </div>
-  
-            <div class="input-group mb-3 row d-flex justify-content-between ">
-              <div class="col-lg-6 d-flex flex-row">
-                <div class="input-group-prepend">
-                  <label class="input-group-text py-2 px-5 rounded-0" for="inputGroupSelect01">Gender</label>
+              
+              <div class="tab-pane fade" id="security">
+                <div class="p-3 text-center">
+                  <fa-icon [icon]="faShieldAlt" class="mb-3" style="font-size: 48px; color: var(--secondary-color);"></fa-icon>
+                  <h4>Security Settings</h4>
+                  <p class="text-muted">Password management and account security options would appear here</p>
                 </div>
-                <select class="form-select gender-select px-3 rounded-0" name="gender" [(ngModel)]="User.gender">
-                  <option [ngValue]="'MALE'"   >Male</option>
-                  <option [ngValue]="'FEMALE'" >Female</option>
-                </select>
               </div>
-              <div class="col-lg-6 ps-2">
-                  <input type="text" class="form-control p-2" placeholder="Birth Date (YYYY-MM-DD)" name="birthDate" [(ngModel)]="User.birthDate" id="">
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input class="p-2" type="tel" name="phone" id="price-input" [(ngModel)]="User.phone" required
-                class="form-control p-2" placeholder="Phone number" aria-label="phone"
-                aria-describedby="basic-addon1">
-            </div>
-  
-  
-  
-            <div class="input-group mb-3 row">
-              <div class="col-lg-6 d-flex flex-row">
-                <div class="input-group-prepend">
-                  <label class="input-group-text py-2 px-5 rounded-0" for="inputGroupSelect01">Role</label>
+              
+              <div class="tab-pane fade" id="activity">
+                <div class="p-3 text-center">
+                  <fa-icon [icon]="faChartLine" class="mb-3" style="font-size: 48px; color: var(--secondary-color);"></fa-icon>
+                  <h4>User Activity</h4>
+                  <p class="text-muted">User activity logs and analytics would appear here</p>
                 </div>
-                <select class="form-select role-select px-5 py-2 rounded-0" id="inputGroupSelect01" name="role"
-                  [(ngModel)]="User.roles[0].id" required>
-                  <option selected>Select Role ...</option>
-                  <option [ngValue]="1">Admin</option>
-                  <option [ngValue]="2">User</option>
-                  <option [ngValue]="3">Deliverer</option>
-                </select>
               </div>
-              </div>
-  
-            <div class="buttons d-flex flex-row justify-content-between gap-1">
-              <input type="reset" name="reset" id="reset-btn" value="Cancel" class="btn btn-danger w-100 p-2"/>
-              <input type="submit" name="submit" id="submit-btn" value="Add" class="btn btn-dark w-100 p-2" />
             </div>
-  
-  
           </div>
-  
-  
-        </form>
+        </div>
       </div>
-    </main>
-  </div>
+  </main>
+</div>

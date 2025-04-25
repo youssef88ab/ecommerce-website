@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { User } from './user.service';
 
 @Injectable({
   providedIn: 'root' // Makes this service available throughout the app
@@ -22,6 +23,10 @@ export class AuthService {
           this.router.navigate([`/${this.getRole()?.toLocaleLowerCase()}`]) ;
         })
       );
+  }
+
+  signUp(User : User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/signUp`, User);
   }
 
   logout(): void {

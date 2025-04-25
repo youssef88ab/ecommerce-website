@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component , OnInit } from '@angular/core';
 import { User  , UserService} from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -6,14 +6,46 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { 
+  faUser, 
+  faEnvelope, 
+  faPhone, 
+  faCalendarAlt, 
+  faVenusMars, 
+  faUserTag, 
+  faCamera, 
+  faCalendar, 
+  faChevronLeft, 
+  faTimes, 
+  faSave,
+  faShieldAlt,
+  faChartLine
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-edit-user',
-  imports: [FormsModule , CommonModule , SidebarComponent , RouterModule , NavbarComponent ],
+  imports: [FormsModule , CommonModule , SidebarComponent , RouterModule , NavbarComponent , FontAwesomeModule ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.css'
 })
 export class EditUserComponent {
+
+   // Font Awesome Icons
+   faUser = faUser;
+   faEnvelope = faEnvelope;
+   faPhone = faPhone;
+   faCalendarAlt = faCalendarAlt;
+   faVenusMars = faVenusMars;
+   faUserTag = faUserTag;
+   faCamera = faCamera;
+   faCalendar = faCalendar;
+   faChevronLeft = faChevronLeft;
+   faTimes = faTimes;
+   faSave = faSave;
+   faShieldAlt = faShieldAlt;
+   faChartLine = faChartLine;
+
    UserId!: number;
     
     Roles = [
