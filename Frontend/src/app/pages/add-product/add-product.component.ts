@@ -4,14 +4,24 @@ import { Router } from '@angular/router'; // Import Router for navigation
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUpload, faTimes, faPlus, faDollarSign, faBox, faTag } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
-  imports: [FormsModule, SidebarComponent, NavbarComponent] ,
+  imports: [FormsModule, SidebarComponent, NavbarComponent, FontAwesomeModule],
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
+  // Font Awesome icons
+  faUpload = faUpload;
+  faTimes = faTimes;
+  faPlus = faPlus;
+  faDollarSign = faDollarSign;
+  faBox = faBox;
+  faTag = faTag;
+
   newProduct = {
     name: '',
     description: '',

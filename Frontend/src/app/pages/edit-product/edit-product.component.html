@@ -1,58 +1,94 @@
 <div class="d-flex">
     <app-sidebar></app-sidebar>
-    <main class="content flex-grow-1">
-        <!-- Content Navigation Bar -->
-        <app-navbar></app-navbar>
+    <main class="content flex-grow-1 d-flex flex-column">
+      <app-navbar></app-navbar>
+      
+      <div class="container-fluid p-3 flex-grow-1">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body p-4 d-flex flex-column">
+            <form #editForm="ngForm" (ngSubmit)="onSubmit()" class="d-flex flex-column flex-grow-1">
+              <div class="d-flex flex-column flex-lg-row flex-grow-1 gap-4">
+                <!-- Image Column -->
+                <div class="d-flex flex-column" style="flex: 1; max-width: 400px;">
+                  <div class="image-container text-center d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-3">Product Image</h5>
+                    <div class="d-flex flex-column align-items-center gap-3 flex-grow-1">
+                      <div class="position-relative w-100" style="flex: 1;">
+                        <img src="assets/images/product1.png" class="img-fluid rounded border h-100 w-100 object-fit-contain" alt="Product Image">
+                      </div>
+                      <button type="button" class="btn btn-outline-dark w-75">
+                        <fa-icon [icon]="faUpload" class="me-2"></fa-icon>Upload Image
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-        <div class="card p-3 rounded-0 h-auto">
-            <form #editForm="ngForm" (ngSubmit)="onSubmit()" class="row d-flex flex-row justify-content-between product-form">
-                <div class="col-lg-4 image-container d-flex flex-column flex-start">
-                    <p class="text-center fw-bold">Product Image</p>
-                    <div class="d-flex flex-column gap-2">
-                        <img [src]="product.imageUrl" class="img-fluid w-75 ms-auto me-auto" alt="" id="product-image">
-                        <button type="button" class="img-btn btn btn-dark m-auto p-2">Upload</button>
-                    </div>
-                </div>
-        
-                <div class="col-lg-8 d-flex flex-column justify-content-center gap-1 ms-auto p-1">
-                    <input type="text" name="id" id="id-input" [(ngModel)]="product.productId" style="display: none;">
+                <!-- Form Column -->
+                <div class="d-flex flex-column" style="flex: 2;">
+                  <div class="d-flex flex-column gap-3 flex-grow-1">
+                    <input type="hidden" name="id" [(ngModel)]="product.productId">
                     
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control p-2" name="name" placeholder="Product Name" 
-                               aria-label="Product name" aria-describedby="basic-addon1" 
-                               [(ngModel)]="product.name" required>
+                    <!-- Product Name -->
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="productName" name="name" 
+                             placeholder="Product Name" [(ngModel)]="product.name" required>
+                      <label for="productName">Product Name</label>
                     </div>
-                    
-                    <div class="input-group mb-3">
-                        <textarea class="form-control p-2" name="description" placeholder="Description" 
-                                  aria-label="Description" aria-describedby="basic-addon1" 
-                                  [(ngModel)]="product.description" rows="3"></textarea>
+
+                    <!-- Product Description -->
+                    <div class="form-floating flex-grow-1">
+                      <textarea class="form-control h-100" id="productDescription" name="description" 
+                                placeholder="Description" [(ngModel)]="product.description"></textarea>
+                      <label for="productDescription">Description</label>
                     </div>
-                    
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text p-2 border-0 bg-grey" id="basic-addon1">$</span>
+
+                    <div class="d-flex flex-column flex-md-row gap-3">
+                      <!-- Price -->
+                      <div class="input-group flex-grow-1">
+                        <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faDollarSign"></fa-icon></span>
+                        <div class="form-floating flex-grow-1">
+                          <input type="number" class="form-control border-start-0 no-spinner" id="productPrice" 
+                                 name="price" placeholder="Price" [(ngModel)]="product.price" required>
+                          <label for="productPrice">Price</label>
                         </div>
-                        <input type="number" class="form-control p-2 no-spinner" name="price" placeholder="Price" 
-                               aria-label="Price" aria-describedby="basic-addon1" [(ngModel)]="product.price">
+                      </div>
+
+                      <!-- Stock -->
+                      <div class="input-group flex-grow-1">
+                        <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faBox"></fa-icon></span>
+                        <div class="form-floating flex-grow-1">
+                          <input type="number" class="form-control border-start-0 no-spinner" id="productStock" 
+                                 name="stock" placeholder="Stock Quantity" [(ngModel)]="product.stockQuantity">
+                          <label for="productStock">Stock Quantity</label>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control p-2" name="category" placeholder="Category" 
-                               aria-label="Category" aria-describedby="basic-addon1" >
+
+                    <!-- Category -->
+                    <div class="input-group">
+                      <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faTag"></fa-icon></span>
+                      <div class="form-floating flex-grow-1">
+                        <input type="text" class="form-control border-start-0" id="productCategory" 
+                               name="category" placeholder="Category" [(ngModel)]="product.categoryName">
+                        <label for="productCategory">Category</label>
+                      </div>
                     </div>
-                    
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control p-2 no-spinner" name="stock" placeholder="Stock Quantity" 
-                               aria-label="Stock" aria-describedby="basic-addon1">
+
+                    <!-- Form Buttons -->
+                    <div class="d-flex justify-content-end gap-3 mt-auto pt-4">
+                      <button type="reset" class="btn btn-outline-danger px-4">
+                        <fa-icon [icon]="faTimes" class="me-2"></fa-icon>Cancel
+                      </button>
+                      <button type="submit" class="btn btn-primary px-4" [disabled]="!editForm.valid">
+                        <fa-icon [icon]="faSave" class="me-2"></fa-icon>Update Product
+                      </button>
                     </div>
-        
-                    <div class="buttons d-flex flex-row justify-content-between gap-1">
-                        <input type="reset" name="reset" id="reset-btn" value="Cancel" class="btn btn-danger w-100 p-2"/>
-                        <input type="submit" name="submit" id="submit-btn" value="Update" class="btn btn-dark w-100 p-2" />
-                    </div>
+                  </div>
                 </div>
+              </div>
             </form>
+          </div>
         </div>
+      </div>
     </main>
-</div>
+  </div>

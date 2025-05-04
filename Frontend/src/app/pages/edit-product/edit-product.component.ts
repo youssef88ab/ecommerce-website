@@ -1,20 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUpload, faTimes, faSave, faDollarSign, faBox, faTag } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css'],
-  imports: [FormsModule, CommonModule, RouterModule, SidebarComponent, NavbarComponent],
+  imports: [FormsModule, CommonModule, RouterModule, SidebarComponent, NavbarComponent, FontAwesomeModule],
   standalone: true
 })
 export class EditProductComponent implements OnInit {
+  // Font Awesome icons
+  faUpload = faUpload;
+  faTimes = faTimes;
+  faSave = faSave;
+  faDollarSign = faDollarSign;
+  faBox = faBox;
+  faTag = faTag;
+
   productId!: number;
   
   product: Product = {
@@ -27,8 +38,9 @@ export class EditProductComponent implements OnInit {
     categoryName: ''
   };
 
-
   constructor(
+    private http: HttpClient,
+    private router: Router,
     private route: ActivatedRoute,
     private productService: ProductService
   ) {}

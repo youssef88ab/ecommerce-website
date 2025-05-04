@@ -40,7 +40,7 @@ body {
   border-radius: 12px !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   background-color: white;
-  margin: 30px auto;
+  margin: 10px;
   max-width: 1000px;
   overflow: hidden;
 }

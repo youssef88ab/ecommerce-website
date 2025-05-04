@@ -1,30 +1,47 @@
-<nav class="sidebar bg-dark text-light p-3">
-    <h2 class="text-center">eMart</h2>
-    <ul class="nav flex-column gap-2">
-      <li class="nav-item">
-        <a routerLink="/admin" class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin/manage-users" class="nav-link"><i class="fas fa-user"></i> Users</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin/manage-products" class="nav-link"><i class="fas fa-box"></i> Products</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin/manage-orders" class="nav-link"><i class="fas fa-cart-shopping"></i> Orders</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin/analytics" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin/payments" class="nav-link"><i class="fa-solid fa-credit-card"></i> Payments</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/admin/settings" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
-      </li>
-      
-    </ul>
+<div class="sidebar bg-dark text-white vh-100 position-fixed start-0 top-0 p-3">
+  <h2 class="mb-4 fw-semibold text-white">Admin Panel</h2>
+  <nav class="nav flex-column">
+    <a class="nav-link text-white-50 d-flex align-items-center mb-2 rounded" 
+       [routerLink]="['/admin']" 
+       routerLinkActive="active bg-primary text-white"
+       [routerLinkActiveOptions]="{exact: true}">
+      <i class="fas fa-chart-line me-3"></i>
+      Dashboard
+    </a>
+    <a class="nav-link text-white-50 d-flex align-items-center mb-2 rounded" 
+       [routerLink]="['/admin/manage-products']" 
+       routerLinkActive="active bg-primary text-white">
+      <i class="fas fa-box me-3"></i>
+      Products
+    </a>
+    <a class="nav-link text-white-50 d-flex align-items-center mb-2 rounded" 
+       [routerLink]="['/admin/manage-orders']" 
+       routerLinkActive="active bg-primary text-white">
+      <i class="fas fa-shopping-cart me-3"></i>
+      Orders
+    </a>
+    <a class="nav-link text-white-50 d-flex align-items-center mb-2 rounded" 
+       [routerLink]="['/admin/manage-users']" 
+       routerLinkActive="active bg-primary text-white">
+      <i class="fas fa-users me-3"></i>
+      Users
+    </a>
+    <a class="nav-link text-white-50 d-flex align-items-center mb-2 rounded" 
+       [routerLink]="['/admin/analytics']" 
+       routerLinkActive="active bg-primary text-white">
+      <i class="fas fa-chart-bar me-3"></i>
+      Analytics
+    </a>
+    <a class="nav-link text-white-50 d-flex align-items-center mb-2 rounded" 
+       [routerLink]="['/admin/settings']" 
+       routerLinkActive="active bg-primary text-white">
+      <i class="fas fa-cog me-3"></i>
+      Settings
+    </a>
+    <a class="nav-link text-danger d-flex align-items-center mb-2 rounded" 
+       (click)="logout()">
+      <i class="fas fa-sign-out-alt me-3"></i>
+      Logout
+    </a>
   </nav>
+</div>

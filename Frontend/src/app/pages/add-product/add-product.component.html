@@ -1,132 +1,87 @@
 <div class="d-flex">
-    <app-sidebar></app-sidebar>
-    <main class="content flex-grow-1">
-      <app-navbar></app-navbar>
-      <div class="card p-3 rounded-0 h-auto">
-        <form class="row d-flex flex-row justify-content-between product-form" id="add-product-form" (ngSubmit)="onSubmit()">
-  
-          <div class="col-lg-4 image-container d-flex flex-column flex-start">
-            <p class="text-center fw-bold">Product Image</p>
-            <div class="d-flex flex-column gap-2">
-              <!-- Dynamic image source will go here -->
-              <img src="assets/images/product1.png"  class="img-fluid w-75 ms-auto me-auto" alt="Product Image">
-              <button type="button" class="img-btn btn btn-dark m-auto p-2">Upload Image</button>
-            </div>
-          </div>
-  
-          <div class="col-lg-8 d-flex flex-column justify-content-center gap-1 ms-auto p-1">
-            <div class="input-group mb-3">
-              <!-- Product name binding -->
-              <!-- <input type="text" class="form-control p-2" name="name" placeholder="Product Name" 
-                     aria-label="Product name" aria-describedby="basic-addon1" 
-                     [(ngModel)]="newProduct.name" required> -->
-              <input type="text" class="form-control p-2" name="name" placeholder="Product Name" 
-                     aria-label="Product name" aria-describedby="basic-addon1" required>
-            </div>
-  
-            <div class="input-group mb-3">
-              <!-- Product description binding -->
-              <!-- <textarea class="form-control p-2" name="description" placeholder="Product Description" 
-                        aria-label="Description" aria-describedby="basic-addon1" 
-                        [(ngModel)]="newProduct.description" rows="3"></textarea> -->
-              <textarea class="form-control p-2" name="description" placeholder="Product Description" 
-                        aria-label="Description" aria-describedby="basic-addon1" rows="3"></textarea>
-            </div>
-  
-            <div class="input-group mb-3 row d-flex justify-content-between">
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <span class="input-group-text p-2 border-0 bg-grey">$</span>
-                  <!-- Price binding -->
-                  <!-- <input type="number" class="form-control p-2 no-spinner" name="price" placeholder="Price" 
-                         aria-label="Price" [(ngModel)]="newProduct.price" required> -->
-                  <input type="number" class="form-control p-2 no-spinner" name="price" placeholder="Price" 
-                         aria-label="Price" required>
+  <app-sidebar></app-sidebar>
+  <main class="content flex-grow-1 d-flex flex-column">
+    <app-navbar></app-navbar>
+    
+    <div class="container-fluid p-3 flex-grow-1">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body p-4 d-flex flex-column">
+          <form class="d-flex flex-column flex-grow-1" id="add-product-form" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-column flex-lg-row flex-grow-1 gap-4">
+              <!-- Image Column -->
+              <div class="d-flex flex-column" style="flex: 1; max-width: 400px;">
+                <div class="image-container text-center d-flex flex-column flex-grow-1">
+                  <h5 class="fw-bold mb-3">Product Image</h5>
+                  <div class="d-flex flex-column align-items-center gap-3 flex-grow-1">
+                    <div class="position-relative w-100" style="flex: 1;">
+                      <img src="assets/images/product1.png" class="img-fluid rounded border h-100 w-100 object-fit-contain" alt="Product Image">
+                    </div>
+                    <button type="button" class="btn btn-outline-dark w-75">
+                      <fa-icon [icon]="faUpload" class="me-2"></fa-icon>Upload Image
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="col-lg-6 ps-2">
-                <div class="input-group">
-                  <span class="input-group-text p-2 border-0 bg-grey">%</span>
-                  <!-- Discount binding -->
-                  <!-- <input type="number" class="form-control p-2 no-spinner" name="discount" placeholder="Discount" 
-                         aria-label="Discount" [(ngModel)]="newProduct.discount" min="0" max="100"> -->
-                  <input type="number" class="form-control p-2 no-spinner" name="discount" placeholder="Discount" 
-                         aria-label="Discount" min="0" max="100">
-                </div>
-              </div>
-            </div>
-  
-            <div class="input-group mb-3 row d-flex justify-content-between">
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <span class="input-group-text p-2 border-0 bg-grey"><i class="fas fa-box"></i></span>
-                  <!-- Stock binding -->
-                  <!-- <input type="number" class="form-control p-2 no-spinner" name="stock" placeholder="Stock Quantity" 
-                         aria-label="Stock" [(ngModel)]="newProduct.stock" required> -->
-                  <input type="number" class="form-control p-2 no-spinner" name="stock" placeholder="Stock Quantity" 
-                         aria-label="Stock" required>
-                </div>
-              </div>
-              <div class="col-lg-6 ps-2">
-                <div class="input-group">
-                  <span class="input-group-text p-2 border-0 bg-grey"><i class="fas fa-tag"></i></span>
-                  <!-- Category binding -->
-                  <!-- <input type="text" class="form-control p-2" name="category" placeholder="Category" 
-                         aria-label="Category" [(ngModel)]="newProduct.category" required> -->
-                  <input type="text" class="form-control p-2" name="category" placeholder="Category" 
-                         aria-label="Category" required>
-                </div>
-              </div>
-            </div>
-  
-            <div class="input-group mb-3 row d-flex justify-content-between">
-              <div class="col-lg-6 d-flex flex-row">
-                <div class="input-group-prepend">
-                  <label class="input-group-text py-2 px-4 rounded-0">Status</label>
-                </div>
-                <!-- Status binding -->
-                <!-- <select class="form-select status-select px-3 rounded-0" name="status" [(ngModel)]="newProduct.status"> -->
-                <select class="form-select status-select px-3 rounded-0" name="status">
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                  <option value="OUT_OF_STOCK">Out of Stock</option>
-                </select>
-              </div>
-              <div class="col-lg-6 ps-2">
-                <div class="input-group">
-                  <span class="input-group-text p-2 border-0 bg-grey"><i class="fas fa-weight-hanging"></i></span>
-                  <!-- Weight binding -->
-                  <!-- <input type="text" class="form-control p-2" placeholder="Weight (kg)" name="weight" 
-                         [(ngModel)]="newProduct.weight"> -->
-                  <input type="text" class="form-control p-2" placeholder="Weight (kg)" name="weight">
+
+              <!-- Form Column -->
+              <div class="d-flex flex-column" style="flex: 2;">
+                <div class="d-flex flex-column gap-3 flex-grow-1">
+                  <!-- Product Name -->
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="productName" name="name" placeholder="Product Name" required>
+                    <label for="productName">Product Name</label>
+                  </div>
+
+                  <!-- Product Description -->
+                  <div class="form-floating flex-grow-1">
+                    <textarea class="form-control h-100" id="productDescription" name="description" placeholder="Product Description"></textarea>
+                    <label for="productDescription">Product Description</label>
+                  </div>
+
+                  <div class="d-flex flex-column flex-md-row gap-3">
+                    <!-- Price -->
+                    <div class="input-group flex-grow-1">
+                      <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faDollarSign"></fa-icon></span>
+                      <div class="form-floating flex-grow-1">
+                        <input type="number" class="form-control border-start-0 no-spinner" id="productPrice" name="price" placeholder="Price" required>
+                        <label for="productPrice">Price</label>
+                      </div>
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="input-group flex-grow-1">
+                      <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faBox"></fa-icon></span>
+                      <div class="form-floating flex-grow-1">
+                        <input type="number" class="form-control border-start-0 no-spinner" id="productStock" name="stock" placeholder="Stock Quantity" required>
+                        <label for="productStock">Stock Quantity</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Category -->
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faTag"></fa-icon></span>
+                    <div class="form-floating flex-grow-1">
+                      <input type="text" class="form-control border-start-0" id="productCategory" name="category" placeholder="Category" required>
+                      <label for="productCategory">Category</label>
+                    </div>
+                  </div>
+
+                  <!-- Form Buttons -->
+                  <div class="d-flex justify-content-end gap-3 mt-auto pt-4">
+                    <button type="reset" class="btn btn-outline-danger px-4">
+                      <fa-icon [icon]="faTimes" class="me-2"></fa-icon>Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary px-4">
+                      <fa-icon [icon]="faPlus" class="me-2"></fa-icon>Add Product
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-  
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label class="input-group-text py-2 px-4 rounded-0">Product Type</label>
-              </div>
-              <!-- Product type binding -->
-              <!-- <select class="form-select type-select px-3 rounded-0" name="type" [(ngModel)]="newProduct.type"> -->
-              <select class="form-select type-select px-3 rounded-0" name="type">
-                <option value="PHYSICAL">Physical Product</option>
-                <option value="DIGITAL">Digital Product</option>
-                <option value="SERVICE">Service</option>
-              </select>
-            </div>
-  
-            <div class="buttons d-flex flex-row justify-content-between gap-1">
-              <!-- Reset function binding -->
-              <!-- <input type="reset" name="reset" id="reset-btn" value="Cancel" 
-                     class="btn btn-danger w-100 p-2" (click)="onReset()" /> -->
-              <input type="reset" name="reset" id="reset-btn" value="Cancel" 
-                     class="btn btn-danger w-100 p-2" />
-              <input type="submit" name="submit" id="submit-btn" value="Add Product" 
-                     class="btn btn-dark w-100 p-2" />
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
+</div>

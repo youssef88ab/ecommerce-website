@@ -14,12 +14,6 @@
             <div class="d-flex align-items-center gap-3">
               <form class="row g-2 align-items-center w-100">
                 <div class="col-auto mx-2">
-                  <button class="btn btn-primary px-4">Upload</button>
-                </div>
-                <div class="col-auto mx-2">
-                  <button class="btn btn-success px-4">Export</button>
-                </div>
-                <div class="col-auto mx-2">
                   <input 
                     type="search" 
                     class="form-control px-3 py-2" 
@@ -32,7 +26,7 @@
                   <button class="btn btn-dark px-4" (click)="onSearch(keyword)">Search</button>
                 </div>
               </form>   
-              <button class="btn btn-dark col-auto px-4 py-2" [routerLink]="['/add-user']">Add User</button>
+         
             </div>
           </div>
           <table class="product-table">
@@ -75,7 +69,7 @@
                   </button>
                   
                   <mat-menu #orderMenu="matMenu" class="custom-menu">
-                    <button [routerLink]="['/order-details' , order.orderId]" mat-menu-item class="custom-menu-item mb-2">
+                    <button [routerLink]="['../order-details' , order.orderId]" mat-menu-item class="custom-menu-item mb-2">
                       View Details
                     </button>
                     <button mat-menu-item class="custom-menu-item">

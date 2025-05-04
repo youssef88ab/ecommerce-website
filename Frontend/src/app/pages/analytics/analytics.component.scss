@@ -1,0 +1,276 @@
+@import '../../styles/variables.scss';
+
+.dashboard-container {
+  padding: 2rem;
+  background-color: $bg-primary;
+  min-height: calc(100vh - 60px);
+  margin-left: 250px; // To account for fixed sidebar
+
+  h3 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    line-height: $line-height-tight;
+  }
+}
+
+// Summary Cards
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .summary-card {
+    background: $bg-secondary;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px $shadow-color;
+    transition: transform 0.2s;
+    border: 1px solid $border-color;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px $shadow-color-dark;
+    }
+
+    .card-content {
+      flex: 1;
+
+      .card-title {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        margin-bottom: 0.5rem;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-normal;
+      }
+
+      .card-value {
+        font-size: $font-size-3xl;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        margin-bottom: 0.5rem;
+        line-height: $line-height-tight;
+      }
+
+      .card-change {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        line-height: $line-height-normal;
+
+        &.positive-growth {
+          color: $success;
+        }
+
+        &.negative-growth {
+          color: $accent;
+        }
+      }
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: $hover-primary;
+      color: $primary;
+      font-size: $font-size-xl;
+    }
+  }
+}
+
+// Charts Row
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .chart-card {
+    background: $bg-secondary;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px $shadow-color;
+    border: 1px solid $border-color;
+
+    .card-header {
+      margin-bottom: 1rem;
+
+      h4 {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        line-height: $line-height-tight;
+      }
+    }
+
+    .chart-container {
+      height: 300px;
+      position: relative;
+    }
+
+    .chart-legend {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        line-height: $line-height-normal;
+
+        .legend-color {
+          width: 12px;
+          height: 12px;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+}
+
+// Bottom Row
+.bottom-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+
+  .products-card, .category-card {
+    background: $bg-secondary;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px $shadow-color;
+    border: 1px solid $border-color;
+
+    .card-header {
+      margin-bottom: 1rem;
+
+      h4 {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        line-height: $line-height-tight;
+      }
+    }
+
+    .chart-container {
+      height: 300px;
+      position: relative;
+    }
+  }
+}
+
+// Products Table
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid $border-color;
+    line-height: $line-height-normal;
+  }
+
+  th {
+    font-weight: $font-weight-semibold;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+
+  .product-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .product-name {
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+    font-size: $font-size-base;
+  }
+
+  .product-category {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+  }
+
+  .growth-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-normal;
+
+    &.positive {
+      background-color: rgba($success, 0.1);
+      color: $success;
+    }
+
+    &.negative {
+      background-color: rgba($accent, 0.1);
+      color: $accent;
+    }
+  }
+}
+
+// Date Range Selector
+.date-range {
+  .form-select {
+    width: 200px;
+    border-radius: 6px;
+    border: 1px solid $border-color;
+    padding: 0.5rem 1rem;
+    font-size: $font-size-sm;
+    color: $text-primary;
+    background-color: $bg-secondary;
+    cursor: pointer;
+    line-height: $line-height-normal;
+
+    &:focus {
+      border-color: $primary;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+    margin-left: 0;
+
+    h3 {
+      font-size: $font-size-xl;
+    }
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+
+    .summary-card {
+      .card-value {
+        font-size: $font-size-2xl;
+      }
+    }
+  }
+
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom-row {
+    grid-template-columns: 1fr;
+  }
+} 
