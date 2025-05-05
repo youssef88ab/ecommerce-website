@@ -4,13 +4,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Product {
-  productId: number;
+  id: number;
   name: string;
   description: string;
   price: number;
-  stockQuantity: number;
-  imageUrl: string;
-  categoryName: string;
+  category: string;
+  image: string;
+  stock: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 @Injectable({
@@ -34,7 +36,7 @@ export class ProductService {
   }
 
   updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/update/${product.productId}`, product);
+    return this.http.put<Product>(`${this.apiUrl}/update/${product.id}`, product);
   }
 
   deleteProduct(id: number): Observable<any> {

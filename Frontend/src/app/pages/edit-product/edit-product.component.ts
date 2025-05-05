@@ -29,13 +29,15 @@ export class EditProductComponent implements OnInit {
   productId!: number;
   
   product: Product = {
-    productId: 0,
+    id: 0,
     name: '',
     description: '',
     price: 0,
-    stockQuantity : 0,
-    imageUrl: '' , 
-    categoryName: ''
+    stock: 0,
+    image: '',
+    category: '',
+    createdAt: new Date(),
+    updatedAt: new Date()
   };
 
   constructor(

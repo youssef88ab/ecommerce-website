@@ -53,7 +53,7 @@ export class ManageProductsComponent implements OnInit{
             this.productService.deleteProduct(id)
               .subscribe({
                 next: () => {
-                  this.products = this.products.filter(product => product.productId !== id);
+                  this.products = this.products.filter(product => product.id !== id);
                 },
                 error: (err) => {
                   console.error('Error deleting product:', err);

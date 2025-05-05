@@ -46,15 +46,15 @@
                     <div class="d-flex flex-column">
                       <p class="text-start fw-bold">{{ product.name }}</p>
                       <p class="text-start text-black text-opacity-75">
-                        {{product.categoryName}}
+                        {{product.category}}
                       </p>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <span *ngIf="product.stockQuantity < 15" class="badge bg-primary rounded-pill p-2 text-center">LOW</span>
-                  <span *ngIf="product.stockQuantity >= 15 && product.stockQuantity < 30" class="badge bg-secondary rounded-pill p-2 text-center">MID</span>
-                  <span *ngIf="product.stockQuantity >= 30" class="badge bg-success rounded-pill p-2 text-center">HIGH</span>
+                  <span *ngIf="product.stock < 15" class="badge bg-primary rounded-pill p-2 text-center">LOW</span>
+                  <span *ngIf="product.stock >= 15 && product.stock < 30" class="badge bg-secondary rounded-pill p-2 text-center">MID</span>
+                  <span *ngIf="product.stock >= 30" class="badge bg-success rounded-pill p-2 text-center">HIGH</span>
                 </td>                
                 <td class="text-center">
                   <p>${{ product.price }}</p>
@@ -65,13 +65,13 @@
                   </button>
                   
                   <mat-menu #menu="matMenu" class="custom-menu">
-                    <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['../edit-product', product.productId]">
+                    <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['../edit-product', product.id]">
                       Edit
                     </button>
-                    <button mat-menu-item class="custom-menu-item" [routerLink]="['../product-details', product.productId]">
+                    <button mat-menu-item class="custom-menu-item" [routerLink]="['../product-details', product.id]">
                       View Details
                     </button>
-                    <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteProduct(product.productId)">
+                    <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteProduct(product.id)">
                       Delete
                     </button>
                   </mat-menu>

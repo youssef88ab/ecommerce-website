@@ -26,7 +26,7 @@
                 <!-- Form Column -->
                 <div class="d-flex flex-column" style="flex: 2;">
                   <div class="d-flex flex-column gap-3 flex-grow-1">
-                    <input type="hidden" name="id" [(ngModel)]="product.productId">
+                    <input type="hidden" name="id" [(ngModel)]="product.id">
                     
                     <!-- Product Name -->
                     <div class="form-floating">
@@ -58,7 +58,7 @@
                         <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faBox"></fa-icon></span>
                         <div class="form-floating flex-grow-1">
                           <input type="number" class="form-control border-start-0 no-spinner" id="productStock" 
-                                 name="stock" placeholder="Stock Quantity" [(ngModel)]="product.stockQuantity">
+                                 name="stock" placeholder="Stock Quantity" [(ngModel)]="product.stock">
                           <label for="productStock">Stock Quantity</label>
                         </div>
                       </div>
@@ -69,7 +69,7 @@
                       <span class="input-group-text bg-light border-end-0"><fa-icon [icon]="faTag"></fa-icon></span>
                       <div class="form-floating flex-grow-1">
                         <input type="text" class="form-control border-start-0" id="productCategory" 
-                               name="category" placeholder="Category" [(ngModel)]="product.categoryName">
+                               name="category" placeholder="Category" [(ngModel)]="product.category">
                         <label for="productCategory">Category</label>
                       </div>
                     </div>
