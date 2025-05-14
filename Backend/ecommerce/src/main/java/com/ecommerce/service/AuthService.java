@@ -27,22 +27,31 @@ public class AuthService {
     private UserRepo userRepo ;
 
     public String Login(LoginDTO loginDto) {
+        System.out.println("Attempting to authenticate user: " + loginDto.getUsername());
+        
+        try {
+            // 01 - AuthenticationManager is used to authenticate the user
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getUsername(),
+                loginDto.getPassword()
+            ));
 
-        // 01 - AuthenticationManager is used to authenticate the user
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-            loginDto.getUsername() ,
-            loginDto.getPassword()
-        ));
+            System.out.println("Authentication successful for user: " + loginDto.getUsername());
 
-         /* 02 - SecurityContextHolder is used to allows the rest of the application to know
-        that the user is authenticated and can use user data from Authentication object */
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            /* 02 - SecurityContextHolder is used to allows the rest of the application to know
+            that the user is authenticated and can use user data from Authentication object */
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // 03 - Generate the token based on username and secret key
-        String token = jwtTokenProvider.generateToken(authentication);
+            // 03 - Generate the token based on username and secret key
+            String token = jwtTokenProvider.generateToken(authentication);
+            System.out.println("JWT token generated successfully");
 
-        // 04 - Return the token to controller
-        return token;
+            // 04 - Return the token to controller
+            return token;
+        } catch (Exception e) {
+            System.out.println("Authentication failed: " + e.getMessage());
+            throw e;
+        }
     }
 
     public String getRole(LoginDTO loginDto) {

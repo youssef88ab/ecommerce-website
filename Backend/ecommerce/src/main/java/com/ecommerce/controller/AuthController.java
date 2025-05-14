@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.Dto.AuthResponseDto;
 import com.ecommerce.Dto.LoginDTO;
+import com.ecommerce.Dto.UserDTO;
 import com.ecommerce.service.AuthService;
 
 @RestController
@@ -52,7 +53,7 @@ public class AuthController {
 
     // SignUp API
     @PostMapping("/signUp")
-    public ResponseEntity<Void> signUp(@RequestBody User user) {
+    public ResponseEntity<Void> signUp(@RequestBody UserDTO user) {
         userService.signUp(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

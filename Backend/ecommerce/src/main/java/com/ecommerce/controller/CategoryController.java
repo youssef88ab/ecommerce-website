@@ -1,7 +1,7 @@
 package com.ecommerce.controller;
 
 
-import com.ecommerce.model.Category;
+import com.ecommerce.Dto.CategoryDTO;
 import com.ecommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         return new ResponseEntity<>(categoryService.GetAllCategories() , HttpStatus.OK);
     }
 }

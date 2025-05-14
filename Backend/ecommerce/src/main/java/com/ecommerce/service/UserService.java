@@ -30,67 +30,49 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         List<User> usersRepo = userRepo.findAll();
-
-        return usersRepo;
+        List<UserDTO> dtos = new ArrayList<>();
+        for (User user : usersRepo) {
+            dtos.add(convertToDTO(user));
+        }
+        return dtos;
     }
 
-    public User getUser(Long id) {
+    public UserDTO getUser(Long id) {
         User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
-
-        return user;
+        return convertToDTO(user);
     }
 
-    public void addUser(User user) {
-
-        // Set Id To Null
+    public void addUser(UserDTO userDTO) {
+        User user = convertToEntity(userDTO);
         user.setId(null);
-
         // Find Role
-        Role role = roleRepo.findById(user.getRoles().iterator().next().getId()).orElseThrow(() -> new RuntimeException("Role Dosent Exist"));
-
-        System.out.println("ROLE NAME : "  + role.getName());
-        // Encrypt Password
+        Role role = roleRepo.findByName(userDTO.getRole()).orElseThrow(() -> new RuntimeException("Role Doesn't Exist"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        // Assign Role
-        user.setRoles(Collections.singleton(role)); // Assign a single role
-
+        user.setRoles(Collections.singleton(role));
         userRepo.save(user);
     }
 
-    public void updateUser(Long id, User updatedUser) {
+    public void updateUser(Long id, UserDTO updatedUserDTO) {
         try {
-            // Find The User
             User user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
-
-            // Mise A jour les Champs
-            String email = updatedUser.getEmail();
-
-            // Check if email exists AND it belongs to a different user
+            String email = updatedUserDTO.getEmail();
             if (userRepo.findByEmail(email).isPresent() && !user.getEmail().equals(email)) {
                 throw new RuntimeException("This Email is Already Taken email : " + email);
             } else {
                 user.setEmail(email);
             }
-
-            String username = updatedUser.getUsername();
-            // Check if username exists AND it belongs to a different user
+            String username = updatedUserDTO.getUsername();
             if (userRepo.findByUsername(username).isPresent() && !user.getUsername().equals(username)) {
                 throw new RuntimeException("This Username is Already Taken Username : " + username);
             } else {
                 user.setUsername(username);
             }
-
             // Update Role
-            user.setRoles(updatedUser.getRoles());
-
-            System.out.println(user.toString());
-
-            // Save The User In Database ;
+            Role role = roleRepo.findByName(updatedUserDTO.getRole()).orElseThrow(() -> new RuntimeException("Role Doesn't Exist"));
+            user.setRoles(Collections.singleton(role));
             userRepo.save(user);
-
         } catch (Exception e) {
             System.out.println("UPDATE USER ERROR : " + e.getMessage());;
         }
@@ -106,28 +88,37 @@ public class UserService {
         userRepo.deleteById(id);
     }
 
-    public List<User> searchUser(String keyword) {
+    public List<UserDTO> searchUser(String keyword) {
         keyword = "%" + keyword + "%" ;
-
-        return userRepo.findByUsernameLike(keyword);
-
+        List<User> users = userRepo.findByUsernameLike(keyword);
+        List<UserDTO> dtos = new ArrayList<>();
+        for (User user : users) {
+            dtos.add(convertToDTO(user));
+        }
+        return dtos;
     }
 
-    public void signUp(User user) {
-
-        // Set Id To Null
+    public void signUp(UserDTO userDTO) {
+        User user = convertToEntity(userDTO);
         user.setId(null);
-
-        // Find Role
-        Role role = roleRepo.findByName("CUSTOMER").orElseThrow(() -> new RuntimeException("Role Dosent Exist"));
-
-        System.out.println("ROLE NAME : "  + role.getName());
-        // Encrypt Password
+        Role role = roleRepo.findByName("CUSTOMER").orElseThrow(() -> new RuntimeException("Role Doesn't Exist"));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        // Assign Role
-        user.setRoles(Collections.singleton(role)); // Assign a single role
-
+        user.setRoles(Collections.singleton(role));
         userRepo.save(user);
+    }
+
+    // Conversion methods
+    private UserDTO convertToDTO(User user) {
+        String roleName = user.getRoles() != null && !user.getRoles().isEmpty() ? user.getRoles().iterator().next().getName() : null;
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), roleName);
+    }
+
+    private User convertToEntity(UserDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        // Password and roles are set in addUser/signUp
+        return user;
     }
 }

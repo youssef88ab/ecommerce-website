@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,12 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.Dto.UserDTO;
-import com.ecommerce.model.User;
-import com.ecommerce.repository.UserRepo;
 import com.ecommerce.service.AuthService;
 import com.ecommerce.service.UserService;
 
@@ -41,15 +37,14 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         try {
-            User user = userService.getUser(id);
+            UserDTO user = userService.getUser(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Get User By Id Error : " + e.getMessage());
@@ -58,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addUser(@RequestBody User user) {
+    public ResponseEntity<Void> addUser(@RequestBody UserDTO user) {
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -70,7 +65,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserDTO updatedUser) {
         try {
             System.out.println("USER TO UPDATE " + updatedUser.toString());
             userService.updateUser(id, updatedUser);
@@ -82,20 +77,17 @@ public class UserController {
     }
 
     @GetMapping("/search/keyword/{keyword}")
-    public ResponseEntity<List<User>> searchUser(@PathVariable String keyword) {
-        try
-        {
-            return new ResponseEntity<>( userService.searchUser(keyword) ,  HttpStatus.OK);
-        }
-        catch (Exception e) {
+    public ResponseEntity<List<UserDTO>> searchUser(@PathVariable String keyword) {
+        try {
+            return new ResponseEntity<>(userService.searchUser(keyword), HttpStatus.OK);
+        } catch (Exception e) {
             System.out.println("Error While Searching User : " + e.getMessage());
-
         }
-        return  null ;
+        return null;
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Void> signUp(@RequestBody User user) {
+    public ResponseEntity<Void> signUp(@RequestBody UserDTO user) {
         userService.signUp(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

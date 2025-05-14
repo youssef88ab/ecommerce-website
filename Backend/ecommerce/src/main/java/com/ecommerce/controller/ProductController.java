@@ -3,7 +3,7 @@ package com.ecommerce.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecommerce.model.Product;
+import com.ecommerce.Dto.ProductDTO;
 import com.ecommerce.service.ProductService;
 
 import java.io.PrintWriter;
@@ -33,8 +33,8 @@ public class ProductController {
 
     // Récupérer tous les produits
     @GetMapping()
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> products = productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getProducts() {
+        List<ProductDTO> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -48,8 +48,8 @@ public class ProductController {
 
     // Récupérer un produit par son ID
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
+        ProductDTO product = productService.getProductById(id);
         if (product != null) {
             return new ResponseEntity<>(product, HttpStatus.OK);
         } else {
@@ -60,8 +60,8 @@ public class ProductController {
     // Mettre à jour un produit par son ID
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
-        Product product = productService.updateProduct(id, updatedProduct);
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO updatedProduct) {
+        ProductDTO product = productService.updateProduct(id, updatedProduct);
         if (product != null) {
             return new ResponseEntity<>(product, HttpStatus.OK);
         } else {
@@ -72,15 +72,15 @@ public class ProductController {
     // Ajouter un nouveau produit
 
     @PostMapping("/add")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        Product newProduct = productService.addProduct(product);
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO product) {
+        ProductDTO newProduct = productService.addProduct(product);
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
     // Exporter les produits au format CSV
     @GetMapping("/export")
     public ResponseEntity<String> exportProductscsv() {
-        List<Product> products = productService.getAllProducts();
+        List<ProductDTO> products = productService.getAllProducts();
 
         StringWriter writer = new StringWriter();
         PrintWriter csvWriter = new PrintWriter(writer);
@@ -89,13 +89,14 @@ public class ProductController {
         csvWriter.println("id,name,description,price,stockQuantity,category,imageUrl,createdAt,updatedAt");
 
         // Lignes du CSV
-        for (Product product : products) {
+        for (ProductDTO product : products) {
             csvWriter.println(
-                product.getProductId() + "," +
+                product.getId() + "," +
                 escapeCsvField(product.getName()) + "," +
                 escapeCsvField(product.getDescription()) + "," +
                 product.getPrice() + "," +
                 product.getStockQuantity() + "," +
+                escapeCsvField(product.getCategoryName()) + "," +
                 escapeCsvField(product.getImageUrl()) + "," +
                 product.getCreatedAt() + "," +
                 product.getUpdatedAt()
@@ -122,9 +123,8 @@ public class ProductController {
     }
 
     @GetMapping("/search/keyword/{keyword}")
-    private ResponseEntity<List<Product>> searchByKeyword(@PathVariable String keyword) {
-        keyword = "%" + "%" ;
-        return new ResponseEntity<>(productService.searchProduct(keyword) , HttpStatus.OK);
+    private ResponseEntity<List<ProductDTO>> searchByKeyword(@PathVariable String keyword) {
+        return new ResponseEntity<>(productService.searchProduct("%" + keyword + "%") , HttpStatus.OK);
     }
 
     @GetMapping("count")
