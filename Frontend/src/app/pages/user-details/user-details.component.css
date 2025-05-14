@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Start Content */
+.content {
+    margin-left: 250px; /* Match the sidebar width */
+    background-color: #f6fbfe;
+    min-height: 100vh;
+}
+
+/* End Content */
+
+#product-image {
+    width: 400px;
+    height: 400px;
+}
+
+.product-form input {
+    outline: none;
+}
+
+.product-form #reset-btn {
+    background: #dc3545;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.product-form #submit-btn {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.account-status p {
+    padding: 10px;
+
+}
+
+fa-icon {
+    font-size: 16px;
+
+}
+
+.order-table tr {
+    font-size: 14px;
+
+}
+
+.order-table td , .order-table th {
+    padding: 10px;
+}
+
+
+thead {
+    background-color: #eee;
+}
+
+
