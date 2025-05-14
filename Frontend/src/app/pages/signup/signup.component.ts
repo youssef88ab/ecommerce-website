@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
     id: 0,
     username: '',
     email: '',
-    roles: [{ id: 2, name: 'CUSTOMER' }],
+    role: 'CUSTOMER',
     address: '',
     phone: '',
     birthDate: '',

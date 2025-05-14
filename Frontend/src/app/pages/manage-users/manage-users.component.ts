@@ -28,6 +28,7 @@ export class ManageUsersComponent implements OnInit {
     constructor(private UserService: UserService) {}
   
     ngOnInit(): void {
+      console.log("Ng OnInite");
       this.fetchUsers();
     }
   
@@ -77,6 +78,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   formatDate(fulldate: string): string {
+   /*
     var arr: string[] = fulldate.split('T');
     var date = arr[0].split('-');
     var year = date[0];  
@@ -127,6 +129,8 @@ export class ManageUsersComponent implements OnInit {
     
 
     return (`${year}, ${monthstr}, ${day}`);
+    */
+   return fulldate ;
   }
   
 }

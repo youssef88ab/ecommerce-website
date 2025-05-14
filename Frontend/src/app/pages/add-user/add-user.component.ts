@@ -59,7 +59,7 @@ export class AddUserComponent {
     id: 0, 
     username: '',
     email: '',
-    roles: this.Roles, 
+    role: '',
     password: '', 
     address: '' , 
     phone: '', 
@@ -92,7 +92,7 @@ export class AddUserComponent {
   }
 
   onReset() {
-    this.newUser = {id :0 ,  username: '', email: '', password: '', gender: '' , phone: '' , address: '' , dateAdded: '' ,  birthDate: '' ,  roles: [{ id: 0 , name: '' }] };
+    this.newUser = {id :0 ,  username: '', email: '', password: '', gender: '' , phone: '' , address: '' , dateAdded: '' ,  birthDate: '' ,  role: '' };
 }
 
 }

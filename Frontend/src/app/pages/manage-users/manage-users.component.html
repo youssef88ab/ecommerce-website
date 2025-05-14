@@ -53,23 +53,32 @@
                     </div>
                   </div>
                 </td>
-                <td class="text-center" [ngSwitch]="User.roles[0].name">
-                  <span *ngSwitchCase="'ADMIN'" class="badge bg-primary rounded-pill p-2 text-center">
-                    {{ User.roles[0].name }}
-                  </span>
-                  <span *ngSwitchCase="'CUSTOMER'" class="badge bg-secondary rounded-pill p-2 text-center">
-                    {{ User.roles[0].name }}
-                  </span>
-                  <span *ngSwitchCase="'DELIVERER'" class="badge bg-success rounded-pill p-2 text-center">
-                    {{ User.roles[0].name }}
-                  </span>
-                  <span *ngSwitchDefault>Default Case</span>
+                <td class="text-center">
+                  <ng-container *ngIf="User.role && User.role.length > 0">
+                    <div [ngSwitch]="User.role">
+                      <span *ngSwitchCase="'ADMIN'" class="badge bg-primary rounded-pill p-2 text-center">
+                        {{ User.role }}
+                      </span>
+                      <span *ngSwitchCase="'CUSTOMER'" class="badge bg-secondary rounded-pill p-2 text-center">
+                        {{ User.role }}
+                      </span>
+                      <span *ngSwitchCase="'DELIVERER'" class="badge bg-success rounded-pill p-2 text-center">
+                        {{ User.role }}
+                      </span>
+                      <span *ngSwitchDefault class="badge bg-info rounded-pill p-2 text-center">
+                        {{ User.role }}
+                      </span>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="!User.role || User.role.length === 0">
+                    <span class="badge bg-light text-dark rounded-pill p-2 text-center">N/A</span>
+                  </ng-container>
                 </td>
                 <td class="text-center">
-                  <p> {{ formatDate(User.birthDate) }}</p>
+                  <p>{{ User.birthDate }}</p>
                 </td>
                 <td class="text-center">
-                  <p>{{ formatDate(User.dateAdded) }}</p>
+                  <p>{{ User.dateAdded }}</p>
                 </td>
                 <td>
                   <button mat-icon-button [matMenuTriggerFor]="menu" class="no-shadow border-0">

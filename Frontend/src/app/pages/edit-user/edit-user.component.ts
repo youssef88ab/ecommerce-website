@@ -56,7 +56,7 @@ export class EditUserComponent {
       id: 0,
       username: '',
       email: '',
-      roles: this.Roles ,
+      role: '',
       phone: '',
       address: '' , 
       gender: '', 
@@ -103,7 +103,7 @@ export class EditUserComponent {
 
     fetchUser(UserId: number): void {
       this.UserService.getUser(UserId).subscribe({
-        next: (data) => {
+        next: (data: User) => {
           this.User = data;
           this.extractAddress(this.User.address);
           console.log('Fetched User:', this.User); // Debug

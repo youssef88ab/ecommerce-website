@@ -60,7 +60,7 @@ export class UserDetailsComponent implements OnInit {
   User: User = {
     id: 0,
     email: '',
-    roles: this.Roles ,
+    role: '',
     username: '',
     phone: '',
     address: '' , 
@@ -92,7 +92,7 @@ export class UserDetailsComponent implements OnInit {
 
   fetchUser(UserId: number): void {
     this.UserService.getUser(UserId).subscribe({
-      next: (data) => {
+      next: (data: User) => {
         this.User = data;
       },
       error: (err) => {

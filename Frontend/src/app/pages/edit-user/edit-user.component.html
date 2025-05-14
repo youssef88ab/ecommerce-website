@@ -95,7 +95,7 @@
                           <label class="form-label label-required">Role</label>
                           <div class="input-with-icon">
                             <fa-icon [icon]="faUserTag"></fa-icon>
-                            <select class="form-select" name="role" [(ngModel)]="User.roles[0].name" required>
+                            <select class="form-select" name="role" [(ngModel)]="User.role" required>
                               <option [ngValue]="" disabled>Select Role</option>
                               <option [ngValue]="'ADMIN'">Admin</option>
                               <option [ngValue]="'CUSTOMER'">User</option>
