@@ -1,0 +1,46 @@
+<body>
+  <div class="main-wrapper d-flex align-items-center justify-content-center">
+    <div class="login-box bg-white shadow rounded p-4">
+      <!-- Logo -->
+      <div class="d-flex align-items-center justify-content-center mb-3">
+        <img src="/Images/Cyberlife.JPG" alt="CyberShop Logo" height="40" width="40" class="me-2">
+        <h5 class="mb-0 fw-bold fst-italic">CyberShop</h5>
+      </div>
+      <hr>
+      <div class="text-end mb-2">
+        <a routerLink="/admin-login" class="admin-link">Login as Admin-></a>
+      </div>
+      <!-- Title -->
+      <h4 class="text-center mb-4 fw-semibold">Login to Your Account</h4>
+
+      <!-- Form -->
+      <form>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email *</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password *</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary fw-semibold">Login</button>
+        </div>
+        <div class="text-center mb-3">
+          <a routerLink="/verify-code" class="text-primary small forgot-link">Forgot your password?</a>
+        </div>
+        <hr>
+        <div class="text-center">
+          <span class="text-muted">Don't have an account?</span>
+          <a routerLink="/signup" class="text-primary fw-semibold ms-1 signup-link">Sign up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+

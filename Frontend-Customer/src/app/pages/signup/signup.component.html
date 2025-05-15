@@ -1,0 +1,52 @@
+
+<body class="bg-light">
+  <div class="main-wrapper d-flex align-items-center justify-content-center">
+    <div class="signup-box bg-white shadow rounded p-4">
+      <!-- Logo -->
+      <div class="d-flex align-items-center justify-content-center mb-3">
+        <img src="/Images/Cyberlife.JPG" alt="CyberShop Logo" height="40" width="40" class="me-2">
+        <h5 class="mb-0 fw-bold fst-italic">CyberShop</h5>
+      </div>
+      <hr>
+
+      <!-- Title -->
+      <h4 class="text-center mb-4 fw-semibold">Create an Account</h4>
+
+      <!-- Form -->
+      <form>
+        <div class="mb-3">
+          <small class="text-muted d-block mb-2">* indicates required field</small>
+          <label for="username" class="form-label">Username *</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email *</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password *</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+        </div>
+        <div class="mb-3">
+          <label for="confirm-password" class="form-label">Confirm Password *</label>
+          <input type="password" class="form-control" id="confirm-password" placeholder="Re-enter your password" required>
+        </div>
+        <div class="mb-3">
+          <small class="text-muted">
+            By creating an account, you agree to the 
+            <a href="#" class="text-primary text-decoration-none">Terms and Conditions</a>.
+          </small>
+        </div>
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary fw-semibold">Register</button>
+        </div>
+        <hr>
+        <div class="text-center">
+          <span class="text-muted">Already have an account?</span>
+          <a routerLink="/login" class="text-primary fw-semibold ms-1 login-link">Log in</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
