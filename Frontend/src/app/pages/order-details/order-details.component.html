@@ -1,0 +1,122 @@
+<div class="d-flex">
+    <app-sidebar></app-sidebar>
+    <main class="content flex-grow-1">
+        <app-navbar></app-navbar>
+        <div class="card p-3 rounded-0 h-auto d-flex flex-column justify-content-between gap-4">
+            <div class="row d-flex justify-content-start gap-0">
+                <div class="col-lg-2 d-flex align-items-center m-auto">
+                    <div class="order-icon-container w-100 h-100 d-flex align-items-center justify-content-center m-auto">
+                        <fa-icon id="bag-icon" [icon]="faBagShopping"></fa-icon>
+                    </div>
+                </div>
+                <div class="col-lg-10 pt-3 d-flex flex-column justify-content-start gap-3">
+                    <h3>Order Id : {{order.orderId}}</h3>
+                    <div class="d-flex flex-row justify-content-start gap-3">
+                        <p><fa-icon id="calendrar-icon" [icon]="faCalendar" class="pe-2"></fa-icon>{{order.orderDate}}</p> 
+                        <p><fa-icon id="user-icon" [icon]="faUser"></fa-icon> User ID: {{order.userId}}</p> 
+                        <p><fa-icon id="payment-icon" [icon]="faCreditCard"></fa-icon> Payment: {{order.paymentId}}</p>
+                    </div>                   
+                    <div class="d-flex flex-row justify-content-start gap-3">
+                        <p><fa-icon [icon]="faTruck" id="status-icon"></fa-icon> Status: 
+                            <span class="badge status-badge" [ngClass]="{
+                                'bg-warning p-2': order.status === 'PENDING',
+                                'bg-info p-2': order.status === 'SHIPPED',
+                                'bg-success p-2': order.status === 'DELIVERED',
+                                'bg-danger p-2': order.status === 'CANCELED'
+                            }">
+                                {{order.status}}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="d-flex flex-row justify-content-start gap-3">
+                        <p><fa-icon [icon]="faDollarSign" id="price-icon"></fa-icon> Total: ${{order.totalPrice}}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section d-flex flex-column justify-content-start gap-2">
+                <h6 class="fw-bold">Order Items</h6>
+                <table class="order-items-table w-100">
+                    <thead>
+                        <tr>
+                            <th class="text-start p-3">Product</th>
+                            <th class="text-start p-3">Price</th>
+                            <th class="text-start p-3">Quantity</th>
+                            <th class="text-start p-3">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let orderItem of order.orderItems">
+                            <td class="p-3">
+                                <div class="d-flex flex-row align-items-center gap-3">
+                                    <img src="assets/images/product1.png" 
+                                         class="product-thumbnail" alt="Product Image"
+                                         style="width: 80px;">
+                                         <!-- Dynamic: [src]="orderItem.productImage || 'assets/images/product-placeholder.png'" -->
+                                    <div>
+                                        <p class="fw-bold mb-1"> {{orderItem.proudctName}}</p> 
+                                        <p class="text-muted small">{{orderItem.id}}</p> 
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-3">${{orderItem.price}}</td> 
+                            <td class="p-3">{{orderItem.quantity}}</td> 
+                            <td class="p-3">${{orderItem.price * orderItem.quantity}}</td> 
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end p-3 fw-bold">Total:</td>
+                            <td class="p-3 fw-bold">${{order.totalPrice}}</td> 
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="section d-flex flex-column justify-content-start gap-2">
+                <div class="card p-3">
+                    <h6 class="fw-bold mb-3 fst-italic">Shipping Details</h6>
+                    <div class="row">
+                        <div class="col-6 d-flex flex-column gap-2">
+                            <div class="d-flex">
+                              <span class="fw-bold me-2" style="min-width: 80px;">Address:</span>
+                              <span>{{order.shippingDetails.address}}</span>
+                            </div>
+                            <div class="d-flex">
+                              <span class="fw-bold me-2" style="min-width: 80px;">City:</span>
+                              <span>{{order.shippingDetails.city}}</span>
+                            </div>
+                            <div class="d-flex">
+                              <span class="fw-bold me-2" style="min-width: 80px;">Zip:</span>
+                              <span>{{order.shippingDetails.postal_code}}</span>
+                            </div>
+                            <div class="d-flex">
+                              <span class="fw-bold me-2" style="min-width: 80px;">Country:</span>
+                              <span>{{order.shippingDetails.country}}</span>
+                            </div>
+                          </div>
+                          <div class="col-6 d-flex flex-column gap-2">
+                            <div class="d-flex">
+                              <span class="fw-bold me-2" style="min-width: 80px;">Recipient phone:</span>
+                              <span>{{order.shippingDetails.recipient_phone}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <span class="fw-bold me-2" style="min-width: 80px;">Estimated delivery date:</span>
+                                <span>{{order.shippingDetails.estimated_delivery_date}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <span class="fw-bold me-2" style="min-width: 80px;">delivered at :</span>
+                                <span *ngIf="order.shippingDetails.delivered_at != null ">{{order.shippingDetails.delivered_at}}</span>
+                                <span *ngIf="order.shippingDetails.delivered_at === null ">Not Yet Delivred</span>
+                            </div>
+                            
+                          </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

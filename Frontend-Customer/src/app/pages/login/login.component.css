@@ -1,0 +1,38 @@
+body {
+    background: 
+        url('/Images/blurred-office.jpg') center/cover no-repeat;
+    min-height: 100vh;
+  }
+  
+  .main-wrapper {
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .admin-link {
+    text-decoration: none;
+    color: gray;
+    transition: ease 0.15s;
+  }
+  .admin-link:hover {
+    text-decoration: underline;
+  }
+  .forgot-link {
+    text-decoration: none;
+    transition: ease 0.15s ;
+  }
+  .forgot-link:hover {
+    text-decoration: underline;
+  }
+  .signup-link {
+    text-decoration: none;
+    transition: ease 0.15s ;
+  }
+  .signup-link:hover {
+    text-decoration: underline;
+  }
+  .login-box {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffffd0; /* semi-transparent white */
+  }
+  

@@ -1,0 +1,17 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.main {
+    overflow-x: hidden;
+}
+
+.content {
+    margin-left: 250px; /* Match the sidebar width */
+    background-color: #f6fbfe;
+    min-height: 100vh;
+}

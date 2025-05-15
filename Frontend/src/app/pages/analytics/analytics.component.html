@@ -1,0 +1,162 @@
+<div class="dashboard">
+  <app-sidebar class="sidebar"></app-sidebar>
+  <main class="content">
+    <app-navbar></app-navbar>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <h2>Analytics Dashboard</h2>
+        <p>Track and analyze your business performance</p>
+      </div>
+    
+      <!-- Summary Cards -->
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="card-icon revenue">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+          <div>
+            <p>Total Revenue</p>
+            <h3>${{ salesSummary.revenue | number:'1.0-0' }}</h3>
+          </div>
+        </div>
+    
+        <div class="summary-card">
+          <div class="card-icon orders">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div>
+            <p>Total Orders</p>
+            <h3>{{ salesSummary.orders | number:'1.0-0' }}</h3>
+          </div>
+        </div>
+    
+        <div class="summary-card">
+          <div class="card-icon aov">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div>
+            <p>Avg. Order Value</p>
+            <h3>${{ salesSummary.avgOrderValue | number:'1.0-2' }}</h3>
+          </div>
+        </div>
+    
+        <div class="summary-card">
+          <div class="card-icon conversion">
+            <i class="fas fa-percent"></i>
+          </div>
+          <div>
+            <p>Conversion Rate</p>
+            <h3>{{ salesSummary.conversionRate }}%</h3>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Charts Section -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h4>Revenue Overview</h4>
+            <button class="icon-button"><i class="fas fa-expand"></i></button>
+          </div>
+          <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
+    
+        <div class="chart-card">
+          <div class="chart-header">
+            <h4>Sales by Category</h4>
+            <div class="dropdown">
+              <button class="icon-button"><i class="fas fa-filter"></i></button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Data Tables Section -->
+      <div class="data-grid">
+        <div class="data-card">
+          <div class="data-header">
+            <h4>Top Selling Products</h4>
+          </div>
+          <div class="data-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Sold</th>
+                  <th>Revenue</th>
+      
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of topProducts">
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.category }}</td>
+                  <td>{{ product.quantitySold | number:'1.0-0' }}</td>
+                  <td>${{ product.revenue | number:'1.0-0' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    
+        <div class="insights-card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-users"></i>
+              Customer Insights
+            </h3>
+          </div>
+        
+          <div class="insights-grid">
+            <!-- New Customers -->
+            <div class="insight-item">
+              <div class="icon-wrapper bg-blue-10">
+                <i class="fas fa-user-plus text-blue"></i>
+              </div>
+              <div class="metric-content">
+                <p class="metric-label">New Customers</p>
+                <div class="metric-value">
+                  <h3>{{ customerInsights.newCustomers | number:'1.0-0' }}</h3>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Repeat Customers -->
+            <div class="insight-item">
+              <div class="icon-wrapper bg-green-10">
+                <i class="fas fa-redo text-green"></i>
+              </div>
+              <div class="metric-content">
+                <p class="metric-label">Repeat Customers</p>
+                <div class="metric-value">
+                  <h3>{{ customerInsights.repeatCustomers | number:'1.0-0' }}</h3>
+     
+                </div>
+              </div>
+            </div>
+        
+            <!-- Avg. Customer Value -->
+            <div class="insight-item">
+              <div class="icon-wrapper bg-amber-10">
+                <i class="fas fa-star text-amber"></i>
+              </div>
+              <div class="metric-content">
+                <p class="metric-label">Avg. Customer Value</p>
+                <div class="metric-value">
+                  <h3>${{ customerInsights.avgCustomerValue | number:'1.0-2' }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,23 @@
+body {
+    background: url('/Images/blurred-office.jpg') center center / cover no-repeat;
+    min-height: 100vh;
+  }
+  
+  .main-wrapper {
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .login-link {
+    text-decoration: none;
+    transition: ease 0.15s;
+  }
+  .login-link:hover {
+    text-decoration: underline;
+  }
+  .signup-box {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffffd8; /* slightly transparent white */
+  }
+  
+
