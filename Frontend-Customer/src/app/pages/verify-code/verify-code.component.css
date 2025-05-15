@@ -1,28 +1,26 @@
 body {
-    background: url('/Images/bookshelf.jpg');
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: url('/Images/blurred-office.jpg') center/cover no-repeat;
+    min-height: 100vh;
   }
-
+  .main-wrapper {
+    min-height: 100vh;
+    padding: 20px;
+  }
   .card {
-    width: 100%;
-    max-width: 400px;
+    width: 400px;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
 
-  .logo {
-    width: 80px;
-    margin-bottom: 16px;
-  }
-
   .btn-primary, .btn-secondary {
     width: 100%;
   }
-
+  .login-box {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffffd0; /* semi-transparent white */
+  }
   .resend-link {
     margin-top: 12px;
   }
