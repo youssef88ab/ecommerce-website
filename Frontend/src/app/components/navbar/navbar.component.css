@@ -1,66 +1,118 @@
-/* Content Navigation Bar */
-.navbar {
-    border-bottom: 1px solid #e9ecef;
+.custom-navbar {
+    height: 80px;
+    padding: 0 1rem;
 }
 
-.navbar .form-control {
-    width: 100%; /* Adjust search bar width */
+.custom-navbar .navbar-brand {
+    font-size: 1.5rem;
+    line-height: 80px;
+    margin-right: 40px;
 }
 
-/* Notifications and User Profile Styles */
-.navbar .nav-link {
-    color: #333;
-    margin-left: 15px;
+.custom-navbar .navbar-brand img {
+    height: 40px;
+    width: 40px;
 }
 
-.navbar .nav-link:hover {
-    color: #007bff;
+.custom-navbar .navbar-nav .nav-link {
+    font-size: 15px;
+    line-height: 80px;
+    padding: 0 1rem;
+    color: black;
+    font-weight: bold;
+    transition: 0.2s ease;
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
-.navbar .dropdown-menu {
-    margin-top: 10px;
+.custom-navbar .navbar-nav .nav-link:hover {
+    opacity: 0.6;
+}
+.custom-navbar .search-btn:hover {
+    opacity: 0.8;
+}
+@media (max-width: 991.98px) {
+    .custom-navbar {
+        height: auto;
+        padding: 0.5rem 1rem;
+    }
+
+    .custom-navbar .navbar-brand {
+        line-height: 1.5;
+    }
+    .navbar-collapse {
+        flex-grow: 0.5 ;
+    }
+
+    .custom-navbar .navbar-nav .nav-link {
+        line-height: 1.5;
+        padding: 0.5rem 1rem;
+    }
+
+    .custom-navbar .form-control,
+    .custom-navbar .btn-outline-dark,
+    .custom-navbar .btn-outline-primary,
+    .custom-navbar .btn-primary {
+        height: auto;
+    }
+    .custom-navbar .d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+.dropdown-menu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-.navbar .dropdown-item {
-    padding: 8px 16px;
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
-.navbar .dropdown-item:hover {
-    background: #f8f9fa;
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 3px 7px;
+    min-width: 20px;
+    text-align: center;
+    transition: ease 0.15s;
 }
-
-.navbar .dropdown-item.text-danger:hover {
-    color: #dc3545 !important;
-    background: rgba(220, 53, 69, 0.1);
+.account-container .dropdown-menu {
+    left: 0;
+    top: 100%; 
+    margin-top: 5px; 
+    min-width: 180px;
+    text-align: left; 
+    padding: 10px 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
 }
-
-.nav-link.dropdown-toggle {
-    display: flex;
-    align-items: center;
-    padding: 8px;
+.account-container:hover .dropdown-menu,
+.account-container:focus-within .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
-
-/* Remove the dropdown arrow */
-.nav-link.dropdown-toggle::after {
-    display: none !important;
-}
-
-.nav-link .icon {
-    font-size: 24px;
-    color: #414141;
-}
-
-/* Profile Image Styles */
-.profile-img {
-    width: 40px; /* Adjust the size of the image */
-    height: 40px; /* Make it square */
-    border-radius: 50%; /* Make it circular */
-    object-fit: cover; /* Ensure the image fits well */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow (optional) */
-}
-
-/* Hover Effects */
-.profile-img:hover {
-    transform: scale(1.1); /* Slightly enlarge on hover */
-    transition: transform 0.3s ease; /* Smooth transition */
+.account-container .dropdown-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }

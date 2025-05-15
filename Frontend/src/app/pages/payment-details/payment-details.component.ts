@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { NavbarComponent } from '../../components/admin-navbar/navbar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/sidebar.component';
 import { Payment , PaymentService } from '../../services/payment.service';
 import { Order } from '../../services/order.service';
 import { ShippingDetails } from '../../services/shipping-details.service';

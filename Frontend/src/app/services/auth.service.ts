@@ -20,7 +20,15 @@ export class AuthService {
           localStorage.setItem('token', response.token);
           localStorage.setItem('username', response.username);
           localStorage.setItem('role' , response.role);
-          this.router.navigate([`/${this.getRole()?.toLocaleLowerCase()}`]) ;
+          if (response.role.toLowerCase() == 'admin') {
+            this.router.navigate(['/admin']);
+          }
+          else if (response.role.toLowerCase() == 'deliverer') {
+            this.router.navigate(['/deliverer']);
+          }
+          else {
+            this.router.navigate(['/home']);
+          }
         })
       );
   }

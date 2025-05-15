@@ -12,7 +12,7 @@ public class ProductDTO {
     private String imageUrl;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private String categoryName;
+    private String category;
 
     // Default constructor
     public ProductDTO() {
@@ -28,7 +28,7 @@ public class ProductDTO {
         this.imageUrl = imageUrl;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.categoryName = categoryName;
+        this.category = categoryName;
     }
 
     // Getters
@@ -64,8 +64,8 @@ public class ProductDTO {
         return updatedAt;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getCategory() {
+        return category;
     }
 
     // Setters
@@ -101,7 +101,7 @@ public class ProductDTO {
         this.updatedAt = updatedAt;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategory(String category) {
+        this.category = category;
     }
 } 

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SidebarComponent } from "./components/sidebar/sidebar.component";
+import { SidebarComponent } from "./components/admin-sidebar/sidebar.component";
 
 
 

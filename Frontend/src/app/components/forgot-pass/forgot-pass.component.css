@@ -1,0 +1,22 @@
+body {
+    background: url('/Images/blurred-office.jpg') center/cover no-repeat;
+    min-height: 100vh;
+  }
+  .main-wrapper {
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  .login-box {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffffd0; /* semi-transparent white */
+  }
+  .btn-primary {
+    width: 100%;
+  }

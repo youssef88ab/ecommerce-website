@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DelivrerSidebarComponent } from '../delivrer-sidebar/delivrer-sidebar.component';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from "../sidebar/sidebar.component";
+import { SidebarComponent } from "../admin-sidebar/sidebar.component";
 
 @Component({
   selector: 'app-deliverer-layout',

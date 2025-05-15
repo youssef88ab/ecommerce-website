@@ -55,11 +55,29 @@
                     </div>
                   </div>
                 </td>
-                <td class="p-3">{{order.totalPrice}}</td>
+                <td class="p-3">${{order.totalPrice}}</td>
                 <td class="p-3">
-                  <span class="badge bg-warning rounded-pill p-2 text-center">
-                    {{order.status}}
-                  </span>
+                  <ng-container [ngSwitch]="order.status">
+                    <!-- Pending Status -->
+                    <span *ngSwitchCase="'PENDING'" class="badge bg-warning rounded-pill p-2 text-center">
+                      {{order.status}}
+                    </span>
+                    
+                    <!-- Shipped Status -->
+                    <span *ngSwitchCase="'SHIPPED'" class="badge bg-secondary rounded-pill p-2 text-center">
+                      {{order.status}}
+                    </span>
+                    
+                    <!-- Delivered Status -->
+                    <span *ngSwitchCase="'DELIVERED'" class="badge bg-success rounded-pill p-2 text-center">
+                      {{order.status}}
+                    </span>
+                    
+                    <!-- Default case for unknown statuses -->
+                    <span *ngSwitchDefault class="badge bg-secondary rounded-pill p-2 text-center">
+                      {{order.status}}
+                    </span>
+                  </ng-container>
                 </td>
                 <td class="p-3">{{ formatDate(order.orderDate)}}</td>
                 <td class="p-3">{{order.paymentId}}</td>
