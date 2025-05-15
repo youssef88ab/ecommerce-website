@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from "../../components/sidebar/sidebar.component";
-import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { SidebarComponent } from "../../components/admin-sidebar/sidebar.component";
+import { NavbarComponent } from "../../components/admin-navbar/navbar.component";
 import { 
   faUser, 
   faEnvelope, 

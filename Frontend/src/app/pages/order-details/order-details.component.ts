@@ -4,14 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from "../../components/sidebar/sidebar.component";
-import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { SidebarComponent } from "../../components/admin-sidebar/sidebar.component";
+import { NavbarComponent } from "../../components/admin-navbar/navbar.component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar} from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faCreditCard} from '@fortawesome/free-solid-svg-icons';
-import { faTruck } from '@fortawesome/free-solid-svg-icons';
+import { faTruck , faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { ShippingDetails } from '../../services/shipping-details.service';
 
@@ -29,6 +29,7 @@ export class OrderDetailsComponent {
   faCreditCard = faCreditCard;
   faUser = faUser;
   faTruck = faTruck;
+  faTruckFast = faTruckFast;
   faDollarSign = faDollarSign;
 
     orderId!: number;

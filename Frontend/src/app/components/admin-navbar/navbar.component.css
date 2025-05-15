@@ -1,0 +1,66 @@
+/* Content Navigation Bar */
+.navbar {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.navbar .form-control {
+    width: 100%; /* Adjust search bar width */
+}
+
+/* Notifications and User Profile Styles */
+.navbar .nav-link {
+    color: #333;
+    margin-left: 15px;
+}
+
+.navbar .nav-link:hover {
+    color: #007bff;
+}
+
+.navbar .dropdown-menu {
+    margin-top: 10px;
+}
+
+.navbar .dropdown-item {
+    padding: 8px 16px;
+}
+
+.navbar .dropdown-item:hover {
+    background: #f8f9fa;
+}
+
+.navbar .dropdown-item.text-danger:hover {
+    color: #dc3545 !important;
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.nav-link.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+/* Remove the dropdown arrow */
+.nav-link.dropdown-toggle::after {
+    display: none !important;
+}
+
+.nav-link .icon {
+    font-size: 24px;
+    color: #414141;
+}
+
+/* Profile Image Styles */
+.profile-img {
+    width: 40px; /* Adjust the size of the image */
+    height: 40px; /* Make it square */
+    border-radius: 50%; /* Make it circular */
+    object-fit: cover; /* Ensure the image fits well */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow (optional) */
+}
+
+/* Hover Effects */
+.profile-img:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    transition: transform 0.3s ease; /* Smooth transition */
+}

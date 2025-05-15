@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from "../../components/sidebar/sidebar.component";
-import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { SidebarComponent } from "../../components/admin-sidebar/sidebar.component";
+import { NavbarComponent } from "../../components/admin-navbar/navbar.component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUpload, faTimes, faSave, faDollarSign, faBox, faTag } from '@fortawesome/free-solid-svg-icons';
 
@@ -33,7 +33,7 @@ export class EditProductComponent implements OnInit {
     name: '',
     description: '',
     price: 0,
-    stock: 0,
+    stockQuantity: 0,
     image: '',
     category: '',
     createdAt: new Date(),

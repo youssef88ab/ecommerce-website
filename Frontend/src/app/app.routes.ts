@@ -33,6 +33,9 @@ import { AdminLayoutComponent } from './components/admin-layout/admin-layout.com
 // Services
 import { AuthGuardService } from './services/auth-guard.service';
 import { DelivererLayoutComponent } from './components/deliverer-layout/deliverer-layout.component';
+import { ShopComponent } from './pages/shop/shop.component';
+import { ForgotPassComponent } from './components/forgot-pass/forgot-pass.component';
+import { VerifyCodeComponent } from './pages/verify-code/verify-code.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -44,7 +47,10 @@ export const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'acces-denied' , component: AccesDeniedComponent},
+  { path: 'acces-denied', component: AccesDeniedComponent },
+  { path: 'shop', component: ShopComponent },
+  { path: 'forgot-pass', component: ForgotPassComponent },
+  { path: 'verify-code', component: VerifyCodeComponent },
 
   // Admin-protected routes
   {
@@ -53,7 +59,7 @@ export const routes: Routes = [
     canActivate: [AuthGuardService],
     data: { role: 'ADMIN' },
     children: [
-      { path: '' , component: DashboardComponent }, 
+      { path: '', component: DashboardComponent },
       { path: 'manage-products', component: ManageProductsComponent },
       { path: 'add-product', component: AddProductComponent },
       { path: 'edit-product/:productId', component: EditProductComponent },
@@ -79,12 +85,12 @@ export const routes: Routes = [
 
   // Delivrer Protected Routes
   {
-    path: 'deliverer' , 
-    component: DelivererLayoutComponent , 
-    canActivate: [AuthGuardService] , 
-    data: {role : 'DELIVERER' } ,
+    path: 'deliverer',
+    component: DelivererLayoutComponent,
+    canActivate: [AuthGuardService],
+    data: { role: 'DELIVERER' },
     children: [
-      { path: '' , component: DelivrerComponent }
+      { path: '', component: DelivrerComponent }
     ]
   }
 ];

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/sidebar.component';
+import { NavbarComponent } from '../../components/admin-navbar/navbar.component';
 import { ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +27,7 @@ export class ProductDetailsComponent implements OnInit {
     name: '',
     description: '',
     price: 0,
-    stock: 0,
+    stockQuantity: 0,
     image: '',
     category: '',
     createdAt: new Date(),

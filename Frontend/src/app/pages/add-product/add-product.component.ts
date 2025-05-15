@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
 import { Router } from '@angular/router'; // Import Router for navigation
 import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from "../../components/sidebar/sidebar.component";
-import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { SidebarComponent } from "../../components/admin-sidebar/sidebar.component";
+import { NavbarComponent } from "../../components/admin-navbar/navbar.component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUpload, faTimes, faPlus, faDollarSign, faBox, faTag } from '@fortawesome/free-solid-svg-icons';
 
