@@ -110,7 +110,7 @@ public class UserService {
     // Conversion methods
     private UserDTO convertToDTO(User user) {
         String roleName = user.getRoles() != null && !user.getRoles().isEmpty() ? user.getRoles().iterator().next().getName() : null;
-        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), roleName);
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), roleName , user.getAddress() , user.getPhone() , user.getGender().toString() , user.getBirthDate() , user.getDateAdded());
     }
 
     private User convertToEntity(UserDTO userDTO) {
