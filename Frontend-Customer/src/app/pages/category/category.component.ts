@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CategoryService, SubCategory,  Category} from '../../category.service';
 
 @Component({
-  selector: 'app-shop',
+  selector: 'app-shop', 
   standalone: true,
   imports: [CommonModule],
   templateUrl: './category.component.html',

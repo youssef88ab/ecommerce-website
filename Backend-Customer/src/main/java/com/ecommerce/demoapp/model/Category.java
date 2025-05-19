@@ -22,6 +22,9 @@ public class Category {
     @Column(name = "Name", length = 100) // Adjust length as needed
     private String NameCat;
 
+    @Column(name = "catUrl", length = 200, nullable = true) // New column
+    private String catUrl;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Subcategory> subcategories = new ArrayList<>();
@@ -34,5 +37,8 @@ public class Category {
     }
      public String getNameCat() {
         return this.NameCat ;
+    }
+    public String getCatUrl() {
+        return this.catUrl ;
     }
      }
