@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-shop',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './shop.component.html',
-  styleUrls: ['../home/home.component.css' ,'./shop.component.css']
+  styleUrls: ['../home/home.component.css', './shop.component.css']
 })
 export class ShopComponent {
-
+  
 }

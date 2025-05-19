@@ -9,6 +9,7 @@ import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ForgotPassComponent } from './pages/forgot-pass/forgot-pass.component';
 import { VerifyCodeComponent } from './pages/verify-code/verify-code.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 export const routes: Routes = [
   {  path: '',
@@ -17,6 +18,7 @@ export const routes: Routes = [
         { path: '', component: HomeComponent },
         { path: 'shop', component: ShopComponent },
         { path: 'cart', component: CartComponent },
+        { path: 'categories', component: CategoryComponent}
         // more routes with navbar
       ]
     },
