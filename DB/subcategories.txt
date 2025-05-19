@@ -1,0 +1,45 @@
+-- Computers & Accessories (Category ID 1)
+INSERT INTO subcategory (name, img_url, category_id) VALUES
+('Laptops', '/Images/hp-laptop.jpeg', 1),
+('WebCams', '/Images/webcam.jpg', 1),
+('Mouses', '/Images/mouse1.jpg', 1),
+('Keyboards', '/Images/keyboard.jpeg', 1),
+('Desktops', '/Images/win11.jpeg', 1),
+('RAMs', '/Images/RAM.JPG', 1),
+('External HDs', '/Images/external-drive.jpeg', 1),
+('Monitors', '/Images/mon.jpeg', 1);
+
+-- Mobile Phones & Accessories (Category ID 2)
+INSERT INTO subcategory (name, img_url, category_id) VALUES
+('Smartphones', '/Images/apple-smartphone.jpg', 2),
+('Screen Protectors', '/Images/screen-protect.jpg', 2),
+('Power Banks', '/Images/powerbank.jpg', 2),
+('Ear Buds', '/Images/earbuds-wireless.jpg', 2),
+('Chargers', '/Images/phone-charger.jpg', 2),
+('Phone Cases', '/Images/phone-cases.jpg', 2);
+
+-- Gaming (Category ID 3)
+INSERT INTO subcategory (name, img_url, category_id) VALUES
+('Gaming PCs', '/Images/PC-gamer.jpg', 3),
+('VR Headsets', '/Images/VRheadset.jpg', 3),
+('Gaming', '/Images/game-chair.jpeg', 3),
+('Controllers', '/Images/xbox-control.jpg', 3),
+('Consoles', '/Images/ps4-cons.png', 3),
+('Gaming Keyboards', '/Images/game-keyb.jpg', 3),
+('Gaming Mouses', '/Images/green-mouse.JPG', 3),
+('Graphic Cards', '/Images/gtx.jpg', 3);
+
+-- Home Entertainment (Category ID 4)
+INSERT INTO subcategory (name, img_url, category_id) VALUES
+('Smart TVs', '/Images/home-tv.jpg', 4),
+('LEDs', '/Images/matrix-led.jpg', 4),
+('DVD Players', '/Images/dvd-player.jpg', 4),
+('4k Ultra HDs', '/Images/curved-UHD.jpeg', 4),
+('Washing Machines', '/Images/whirlpool.jpg', 4),
+('Smart Speakers', '/Images/Smart-speakers.jpg', 4);
+
+-- Audio & Headphones (Category ID 5)
+INSERT INTO subcategory (name, img_url, category_id) VALUES
+('Speakers', '/Images/stereo-speakers.jpeg', 5),
+('Headphones', '/Images/JPL.png', 5),
+('Studio Equipments', '/Images/equipment-studio.jpg', 5);
