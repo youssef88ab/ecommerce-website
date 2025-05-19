@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-4 custom-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark px-4 custom-navbar">
     <a class="navbar-brand d-flex align-items-center" href="#">
         <img src="/Images/Cyberlife.JPG" width="30" height="30" class="d-inline-block align-top me-2" alt="">
         <span style='font-family: "Boldonse", system-ui; font-weight: 300; font-style: italic;'>Cybershop</span>
@@ -14,16 +14,11 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" routerLink="categories" data-bs-toggle="dropdown">Categories</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Computers & Accessories</a></li>
-                    <li><a class="dropdown-item" href="#">Mobile Phones & Accessories</a></li>
-                    <li><a class="dropdown-item" href="#">Gaming</a></li>
-                    <li><a class="dropdown-item" href="#">Home Entertainment</a></li>
-                    <li><a class="dropdown-item" href="#">Audio & Headphones</a></li>
-                    <li><a class="dropdown-item" href="#">Wearable Technology</a></li>
-                    <li><a class="dropdown-item" href="#">Cameras & Photography</a></li>
-                    <li><a class="dropdown-item" href="#">Networking & Smart Home</a></li>
-                    <li><a class="dropdown-item" href="#">Office Electronics</a></li>
-                    <li><a class="dropdown-item" href="#">Computer Components</a></li>
+                    <li *ngFor="let category of categories">
+                        <a class="dropdown-item" [routerLink]="category.catUrl">
+                            {{category.name}}
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -37,19 +32,18 @@
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
+          <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
       </form>
-      <div class="ms-3">
-          <a class="btn btn-outline-secondary position-relative" routerLink="cart">
-              <span>Cart</span>
-              <i class="bi bi-cart"></i>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  0
-              </span>
-          </a>
+      <div class="ms-3 cart-cont">
+        <a href="#" class="btn btn-light position-relative">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                3
+            </span>
+        </a>
       </div>
       <div class="ms-3 dropdown">
-          <a class="btn btn-outline-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown">
+          <a class="btn btn-outline-light dropdown-toggle" role="button" data-bs-toggle="dropdown">
               <i class="bi bi-person-circle"></i> Account
           </a>
           <ul class="dropdown-menu">

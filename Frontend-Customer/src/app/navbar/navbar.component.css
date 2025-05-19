@@ -1,6 +1,8 @@
 .custom-navbar {
     height: 80px;
     padding: 0 1rem;
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .custom-navbar .navbar-brand {
@@ -18,7 +20,7 @@
     font-size: 15px;
     line-height: 80px;
     padding: 0 1rem;
-    color: black;
+    color: #FFFFFFD9;
     font-weight: bold;
     transition: 0.2s ease;
     font-family: "DM Sans", sans-serif;

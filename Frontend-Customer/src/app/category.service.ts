@@ -5,13 +5,14 @@ import { Observable, forkJoin, map } from 'rxjs';
 export interface Category {
   id: number;
   name: string;
+  catUrl: string;
 }
 
 export interface SubCategory {
   idSubCat: number;
   name: string;
   imgUrl: string;
-  categoryId: number;
+  categoryId: number; 
 }
 
 @Injectable({

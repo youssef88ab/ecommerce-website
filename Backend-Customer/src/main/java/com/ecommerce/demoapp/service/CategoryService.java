@@ -26,7 +26,8 @@ public class CategoryService {
     private CategoryDTO convertToDTO(Category category) {
         return new CategoryDTO(
                 category.getIdCat(),
-                category.getNameCat()
+                category.getNameCat(),
+                category.getCatUrl()
         );
     }
 }
