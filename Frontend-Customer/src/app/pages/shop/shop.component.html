@@ -54,34 +54,66 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <!-- Product 1 -->
-                    <div class="col-md-4 col-sm-6">
+                <div class="container mt-4">
+                  
+                    <!-- Product grid -->
+                    <div class="row">
+                      <!-- Product Card - Repeats for each product -->
+                      <div class="col-md-4 col-sm-6 mb-4" *ngFor="let product of products">
                         <div class="product-card">
-                            <div class="product-img-container">
-                                <img src="https://via.placeholder.com/300x200?text=Product+1" alt="Product 1" class="product-img">
-                                <span class="product-badge">Sale</span>
+                          <div class="product-img-container">
+                            <img [src]="product.mainImgUrl || '/assets/images/placeholder-product.jpg'" 
+                                 [alt]="product.productName" 
+                                 class="product-img">
+                            <span class="product-badge" *ngIf="isOnSale(product)">
+                              Sale {{getDiscount(product)}}%
+                            </span>
+                          </div>
+                          <div class="product-info">
+                            <span class="product-category">Electronics</span>
+                            <h5 class="product-title">{{product.productName}}</h5>
+                            <p class="product-description">{{product.description || 'No description available'}}</p>
+                            <div class="product-rating">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <span>(0)</span> <!-- Static rating for now -->
                             </div>
-                            <div class="product-info">
-                                <span class="product-category">Electronics</span>
-                                <h5 class="product-title">Wireless Bluetooth Headphones</h5>
-                                <p class="product-description">High-quality wireless headphones with noise cancellation and 30-hour battery life.</p>
-                                <div class="product-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(24)</span>
-                                </div>
-                                <div class="product-price">$89.99 <span class="product-old-price">$129.99</span></div>
-                                <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                            <div class="product-price" [class.text-danger]="isOnSale(product)">
+                              ${{product.price.toFixed(2)}}
+                              <span class="product-old-price" *ngIf="isOnSale(product)">
+                                ${{product.originalPrice.toFixed(2)}}
+                              </span>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                              <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  
+                    <!-- Pagination -->
+                    <nav *ngIf="totalPages > 1" aria-label="Page navigation">
+                      <ul class="pagination justify-content-center">
+                        <li class="page-item" [class.disabled]="currentPage === 0">
+                          <a class="page-link" (click)="loadProducts(currentPage - 1)">Previous</a>
+                        </li>
+                        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                            [class.active]="i === currentPage">
+                          <a class="page-link" (click)="loadProducts(i)">{{i + 1}}</a>
+                        </li>
+                        <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+                          <a class="page-link" (click)="loadProducts(currentPage + 1)">Next</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
 
                     <!-- Product 2 -->
-                    <div class="col-md-4 col-sm-6">
+                  <!-- <div class="col-md-4 col-sm-6">
                         <div class="product-card">
                             <div class="product-img-container">
                                 <img src="https://via.placeholder.com/300x200?text=Product+2" alt="Product 2" class="product-img">
@@ -104,7 +136,7 @@
                         </div>
                     </div>
 
-                    <!-- Product 3 -->
+
                     <div class="col-md-4 col-sm-6">
                         <div class="product-card">
                             <div class="product-img-container">
@@ -129,7 +161,7 @@
                         </div>
                     </div>
 
-                    <!-- Product 4 -->
+
                     <div class="col-md-4 col-sm-6">
                         <div class="product-card">
                             <div class="product-img-container">
@@ -153,7 +185,7 @@
                         </div>
                     </div>
 
-                    <!-- Product 5 -->
+
                     <div class="col-md-4 col-sm-6">
                         <div class="product-card">
                             <div class="product-img-container">
@@ -177,7 +209,7 @@
                         </div>
                     </div>
 
-                    <!-- Product 6 -->
+
                     <div class="col-md-4 col-sm-6">
                         <div class="product-card">
                             <div class="product-img-container">
@@ -203,7 +235,7 @@
                     </div>
                 </div>
 
-                <!-- Pagination -->
+
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center mt-4">
                         <li class="page-item disabled">
@@ -216,10 +248,11 @@
                             <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>
-                </nav>
+                </nav> --> 
             </div>
-        </div>
-    </div>
+        </div> 
+            </div>
+        
     <script>
         // Update price range value display
         const priceRange = document.getElementById('priceRange');
