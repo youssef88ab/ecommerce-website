@@ -1,45 +1,49 @@
 -- Computers & Accessories (Category ID 1)
 INSERT INTO subcategory (name, img_url, category_id) VALUES
-('Laptops', '/Images/hp-laptop.jpeg', 1),
-('WebCams', '/Images/webcam.jpg', 1),
-('Mouses', '/Images/mouse1.jpg', 1),
-('Keyboards', '/Images/keyboard.jpeg', 1),
-('Desktops', '/Images/win11.jpeg', 1),
-('RAMs', '/Images/RAM.JPG', 1),
-('External HDs', '/Images/external-drive.jpeg', 1),
-('Monitors', '/Images/mon.jpeg', 1);
+('Laptops', '/Images/Categories/Computers&Accessories/hp-laptop.jpeg', 1),
+('WebCams', '/Images/Categories/Computers&Accessories/webcam.jpg', 1),
+('Mouses', '/Images/Categories/Computers&Accessories/mouse1.jpg', 1),
+('Keyboards', '/Images/Categories/Computers&Accessories/keyboard.jpeg', 1),
+('Desktops', '/Images/Categories/Computers&Accessories/win11.jpeg', 1),
+('RAMs', '/Images/Categories/Computers&Accessories/RAM.JPG', 1),
+('External HDs', '/Images/Categories/Computers&Accessories/external-drive.jpeg', 1),
+('Monitors', '/Images/Categories/Computers&Accessories/mon.jpeg', 1);
 
 -- Mobile Phones & Accessories (Category ID 2)
 INSERT INTO subcategory (name, img_url, category_id) VALUES
-('Smartphones', '/Images/apple-smartphone.jpg', 2),
-('Screen Protectors', '/Images/screen-protect.jpg', 2),
-('Power Banks', '/Images/powerbank.jpg', 2),
-('Ear Buds', '/Images/earbuds-wireless.jpg', 2),
-('Chargers', '/Images/phone-charger.jpg', 2),
-('Phone Cases', '/Images/phone-cases.jpg', 2);
+('Smartphones', '/Images/Categories/Mobile&Accessories/apple-smartphone.jpg', 2),
+('Screen Protectors', '/Images/Categories/Mobile&Accessories/screen-protect.jpg', 2),
+('Power Banks', '/Images/Categories/Mobile&Accessories/powerbank.jpg', 2),
+('Ear Buds', '/Images/Categories/Mobile&Accessories/earbuds-wireless.jpg', 2),
+('Chargers', '/Images/Categories/Mobile&Accessories/phone-charger.jpg', 2),
+('Phone Cases', '/Images/Categories/Mobile&Accessories/phone-cases.jpg', 2);
 
 -- Gaming (Category ID 3)
 INSERT INTO subcategory (name, img_url, category_id) VALUES
-('Gaming PCs', '/Images/PC-gamer.jpg', 3),
-('VR Headsets', '/Images/VRheadset.jpg', 3),
-('Gaming', '/Images/game-chair.jpeg', 3),
-('Controllers', '/Images/xbox-control.jpg', 3),
-('Consoles', '/Images/ps4-cons.png', 3),
-('Gaming Keyboards', '/Images/game-keyb.jpg', 3),
-('Gaming Mouses', '/Images/green-mouse.JPG', 3),
-('Graphic Cards', '/Images/gtx.jpg', 3);
+('Gaming PCs', '/Images/Categories/Gaming/PC-gamer.jpg', 3),
+('VR Headsets', '/Images/Categories/Gaming/VRheadset.jpg', 3),
+('Gaming', '/Images/Categories/Gaming/game-chair.jpeg', 3),
+('Controllers', '/Images/Categories/Gaming/xbox-control.jpg', 3),
+('Consoles', '/Images/Categories/Gaming/ps4-cons.png', 3),
+('Gaming Keyboards', '/Images/Categories/Gaming/game-keyb.jpg', 3),
+('Gaming Mouses', '/Images/Categories/Gaming/green-mouse.JPG', 3),
+('Graphic Cards', '/Images/Categories/Gaming/gtx.jpg', 3);
 
 -- Home Entertainment (Category ID 4)
 INSERT INTO subcategory (name, img_url, category_id) VALUES
-('Smart TVs', '/Images/home-tv.jpg', 4),
-('LEDs', '/Images/matrix-led.jpg', 4),
-('DVD Players', '/Images/dvd-player.jpg', 4),
-('4k Ultra HDs', '/Images/curved-UHD.jpeg', 4),
-('Washing Machines', '/Images/whirlpool.jpg', 4),
-('Smart Speakers', '/Images/Smart-speakers.jpg', 4);
+('Smart TVs', '/Images/Categories/Home_Entertainment/home-tv.jpg', 4),
+('LEDs', '/Images/Categories/Home_Entertainment/matrix-led.jpg', 4),
+('DVD Players', '/Images/Categories/Home_Entertainment/dvd-player.jpg', 4),
+('4k Ultra HDs', '/Images/Categories/Home_Entertainment/curved-UHD.jpeg', 4),
+('Washing Machines', '/Images/Categories/Home_Entertainment/whirlpool.jpg', 4),
+('Smart Speakers', '/Images/Categories/Home_Entertainment/Smart-speakers.jpg', 4),
+('Fridges', '/Images/Categories/Home_Entertainment/samsung-smart.jpg', 4),
+('Security Systems', '/Images/Categories/Home_Entertainment/house-security-system.jpg', 4);
 
 -- Audio & Headphones (Category ID 5)
 INSERT INTO subcategory (name, img_url, category_id) VALUES
-('Speakers', '/Images/stereo-speakers.jpeg', 5),
-('Headphones', '/Images/JPL.png', 5),
-('Studio Equipments', '/Images/equipment-studio.jpg', 5);
+('Speakers', '/Images/Categories/Audio&Headphones/stereo-speakers.jpeg', 5),
+('Headphones', '/Images/Categories/Audio&Headphones/JPL.png', 5),
+('Studio Equipments', '/Images/Categories/Audio&Headphones/equipment-studio.jpg', 5),
+('Radios', '/Images/Categories/Audio&Headphones/wooden-radio.jpg', 5),
+('Microphones', '/Images/Categories/Audio&Headphones/micro-rode.webp', 5);
