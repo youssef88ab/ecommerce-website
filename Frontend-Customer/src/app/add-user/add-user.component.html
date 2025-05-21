@@ -1,0 +1,216 @@
+<div class="d-flex">
+    <admin-sidebar></admin-sidebar>
+    <main class="content flex-grow-1">
+      <admin-navbar></admin-navbar>
+      <div class="container">
+        <div class="card animate-in">
+   
+        
+          <div class="card-body p-4">
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="profile">
+                <form class="row" id="add-user-form" (ngSubmit)="onSubmit()">
+                  <div class="col-md-4 mb-4">
+                    <div class="image-container">
+                      <h5 class="section-title">Profile Picture</h5>
+                      <div class="profile-img-container position-relative rounded-circle overflow-hidden mx-auto" style="width: 180px; height: 180px;">
+                        <img src="assets/images/avatar.png" class="profile-img w-100 h-100 object-fit-cover" alt="Profile picture">
+                        <div class="upload-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-50 text-white cursor-pointer">
+                          <fa-icon [icon]="faCamera" class="me-2"></fa-icon>Change Photo
+                        </div>
+                      </div>
+                      <div class="mt-4 text-center">
+                        <p class="text-muted small">Click on the image to upload a new photo</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-8">
+                    <h5 class="section-title">Personal Information</h5>
+                    <div class="row g-3">
+                      <!-- Username & Email -->
+                      <div class="col-md-6 pe-1">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Username</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faUser" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <input type="text" class="form-control ps-5" name="username" placeholder="Enter username" [(ngModel)]="newUser.username" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Email Address</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faEnvelope" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <input type="email" class="form-control ps-5" name="email" placeholder="Enter email" [(ngModel)]="newUser.email" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Password Fields -->
+                      <div class="col-md-6 pe-1">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Password</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faLock" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <input type="password" class="form-control ps-5" name="password" placeholder="Enter password" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Confirm Password</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faLock" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <input type="password" class="form-control ps-5" name="password2" placeholder="Confirm password" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Phone & Birth Date -->
+                      <div class="col-md-6 pe-1">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Phone Number</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faPhone" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <input type="tel" name="phone" class="form-control ps-5" placeholder="Enter phone number" [(ngModel)]="newUser.phone" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group mb-3">
+                          <label class="form-label">Birth Date</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faCalendarAlt" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <input type="date" class="form-control ps-5" name="birthDate" [(ngModel)]="newUser.birthDate">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Gender & Role -->
+                      <div class="col-md-6 pe-1">
+                        <div class="form-group mb-3">
+                          <label class="form-label">Gender</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faVenusMars" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <select class="form-select ps-5" name="gender" [(ngModel)]="newUser.gender">
+                              <option [ngValue]="''" disabled>Select gender</option>
+                              <option [ngValue]="'MALE'">Male</option>
+                              <option [ngValue]="'FEMALE'">Female</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group mb-3">
+                          <label class="form-label label-required">Role</label>
+                          <div class="input-with-icon position-relative">
+                            <fa-icon [icon]="faUserTag" class="position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></fa-icon>
+                            <select class="form-select ps-5" name="role" [(ngModel)]="newUser.role" required>
+                              <option [ngValue]="" disabled>Select Role</option>
+                              <option [ngValue]="'ADMIN'">Admin</option>
+                              <option [ngValue]="'CUSTOMER'">User</option>
+                              <option [ngValue]="'DELIVERER'">Deliverer</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Address Section -->
+                    <h5 class="section-title mt-4">Address Information</h5>
+                    
+                    <div class="address-section">
+                      <div class="row g-3">
+                        <div class="col-md-12">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">Street</label>
+                            <input type="text" class="form-control" name="street" placeholder="Enter street address" [(ngModel)]="Street" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6 pe-1">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">City</label>
+                            <input type="text" class="form-control" name="city" placeholder="Enter city" [(ngModel)]="City" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">State/Province</label>
+                            <input type="text" class="form-control" name="state" placeholder="Enter state/province" [(ngModel)]="State" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6 pe-1">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">ZIP/Postal Code</label>
+                            <input type="number" class="form-control no-spinner" name="zip" placeholder="Enter ZIP/postal code" [(ngModel)]="ZIP" required>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label class="form-label label-required">Country</label>
+                            <select class="form-select" name="country" [(ngModel)]="Country" required>
+                              <option [ngValue]="" disabled>Select Country</option>
+                              <option [ngValue]="'US'">🇺🇸 United States</option>
+                              <option [ngValue]="'GB'">🇬🇧 United Kingdom</option>
+                              <option [ngValue]="'CA'">🇨🇦 Canada</option>
+                              <option [ngValue]="'AU'">🇦🇺 Australia</option>
+                              <option [ngValue]="'DE'">🇩🇪 Germany</option>
+                              <option [ngValue]="'FR'">🇫🇷 France</option>
+                              <option [ngValue]="'JP'">🇯🇵 Japan</option>
+                              <option [ngValue]="'IN'">🇮🇳 India</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Form Buttons -->
+                    <div class="d-flex justify-content-between mt-4">
+                      <button type="button" class="btn btn-outline-secondary" [routerLink]="['/admin/manage-users']">
+                        <fa-icon [icon]="faChevronLeft" class="me-2"></fa-icon>Back to Users
+                      </button>
+                      
+                      <div class="d-flex gap-3">
+                        <button type="reset" class="btn btn-danger">
+                          <fa-icon [icon]="faTimes" class="me-2"></fa-icon>Cancel
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                          <fa-icon [icon]="faUserPlus" class="me-2"></fa-icon>Add User
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              
+              <div class="tab-pane fade" id="security">
+                <div class="p-3 text-center">
+                  <fa-icon [icon]="faShieldAlt" class="mb-3" style="font-size: 48px; color: var(--secondary-color);"></fa-icon>
+                  <h4>Security Settings</h4>
+                  <p class="text-muted">Password management and account security options would adminear here</p>
+                </div>
+              </div>
+              
+              <div class="tab-pane fade" id="activity">
+                <div class="p-3 text-center">
+                  <fa-icon [icon]="faChartLine" class="mb-3" style="font-size: 48px; color: var(--secondary-color);"></fa-icon>
+                  <h4>User Activity</h4>
+                  <p class="text-muted">User activity logs and analytics would adminear here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
