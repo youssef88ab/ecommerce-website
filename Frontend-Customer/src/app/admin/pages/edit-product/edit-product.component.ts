@@ -33,7 +33,7 @@ export class EditProductComponent implements OnInit {
     name: '',
     description: '',
     price: 0,
-    stock: 0,
+    stockQuantity: 0,
     image: '',
     category: '',
     createdAt: new Date(),

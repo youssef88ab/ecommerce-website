@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from "../../components/sidebar/sidebar.component";
-import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { SidebarComponent } from "../../components/admin-sidebar/admin-sidebar.component";
+import { AdminNavbarComponent } from "../../components/admin-navbar/admin-navbar.component";
 import { 
   faUser, 
   faEnvelope, 
@@ -25,7 +25,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-edit-user',
-  imports: [FormsModule , CommonModule , SidebarComponent , RouterModule , NavbarComponent , FontAwesomeModule ],
+  standalone: true,
+  imports: [
+    SidebarComponent,
+    AdminNavbarComponent,
+    FormsModule , CommonModule , RouterModule , FontAwesomeModule
+  ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.css'
 })
