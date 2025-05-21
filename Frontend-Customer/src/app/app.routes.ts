@@ -3,7 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { MainComponent } from './main/main.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { LoginComponent } from './admin/pages/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { PlainComponent } from './plain/plain.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 // import { SignupComponent } from './pages/signup/signup.component';
@@ -15,7 +15,22 @@ import { AdminLayoutComponent } from './admin/components/admin-layout/admin-layo
 import { DashboardComponent } from './admin/pages/dashboard/dashboard.component';
 import { AuthGuardService } from './admin/services/auth-guard.service';
 import { LogoutComponent } from './admin/pages/logout/logout.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
+import { ContactUsComponent } from './admin/pages/contact-us/contact-us.component';
+import { ManageProductsComponent } from './admin/pages/manage-products/manage-products.component';
+import { ManageOrdersComponent } from './admin/pages/manage-orders/manage-orders.component';
+import { AddProductComponent } from './admin/pages/add-product/add-product.component';
+import { EditProductComponent } from './admin/pages/edit-product/edit-product.component';
+import { OrderDetailsComponent } from './admin/pages/order-details/order-details.component';
+import { ManageUsersComponent } from './admin/pages/manage-users/manage-users.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { EditUserComponent } from './admin/pages/edit-user/edit-user.component';
+import { UserDetailsComponent } from './admin/pages/user-details/user-details.component';
+import { ProductDetailsComponent } from './admin/pages/product-details/product-details.component';
+import { PaymentDetailsComponent } from './admin/pages/payments-details/payments-details.component';
+import { PaymentsComponent } from './admin/pages/payments/payments.component';
+import { AnalyticsComponent } from './admin/pages/analytics/analytics.component';
+import { DelivererLayoutComponent } from './admin/components/deliverer-layout/deliverer-layout.component';
+import { DelivrerComponent } from './admin/pages/delivrer/delivrer.component';
 
 export const routes: Routes = [
   {
@@ -35,7 +50,7 @@ export const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'admin-login', component: AdminLoginComponent },
-     // { path: 'signup', component: SignupComponent },
+      // { path: 'signup', component: SignupComponent },
       { path: 'forgot-pass', component: ForgotPassComponent },
       { path: 'verify-code', component: VerifyCodeComponent },
     ],
@@ -49,11 +64,34 @@ export const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'manage-products', component: ManageProductsComponent },
+      { path: 'add-product', component: AddProductComponent },
+      { path: 'edit-product/:productId', component: EditProductComponent },
+      { path: 'manage-orders', component: ManageOrdersComponent },
+      { path: 'order-details/:orderId', component: OrderDetailsComponent },
+      { path: 'manage-users', component: ManageUsersComponent },
+      { path: 'add-user', component: AddUserComponent },
+      { path: 'edit-user/:userId', component: EditUserComponent },
+      { path: 'user-details/:userId', component: UserDetailsComponent },
+      { path: 'product-details/:productId', component: ProductDetailsComponent },
+      { path: 'payments', component: PaymentsComponent },
+      { path: 'payment-details/:paymentId', component: PaymentDetailsComponent },
+      { path: 'analytics', component: AnalyticsComponent },
     ],
   },
   {
     path: 'logout', component: LogoutComponent
   },
-  { path: 'contact-us', component: ContactUsComponent }
+  { path: 'contact-us', component: ContactUsComponent },
+  // Delivrer Protected Routes
+  {
+    path: 'deliverer',
+    component: DelivererLayoutComponent,
+    canActivate: [AuthGuardService],
+    data: { role: 'DELIVERER' },
+    children: [
+      { path: '', component: DelivrerComponent }
+    ]
+  }
 
 ];
