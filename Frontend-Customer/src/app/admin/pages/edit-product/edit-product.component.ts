@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
-import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
+import { SidebarComponent } from '../admin/components/admin-sidebar/admin-sidebar.component';
+import { AdminNavbarComponent } from '../admin/components/admin-navbar/admin-navbar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUpload, faTimes, faSave, faDollarSign, faBox, faTag } from '@fortawesome/free-solid-svg-icons';
 

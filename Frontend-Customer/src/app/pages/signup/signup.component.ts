@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+/* import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['../login/login.component.css']
 })
 export class SignupComponent {
+  /*
   registerForm: FormGroup;
   userData = {
     username: '',
@@ -33,4 +34,5 @@ export class SignupComponent {
         this.errorMessage = error || 'Registration failed';
       });
   }
+      */
 }

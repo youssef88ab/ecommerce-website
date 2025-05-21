@@ -6,15 +6,16 @@ import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './admin/pages/login/login.component';
 import { PlainComponent } from './plain/plain.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
-import { SignupComponent } from './pages/signup/signup.component';
+// import { SignupComponent } from './pages/signup/signup.component';
 import { ForgotPassComponent } from './pages/forgot-pass/forgot-pass.component';
 import { VerifyCodeComponent } from './pages/verify-code/verify-code.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
-import { AdminLayoutComponent } from './admin/layouts/admin-layout/admin-layout.component';
+import { AdminLayoutComponent } from './admin/components/admin-layout/admin-layout.component';
 import { DashboardComponent } from './admin/pages/dashboard/dashboard.component';
 import { AuthGuardService } from './admin/services/auth-guard.service';
 import { LogoutComponent } from './admin/pages/logout/logout.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 export const routes: Routes = [
   {
@@ -34,24 +35,25 @@ export const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'admin-login', component: AdminLoginComponent },
-      { path: 'signup', component: SignupComponent },
+     // { path: 'signup', component: SignupComponent },
       { path: 'forgot-pass', component: ForgotPassComponent },
-      { path: 'verify-code', component: VerifyCodeComponent }
-      // other routes without navbar
+      { path: 'verify-code', component: VerifyCodeComponent },
     ],
   },
-   // Admin-protected routes
-   {
+  // Admin-protected routes
+  {
     path: 'admin',
     component: AdminLayoutComponent,
     canActivate: [AuthGuardService],
     data: { role: 'ADMIN' },
     children: [
       { path: '', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
     ],
   },
   {
-     path: 'logout', component: LogoutComponent
+    path: 'logout', component: LogoutComponent
   },
+  { path: 'contact-us', component: ContactUsComponent }
 
 ];
