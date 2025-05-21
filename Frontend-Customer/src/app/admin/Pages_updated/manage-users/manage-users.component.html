@@ -1,0 +1,121 @@
+<div class="main d-flex">
+    <app-sidebar></app-sidebar>
+    <main class="content flex-grow-1">
+      <!-- Content Navigation Bar -->
+      <app-navbar></app-navbar>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card p-3 rounded-0 d-flex flex-column gap-3 flex-start">
+            <div class="utils d-flex justify-content-between align-items-center">
+              <p class="fw-bold m-0">
+                All Users <span class="text-black-50">{{ UserNumber }}</span>
+              </p>
+              <div class="d-flex align-items-center gap-3">
+                <form class="row g-2 align-items-center w-100">
+                  <div class="col-auto mx-2">
+                    <input 
+                      type="search" 
+                      class="form-control px-3 py-2" 
+                      name="keyword" 
+                      placeholder="Search users..." 
+                      [(ngModel)]="keyword"
+                    />
+                  </div>
+                  <div class="col-auto">
+                    <button class="btn btn-dark px-4" (click)="onSearch(keyword)">Search</button>
+                  </div>
+                </form>   
+                <button class="btn btn-dark col-auto px-4 py-2" [routerLink]="['../add-user']">Add User</button>
+              </div>
+            </div>
+            <table class="user-table">
+              <thead class="">
+                <tr class="p-3">
+                  <th class="text-start p-3">Username</th>
+                  <th class="text-center p-3">Role</th>
+                  <th class="text-center p-3">Last Activated</th>
+                  <th class="text-center p-3">Date Adeed</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let User of Users">
+                  <td class="p-3 text-center">
+                    <div class="d-flex flex-row justify-content-start gap-2 align-items-center">
+                      <img src="/assets/images/profile.png" alt="user" class="img-fluid rounded-circle" style="width: 50px; height: 50px;" />
+  
+                      <div class="d-flex flex-column">
+                        <p class="text-start fw-bold">{{ User.username }}</p>
+                        <p class="text-start text-black text-opacity-75">
+                          {{ User.email }}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <ng-container *ngIf="User.role && User.role.length > 0">
+                      <div [ngSwitch]="User.role">
+                        <span *ngSwitchCase="'ADMIN'" class="badge bg-primary rounded-pill p-2 text-center">
+                          {{ User.role }}
+                        </span>
+                        <span *ngSwitchCase="'CUSTOMER'" class="badge bg-secondary rounded-pill p-2 text-center">
+                          {{ User.role }}
+                        </span>
+                        <span *ngSwitchCase="'DELIVERER'" class="badge bg-success rounded-pill p-2 text-center">
+                          {{ User.role }}
+                        </span>
+                        <span *ngSwitchDefault class="badge bg-info rounded-pill p-2 text-center">
+                          {{ User.role }}
+                        </span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="!User.role || User.role.length === 0">
+                      <span class="badge bg-light text-dark rounded-pill p-2 text-center">N/A</span>
+                    </ng-container>
+                  </td>
+                  <td class="text-center">
+                    <p>{{ User.birthDate }}</p>
+                  </td>
+                  <td class="text-center">
+                    <p>{{ User.dateAdded }}</p>
+                  </td>
+                  <td>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="no-shadow border-0">
+                      <mat-icon>&#8942;</mat-icon>
+                    </button>
+                    
+                    <mat-menu #menu="matMenu" class="custom-menu">
+                      <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['../edit-user', User.id]">
+                        Edit
+                      </button>
+                      <button mat-menu-item class="custom-menu-item" [routerLink]="['../user-details', User.id]">
+                        View Details
+                      </button>
+                      <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteUser(User.id)">
+                        Delete
+                      </button>
+                    </mat-menu>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5" class="border-0">
+                    <div class="pagination d-flex justify-content-center">
+                      <ul class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3">
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
