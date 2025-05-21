@@ -14,7 +14,7 @@ import { DelivrerSidebarComponent } from '../delivrer-sidebar/delivrer-sidebar.c
 @Component({
   selector: 'app-delivrer',
   standalone: true, // Added standalone flag
-  imports: [SidebarComponent, NavbarComponent, FormsModule, CommonModule, RouterModule, MatButtonModule, MatMenuModule, MatIconModule, DelivrerSidebarComponent],
+  imports: [SidebarComponent, AdminNavbarComponent, FormsModule, CommonModule, RouterModule, MatButtonModule, MatMenuModule, MatIconModule, DelivrerSidebarComponent],
   templateUrl: './delivrer.component.html',
   styleUrl: './delivrer.component.css'
 })

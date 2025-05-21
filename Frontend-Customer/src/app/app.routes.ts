@@ -3,7 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { MainComponent } from './main/main.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './admin/pages/login/login.component';
 import { PlainComponent } from './plain/plain.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 // import { SignupComponent } from './pages/signup/signup.component';
@@ -22,7 +22,7 @@ import { AddProductComponent } from './admin/pages/add-product/add-product.compo
 import { EditProductComponent } from './admin/pages/edit-product/edit-product.component';
 import { OrderDetailsComponent } from './admin/pages/order-details/order-details.component';
 import { ManageUsersComponent } from './admin/pages/manage-users/manage-users.component';
-import { AddUserComponent } from './add-user/add-user.component';
+import { AddUserComponent } from './admin/pages/add-user/add-user.component';
 import { EditUserComponent } from './admin/pages/edit-user/edit-user.component';
 import { UserDetailsComponent } from './admin/pages/user-details/user-details.component';
 import { ProductDetailsComponent } from './admin/pages/product-details/product-details.component';

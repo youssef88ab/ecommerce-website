@@ -1,0 +1,26 @@
+<div class="payment-details-container">
+  <h2>Payment Details</h2>
+  
+  <div class="payment-info" *ngIf="payment">
+    <div class="info-row">
+      <span class="label">Payment ID:</span>
+      <span class="value">{{payment.id}}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Amount:</span>
+      <span class="value">{{payment.order.totalPrice | currency}}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Status:</span>
+      <span class="value">{{payment.paymentStatus}}</span>
+    </div>
+    <div class="info-row">
+      <span class="label">Date:</span>
+      <span class="value">{{payment.paymentDate | date}}</span>
+    </div>
+  </div>
+
+  <div class="no-payment" *ngIf="!payment">
+    <p>No payment details available</p>
+  </div>
+</div> 

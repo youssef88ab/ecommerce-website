@@ -1,0 +1,110 @@
+/* Incorporating your existing styles */
+.main {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background: #0f0c29; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #24243e,
+    #302b63,
+    #0f0c29
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #24243e,
+    #302b63,
+    #0f0c29
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+/* Enhanced styles */
+.text-gradient {
+  background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.65) inset;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.custom-input-group {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.custom-input-group input {
+  border: 1px solid #e1e5ea;
+  padding: 12px;
+  transition: all 0.3s ease;
+}
+
+.custom-input-group .input-group-text {
+  border: 1px solid #e1e5ea;
+  color: #8e9aaf;
+}
+
+.custom-btn {
+  background-color: rgb(136, 37, 242);
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.custom-btn:hover {
+  background-color: rgb(156, 75, 245);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(136, 37, 242, 0.4);
+}
+
+.custom-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(136, 37, 242, 0.4);
+}
+
+.forgot-link {
+  color: rgb(136, 37, 242);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.forgot-link:hover {
+  color: rgb(156, 75, 245);
+  text-decoration: underline;
+}
+
+.brand-badge {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .login-card {
+    padding: 20px;
+    width: 85% !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-card {
+    width: 95% !important;
+  }
+}

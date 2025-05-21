@@ -1,11 +1,11 @@
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Chart, ChartConfiguration } from 'chart.js';
 import { ProductService, Product } from '../../services/product.service';
 import { AnalyticsService } from '../../services/analytics.service';
+import { SidebarComponent } from "../../components/admin-sidebar/admin-sidebar.component";
+import { AdminNavbarComponent } from "../../components/admin-navbar/admin-navbar.component";
 
 interface SalesSummary {
   revenue: number;
@@ -39,7 +39,12 @@ interface CustomerInsights {
 @Component({
   selector: 'app-analytics',
   standalone: true,
-  imports: [SidebarComponent, NavbarComponent, CommonModule, FormsModule],
+  imports: [
+    SidebarComponent,
+    AdminNavbarComponent,
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.css'
 })

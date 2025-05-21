@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { DelivrerSidebarComponent } from '../delivrer-sidebar/delivrer-sidebar.component';
+import { DelivrerSidebarComponent } from '../../pages/delivrer-sidebar/delivrer-sidebar.component';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from "../admin-sidebar/sidebar.component";
 
 @Component({
   selector: 'app-deliverer-layout',
-  imports: [DelivererLayoutComponent, RouterModule, SidebarComponent],
+  standalone: true,
+  imports: [
+    DelivrerSidebarComponent,
+    RouterModule
+  ],
   templateUrl: './deliverer-layout.component.html',
   styleUrl: './deliverer-layout.component.css'
 })
