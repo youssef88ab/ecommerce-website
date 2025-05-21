@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-logout',
   imports: [],
+  standalone: true,
   templateUrl: './logout.component.html',
   styleUrl: './logout.component.css'
 })
