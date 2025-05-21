@@ -13,7 +13,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['../login/login.component.css']
 })
 export class SignupComponent {
+<<<<<<< HEAD
   /*
+=======
+>>>>>>> main
   registerForm: FormGroup;
   userData = {
     username: '',
@@ -34,5 +37,8 @@ export class SignupComponent {
         this.errorMessage = error || 'Registration failed';
       });
   }
+<<<<<<< HEAD
       */
+=======
+>>>>>>> main
 }
