@@ -3,17 +3,17 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import Chart from 'chart.js/auto';
-import { SidebarComponent } from '../../components/admin-sidebar/sidebar.component';
-import { NavbarComponent } from '../../components/admin-navbar/navbar.component';
-import { OrderItemsService } from '../../services/order-items.service';
+import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { OrderItems } from '../../services/order.service';
+import { OrderItemsService } from '../../services/order-items.service';
 import { Product, ProductService } from '../../services/product.service';
 import { AnalyticsService } from '../../services/analytics.service';
 
+
 @Component({
   selector: 'app-dashboard',
-  standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule, SidebarComponent, NavbarComponent],
+  imports: [FormsModule, CommonModule, RouterModule, SidebarComponent, AdminNavbarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

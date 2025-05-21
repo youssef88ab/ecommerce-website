@@ -1,0 +1,176 @@
+<div class="d-flex">
+  <admin-sidebar></admin-sidebar>
+  <div class="content">
+    <admin-navbar></admin-navbar>
+    <div
+      class="order-card card p-4 rounded-3 shadow-sm border-0 h-auto d-flex flex-column gap-5"
+    >
+      <!-- Order Header Section -->
+      <div class="order-header">
+        <div
+          class="d-flex justify-content-between align-items-start flex-wrap gap-3"
+        >
+          <div>
+            <h2 class="fw-bold mb-1">Order #{{ order.orderId }}</h2>
+            <p class="text-muted mb-3">
+              Placed on {{ order.orderDate | date : "mediumDate" }}
+            </p>
+
+            <div class="d-flex flex-wrap align-items-center gap-4">
+              <div class="d-flex align-items-center gap-2">
+                <fa-icon [icon]="faUser" class="text-secondary"></fa-icon>
+                <span>Customer ID: {{ order.userId }}</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <fa-icon [icon]="faCreditCard" class="text-secondary"></fa-icon>
+                <span>Payment: {{ order.paymentId }}</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <fa-icon [icon]="faDollarSign" class="text-secondary"></fa-icon>
+                <span class="fw-semibold"
+                  >Total: ${{ order.totalPrice | number : "1.2-2" }}</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="status-badge">
+            <span
+              class="badge rounded-pill px-3 py-2 fw-normal text-capitalize"
+              [ngClass]="{
+                'bg-warning-subtle text-warning-emphasis':
+                  order.status === 'PENDING',
+                'bg-info-subtle text-info-emphasis': order.status === 'SHIPPED',
+                'bg-success-subtle text-success-emphasis':
+                  order.status === 'DELIVERED',
+                'bg-danger-subtle text-danger-emphasis':
+                  order.status === 'CANCELED'
+              }"
+            >
+              <fa-icon [icon]="faTruck" class="me-2"></fa-icon>
+              {{ order.status | lowercase }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Items Section -->
+      <div class="order-items">
+        <h5 class="fw-bold mb-3">Order Items</h5>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-4">Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th class="pe-4 text-end">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let orderItem of order.orderItems">
+                <td class="ps-4">
+                  <div class="d-flex align-items-center gap-3">
+                    <img
+                      src="assets/images/product1.png"
+                      class="product-thumbnail rounded-2"
+                      alt="Product Image"
+                      style="width: 60px; height: 60px; object-fit: cover"
+                    />
+                    <div>
+                      <p class="fw-semibold mb-1">
+                        {{ orderItem.proudctName }}
+                      </p>
+                      <p class="text-muted small mb-0">
+                        SKU: {{ orderItem.id }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td>${{ orderItem.price | number : "1.2-2" }}</td>
+                <td>{{ orderItem.quantity }}</td>
+                <td class="pe-4 text-end fw-semibold">
+                  ${{ orderItem.price * orderItem.quantity | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="table-light">
+              <tr>
+                <td colspan="3" class="ps-4 fw-bold">Total</td>
+                <td class="pe-4 text-end fw-bold">
+                  ${{ order.totalPrice | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Shipping Details Section -->
+      <div class="shipping-details">
+        <div class="card border-0 bg-light-subtle p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Shipping Details</h5>
+            <fa-icon [icon]="faTruckFast" class="text-primary"></fa-icon>
+          </div>
+          <div class="row g-3">
+            <!-- First Row -->
+            <div class="col-md-12">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <span class="text-muted small d-block mb-1"
+                    >Shipping Address</span
+                  >
+                  <p class="fw-semibold mb-0">
+                    {{ order.shippingDetails.address }}
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <span class="text-muted small d-block mb-1">City</span>
+                  <p class="fw-semibold mb-0">
+                    {{ order.shippingDetails.city }}
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <span class="text-muted small d-block mb-1">Postal Code</span>
+                  <p class="fw-semibold mb-0">
+                    {{ order.shippingDetails.postal_code }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Second Row -->
+            <div class="col-md-12">
+              <div class="row g-3 my-3">
+                <div class="col-md-4">
+                  <span class="text-muted small d-block mb-1">Country</span>
+                  <p class="fw-semibold mb-0">
+                    {{ order.shippingDetails.country }}
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <span class="text-muted small d-block mb-1">Contact</span>
+                  <p class="fw-semibold mb-0">
+                    {{ order.shippingDetails.recipient_phone }}
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <span class="text-muted small d-block mb-1"
+                    >Estimated Delivery</span
+                  >
+                  <p class="fw-semibold mb-0">
+                    {{
+                      order.shippingDetails.estimated_delivery_date
+                        | date : "mediumDate"
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
