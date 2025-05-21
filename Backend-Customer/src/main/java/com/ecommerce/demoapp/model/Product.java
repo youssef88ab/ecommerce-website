@@ -11,10 +11,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Transient;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -32,8 +37,11 @@ public class Product {
     @Column(name = "product_name", nullable = false, length = 255)
     private String productName;
 
-    @Column(nullable = false)
+    @Column(name="avg_rating", nullable = false)
     private int rating;
+
+    @Column(name = "review_count")
+    private int review_count ;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -129,6 +137,12 @@ public class Product {
     public void setRating(int rating) {
         this.rating = rating ;
     }
+    public int getReviewCount() {
+        return this.review_count ;
+    }
+    public void setReviewCount(int count) {
+        this.review_count = count ;
+    }
     public String getDescription() {
         return description;
     }
@@ -177,9 +191,23 @@ public class Product {
         this.mainImgUrl = mainImgUrl;
     }
 
-    public String getImageGallery() {
-        return imageGallery;
+    @Transient
+private List<String> imageGalleryList;
+
+public List<String> getImageGalleryList() {
+    if (this.imageGalleryList == null && this.imageGallery != null) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            this.imageGalleryList = mapper.readValue(
+                this.imageGallery, 
+                new TypeReference<List<String>>(){}
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to parse image gallery", e);
+        }
     }
+    return this.imageGalleryList;
+}
 
     public void setImageGallery(String imageGallery) {
         this.imageGallery = imageGallery;

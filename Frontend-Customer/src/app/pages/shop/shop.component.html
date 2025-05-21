@@ -54,24 +54,25 @@
                     </div>
                 </div>
 
-                <div class="container mt-4">
+              <div class="container mt-4"> 
                   
-                    <!-- Product grid -->
+
                     <div class="row">
-                      <!-- Product Card - Repeats for each product -->
+
                       <div class="col-md-4 col-sm-6 mb-4" *ngFor="let product of products">
                         <div class="product-card">
                           <div class="product-img-container">
-                            <img [src]="product.mainImgUrl || '/assets/images/placeholder-product.jpg'" 
-                                 [alt]="product.productName" 
-                                 class="product-img">
+                            <img [src]="product.img || '/assets/images/placeholder-product.jpg'" 
+                                 [alt]="product.nameProduct" 
+                                 class="product-img"
+                                 (click)="navigateToProduct(product.productId)">
                             <span class="product-badge" *ngIf="isOnSale(product)">
                               Sale {{getDiscount(product)}}%
                             </span>
                           </div>
                           <div class="product-info">
                             <span class="product-category">Electronics</span>
-                            <h5 class="product-title">{{product.productName}}</h5>
+                            <h5 class="product-title">{{product.nameProduct}}</h5>
                             <p class="product-description">{{product.description || 'No description available'}}</p>
                             <div class="product-rating">
                               <i class="fas fa-star"></i>
@@ -79,7 +80,7 @@
                               <i class="fas fa-star"></i>
                               <i class="fas fa-star"></i>
                               <i class="far fa-star"></i>
-                              <span>(0)</span> <!-- Static rating for now -->
+                              <span>(0)</span> 
                             </div>
                             <div class="product-price" [class.text-danger]="isOnSale(product)">
                               ${{product.price.toFixed(2)}}
@@ -95,7 +96,7 @@
                       </div>
                     </div>
                   
-                    <!-- Pagination -->
+
                     <nav *ngIf="totalPages > 1" aria-label="Page navigation">
                       <ul class="pagination justify-content-center">
                         <li class="page-item" [class.disabled]="currentPage === 0">
@@ -110,129 +111,156 @@
                         </li>
                       </ul>
                     </nav>
-                  </div>
+                  </div>  
 
                     <!-- Product 2 -->
-                  <!-- <div class="col-md-4 col-sm-6">
-                        <div class="product-card">
-                            <div class="product-img-container">
-                                <img src="https://via.placeholder.com/300x200?text=Product+2" alt="Product 2" class="product-img">
-                            </div>
-                            <div class="product-info">
-                                <span class="product-category">Fashion</span>
-                                <h5 class="product-title">Men's Casual T-Shirt</h5>
-                                <p class="product-description">Comfortable cotton t-shirt available in multiple colors and sizes.</p>
-                                <div class="product-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <span>(36)</span>
-                                </div>
-                                <div class="product-price">$24.99</div>
-                                <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+                 <!-- Product 1 - Laptop -->
+<div class="col-md-4 col-sm-6">
+    <div class="product-card">
+        <div class="product-img-container">
+            <img src="https://via.placeholder.com/300x200?text=MacBook+Pro+14" alt="MacBook Pro 14" class="product-img">
+            <span class="product-badge">New</span>
+        </div>
+        <div class="product-info">
+            <span class="product-category">Electronics</span>
+            <h5 class="product-title">MacBook Pro 14" M2 Pro</h5>
+            <p class="product-description">Apple 2023 model with 16GB RAM, 512GB SSD, and Liquid Retina XDR display.</p>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>(142)</span>
+            </div>
+            <div class="product-price">$1,999.00 <span class="product-old-price">$2,199.00</span></div>
+            <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        </div>
+    </div>
+</div>
 
+<!-- Product 2 - Smartphone -->
+<div class="col-md-4 col-sm-6">
+    <div class="product-card">
+        <div class="product-img-container">
+            <img src="/Images/tempered-screen.jpeg" alt="iPhone 15 Pro" class="product-img">
+            <span class="product-badge">-10%</span>
+        </div>
+        <div class="product-info">
+            <span class="product-category">Electronics</span>
+            <h5 class="product-title">iPhone 15 Pro</h5>
+            <p class="product-description">6.1" Super Retina XDR display, A17 Pro chip, 128GB storage.</p>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(256)</span>
+            </div>
+            <div class="product-price">$999.00 <span class="product-old-price">$1,099.00</span></div>
+            <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        </div>
+    </div>
+</div>
 
-                    <div class="col-md-4 col-sm-6">
-                        <div class="product-card">
-                            <div class="product-img-container">
-                                <img src="https://via.placeholder.com/300x200?text=Product+3" alt="Product 3" class="product-img">
-                                <span class="product-badge">New</span>
-                            </div>
-                            <div class="product-info">
-                                <span class="product-category">Home</span>
-                                <h5 class="product-title">Smart LED Light Bulb</h5>
-                                <p class="product-description">WiFi enabled smart bulb with 16 million colors, works with Alexa and Google Home.</p>
-                                <div class="product-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>(42)</span>
-                                </div>
-                                <div class="product-price">$19.99</div>
-                                <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+<!-- Product 3 - Headphones -->
+<div class="col-md-4 col-sm-6">
+    <div class="product-card">
+        <div class="product-img-container">
+            <img src="https://via.placeholder.com/300x200?text=Sony+WH-1000XM5" alt="Sony Headphones" class="product-img">
+        </div>
+        <div class="product-info">
+            <span class="product-category">Electronics</span>
+            <h5 class="product-title">Sony WH-1000XM5</h5>
+            <p class="product-description">Industry-leading noise cancellation with 30-hour battery life.</p>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span>(87)</span>
+            </div>
+            <div class="product-price">$349.99</div>
+            <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        </div>
+    </div>
+</div>
 
+<!-- Product 4 - Smart Watch -->
+<div class="col-md-4 col-sm-6">
+    <div class="product-card">
+        <div class="product-img-container">
+            <img src="/Images/apple-watch.jpg" alt="Apple Watch" class="product-img">
+            <span class="product-badge">Best Seller</span>
+        </div>
+        <div class="product-info">
+            <span class="product-category">Electronics</span>
+            <h5 class="product-title">Apple Watch Series 9</h5>
+            <p class="product-description">GPS + Cellular, 45mm Midnight Aluminum Case.</p>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>(312)</span>
+            </div>
+            <div class="product-price">$429.00</div>
+            <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        </div>
+    </div>
+</div>
 
-                    <div class="col-md-4 col-sm-6">
-                        <div class="product-card">
-                            <div class="product-img-container">
-                                <img src="https://via.placeholder.com/300x200?text=Product+4" alt="Product 4" class="product-img">
-                            </div>
-                            <div class="product-info">
-                                <span class="product-category">Sports</span>
-                                <h5 class="product-title">Yoga Mat</h5>
-                                <p class="product-description">Eco-friendly non-slip yoga mat with carrying strap included.</p>
-                                <div class="product-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <span>(18)</span>
-                                </div>
-                                <div class="product-price">$29.99 <span class="product-old-price">$39.99</span></div>
-                                <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+<!-- Product 5 - Gaming Console -->
+<div class="col-md-4 col-sm-6">
+    <div class="product-card">
+        <div class="product-img-container">
+            <img src="https://via.placeholder.com/300x200?text=PlayStation+5" alt="PS5" class="product-img">
+        </div>
+        <div class="product-info">
+            <span class="product-category">Electronics</span>
+            <h5 class="product-title">PlayStation 5 Console</h5>
+            <p class="product-description">4K UHD Blu-ray disc drive, 825GB SSD, 2 controllers included.</p>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(498)</span>
+            </div>
+            <div class="product-price">$499.99</div>
+            <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        </div>
+    </div>
+</div>
 
-
-                    <div class="col-md-4 col-sm-6">
-                        <div class="product-card">
-                            <div class="product-img-container">
-                                <img src="https://via.placeholder.com/300x200?text=Product+5" alt="Product 5" class="product-img">
-                            </div>
-                            <div class="product-info">
-                                <span class="product-category">Electronics</span>
-                                <h5 class="product-title">Portable Power Bank</h5>
-                                <p class="product-description">10000mAh power bank with fast charging for all devices.</p>
-                                <div class="product-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <span>(31)</span>
-                                </div>
-                                <div class="product-price">$34.99</div>
-                                <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-4 col-sm-6">
-                        <div class="product-card">
-                            <div class="product-img-container">
-                                <img src="https://via.placeholder.com/300x200?text=Product+6" alt="Product 6" class="product-img">
-                                <span class="product-badge">-20%</span>
-                            </div>
-                            <div class="product-info">
-                                <span class="product-category">Fashion</span>
-                                <h5 class="product-title">Women's Running Shoes</h5>
-                                <p class="product-description">Lightweight running shoes with cushioned soles for maximum comfort.</p>
-                                <div class="product-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>(47)</span>
-                                </div>
-                                <div class="product-price">$59.99 <span class="product-old-price">$74.99</span></div>
-                                <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+<!-- Product 6 - External SSD -->
+<div class="col-md-4 col-sm-6">
+    <div class="product-card">
+        <div class="product-img-container">
+            <img src="https://via.placeholder.com/300x200?text=Samsung+T7+SSD" alt="Samsung SSD" class="product-img">
+            <span class="product-badge">-15%</span>
+        </div>
+        <div class="product-info">
+            <span class="product-category">Electronics</span>
+            <h5 class="product-title">Samsung T7 Shield SSD</h5>
+            <p class="product-description">1TB Portable SSD with USB 3.2 Gen2, IP65 water resistance.</p>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span>(64)</span>
+            </div>
+            <div class="product-price">$89.99 <span class="product-old-price">$105.99</span></div>
+            <button class="btn btn-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        </div>
+    </div>
+</div>
                 </div>
 
 
@@ -248,10 +276,10 @@
                             <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>
-                </nav> --> 
+                </nav>  
             </div>
         </div> 
-            </div>
+            
         
     <script>
         // Update price range value display
