@@ -35,4 +35,7 @@ export class ProductService {
     
     return this.http.get<PageResponse<ProductListingDTO>>(this.apiUrl, { params });
   }
+  getProductById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
 }

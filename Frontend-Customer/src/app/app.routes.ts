@@ -10,6 +10,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { ForgotPassComponent } from './pages/forgot-pass/forgot-pass.component';
 import { VerifyCodeComponent } from './pages/verify-code/verify-code.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 export const routes: Routes = [
   {  path: '',
@@ -18,8 +19,8 @@ export const routes: Routes = [
         { path: '', component: HomeComponent },
         { path: 'shop', component: ShopComponent },
         { path: 'cart', component: CartComponent },
-        { path: 'categories', component: CategoryComponent}
-        // more routes with navbar
+        { path: 'categories', component: CategoryComponent},
+        { path: 'product/:id', component: ProductDetailComponent}
       ]
     },
     {

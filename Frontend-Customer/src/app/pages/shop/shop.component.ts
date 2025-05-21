@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryService, SubCategory,  Category} from '../../category.service';
 import { ProductService } from '../../product.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ShopComponent implements OnInit{
   currentPage = 0;
   totalPages = 0;
 
-  constructor(private categoryService: CategoryService, private productService: ProductService) {}
+  constructor(private categoryService: CategoryService, private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts(0);
@@ -40,6 +41,9 @@ export class ShopComponent implements OnInit{
       }
       isOnSale(product: any): boolean {
         return product.originalPrice && product.price < product.originalPrice;
+      }
+      navigateToProduct(productId: number) {
+        this.router.navigate(['/product', productId]);
       }
     
       // Calculate discount percentage

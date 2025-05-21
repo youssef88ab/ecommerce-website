@@ -2,9 +2,15 @@ package com.ecommerce.demoapp.service ;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.ecommerce.demoapp.repository.ProductRepository;
-import com.ecommerce.demoapp.Dto.ProductListingDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.ecommerce.demoapp.Dto.ProductDetailDTO;
+import com.ecommerce.demoapp.Dto.ProductListingDTO;
+import com.ecommerce.demoapp.model.Product;
+import com.ecommerce.demoapp.repository.ProductRepository;
+
 
 @Service
 public class ProductService {
@@ -21,10 +27,31 @@ public class ProductService {
                 product.getProductId(),
                 product.getProductName(),
                 product.getRating(),
+                product.getReviewCount(),
                 product.getDescription(),
                 product.getPrice(),
                 product.getOriginalPrice(),
                 product.getMainImgUrl()
             ));
     }
+    public ProductDetailDTO getProductDetailById(int id) {
+    Product product = productRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, 
+                "Product not found with ID: " + id
+            ));
+    
+    return new ProductDetailDTO(
+        product.getProductId(),
+        product.getProductName(),
+        product.getRating(),
+        product.getReviewCount(),
+        product.getDescription(),
+        product.getPrice(),
+        product.getOriginalPrice(),
+        product.getMainImgUrl(),
+        product.getImageGalleryList(),
+        product.getStockQuantity()
+    );
+}
 }
