@@ -6,7 +6,11 @@ import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PlainComponent } from './plain/plain.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
+<<<<<<< HEAD
+/*import { SignupComponent } from './pages/signup/signup.component';*/
+=======
 // import { SignupComponent } from './pages/signup/signup.component';
+>>>>>>> origin/main
 import { ForgotPassComponent } from './pages/forgot-pass/forgot-pass.component';
 import { VerifyCodeComponent } from './pages/verify-code/verify-code.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -50,7 +54,11 @@ export const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'admin-login', component: AdminLoginComponent },
+<<<<<<< HEAD
+      /*{ path: 'signup', component: SignupComponent },*/
+=======
       // { path: 'signup', component: SignupComponent },
+>>>>>>> origin/main
       { path: 'forgot-pass', component: ForgotPassComponent },
       { path: 'verify-code', component: VerifyCodeComponent },
     ],

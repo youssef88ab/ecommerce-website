@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+/*import { Component } from '@angular/core';
+=======
 /* import { Component } from '@angular/core';
+>>>>>>> origin/main
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
@@ -38,7 +42,11 @@ export class SignupComponent {
       });
   }
 <<<<<<< HEAD
+}*/
+=======
+<<<<<<< HEAD
       */
 =======
 >>>>>>> main
 }
+>>>>>>> origin/main
