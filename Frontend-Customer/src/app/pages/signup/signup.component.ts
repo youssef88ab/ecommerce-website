@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+/*import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
@@ -33,4 +33,4 @@ export class SignupComponent {
         this.errorMessage = error || 'Registration failed';
       });
   }
-}
+}*/

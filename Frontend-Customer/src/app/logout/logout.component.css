@@ -1,9 +1,0 @@
-main {
-    display: flex;
-    align-items: center;
-    height: 100vh;
-}
-
-.logout-container {
-    margin: 0 auto;
-}
