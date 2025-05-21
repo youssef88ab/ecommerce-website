@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
-import { SidebarComponent } from '../admin/components/admin-sidebar/admin-sidebar.component';
-import { AdminNavbarComponent } from '../admin/components/admin-navbar/admin-navbar.component';
-=======
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
-import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
->>>>>>> main
+import { SidebarComponent } from '../../Pages_updated/admin-sidebar/admin-sidebar.component';
+import { AdminNavbarComponent } from '../../Pages_updated/admin-navbar/admin-navbar.component';
 import { ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';

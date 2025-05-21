@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
+import { SidebarComponent } from '../admin/components/admin-sidebar/admin-sidebar.component';
+import { AdminNavbarComponent } from '../admin/components/admin-navbar/admin-navbar.component';
+=======
 import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
+>>>>>>> main
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
