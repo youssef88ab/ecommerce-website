@@ -1,43 +1,36 @@
 package com.ecommerce.demoapp.controller;
 
-import com.ecommerce.demoapp.Dto.UserAuthDTO;
-import com.ecommerce.demoapp.service.UserService;
-import jakarta.validation.Valid;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ecommerce.demoapp.Dto.AuthResponseDTO;
+import com.ecommerce.demoapp.Dto.LoginDTO;
+import com.ecommerce.demoapp.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    
+    @Autowired
+    private AuthService authService;
+     @PostMapping("/login") 
+    public ResponseEntity<?> login(@RequestBody LoginDTO request) {
+        System.out.println("EMAIL ENTERED: " + request.getMail());
+        System.out.println("PASSWORD ENTERED: " + request.getPassword());
 
-    private final UserService userService;
-
-    public AuthController(UserService userService) {
-        this.userService = userService;
+        Optional<AuthResponseDTO> response = authService.login(request.getMail(), request.getPassword());
+        
+        return response
+            .map(ResponseEntity::ok) // If response exists, return 200 OK with body
+            .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()); // Else return 401
     }
+ }
 
-    @PostMapping("/register")
-public ResponseEntity<?> register(@Valid @RequestBody UserAuthDTO authRequest) {
-    try {
-        int response = userService.createUser(authRequest);
-        if (response == 0) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().body("Registration failed");
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().body(e.getMessage());
-    }
-}
 
-    @PostMapping("/login")
-    public ResponseEntity<UserResponseDTO> login(@Valid @RequestBody AuthRequestDTO authRequest) {
-        UserResponseDTO response = userService.authenticateUser(authRequest);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/me")
-    public ResponseEntity<UserResponseDTO> getCurrentUser(@RequestParam String email) {
-        UserResponseDTO response = userService.getCurrentUser(email);
-        return ResponseEntity.ok(response);
-    }
-}

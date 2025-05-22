@@ -1,8 +1,4 @@
-
-/*import { Component } from '@angular/core';
-
-/* import { Component } from '@angular/core';
-
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
@@ -18,10 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SignupComponent {
 
-  /*
-
->>>>>>> main
-  registerForm: FormGroup;
+  //registerForm: FormGroup;
   userData = {
     username: '',
     email: '',
@@ -48,5 +41,5 @@ export class SignupComponent {
     
 
 
-}   */
+ 
 

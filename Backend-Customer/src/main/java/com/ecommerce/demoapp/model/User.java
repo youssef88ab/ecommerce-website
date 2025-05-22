@@ -58,7 +58,7 @@ public class User {
     public int getRole() {
         return this.role ;
     }
-    public void setUsername(String username) {
+    public void setName(String username) {
         this.username = username;
     }
     public void setEmail(String email) {

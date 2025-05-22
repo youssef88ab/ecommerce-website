@@ -15,13 +15,15 @@ public class DemoappApplication {
     }
     @Configuration
 public class CorsConfig implements WebMvcConfigurer {
+    
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200") // Your Angular app URL
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(true);
+            .allowedOriginPatterns("*")  // Changed from allowedOrigins
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true)
+            .maxAge(3600);  // 1 hour cache for preflight responses
     }
 }
 }

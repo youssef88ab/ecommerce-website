@@ -1,4 +1,4 @@
-package com.ecommerce.demoapp.service;
+/*package com.ecommerce.demoapp.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -83,4 +83,4 @@ public class UserService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByMail(email);
     }
-}
+}*/
