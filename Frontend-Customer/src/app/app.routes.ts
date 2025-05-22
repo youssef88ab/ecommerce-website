@@ -3,7 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { MainComponent } from './main/main.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { LoginComponent } from './admin/pages/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { PlainComponent } from './plain/plain.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 
