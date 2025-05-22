@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class AdminLoginComponent {
 
   credentials = { username: '', password: '' };
   errorMessage: string = '';
