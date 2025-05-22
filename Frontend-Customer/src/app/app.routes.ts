@@ -5,7 +5,6 @@ import { MainComponent } from './main/main.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PlainComponent } from './plain/plain.component';
-import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 
 /*import { SignupComponent } from './pages/signup/signup.component';*/
 
@@ -33,6 +32,7 @@ import { PaymentsComponent } from './admin/pages/payments/payments.component';
 import { AnalyticsComponent } from './admin/pages/analytics/analytics.component';
 import { DelivererLayoutComponent } from './admin/components/deliverer-layout/deliverer-layout.component';
 import { DelivrerComponent } from './admin/pages/delivrer/delivrer.component';
+import { AdminLoginComponent } from './admin/pages/login/login.component';
 
 export const routes: Routes = [
   {
@@ -51,7 +51,6 @@ export const routes: Routes = [
     component: PlainComponent, // Contains only <router-outlet>
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'admin-login', component: AdminLoginComponent },
       // { path: 'signup', component: SignupComponent },
       { path: 'forgot-pass', component: ForgotPassComponent },
       { path: 'verify-code', component: VerifyCodeComponent },
@@ -85,6 +84,8 @@ export const routes: Routes = [
     path: 'logout', component: LogoutComponent
   },
   { path: 'contact-us', component: ContactUsComponent },
+  { path: 'admin-login', component: AdminLoginComponent },
+
   // Delivrer Protected Routes
   {
     path: 'deliverer',
