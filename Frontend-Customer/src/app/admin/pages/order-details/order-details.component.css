@@ -1,148 +1,199 @@
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    
 }
 
-body , html{
+body, html {
     overflow-x: hidden;
-
+    background-color: #f8f9fa;
 }
 
-/* Start Content */
-
+/* Layout */
 .content {
-    margin-left: 250px; /* Match the sidebar width */
-    background-color: #f6fbfe;
+    margin-left: 250px;
     min-height: 100vh;
+    background-color: #f8f9fa;
+    width: calc(100% - 250px);
 }
 
-/* End Content */
-
-/* Start Form */ 
-
-#product-image {
-    width: 400px;
-    height: 400px;
+/* Order Card */
+.order-card {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    width: 100%;
+    margin: 0 auto;
 }
 
-.product-form input {
-    outline: none;
+/* Order Header */
+.order-header h2 {
+    color: #2c3e50;
+    font-size: 1.75rem;
 }
 
-.product-form #reset-btn {
-    background: #dc3545;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
+.order-header .text-muted {
+    color: #6c757d !important;
+    font-size: 0.875rem;
 }
 
-.product-form #submit-btn {
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
+/* Status Badge */
+.status-badge .badge {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 500;
 }
 
-#bag-icon {
-    min-width: 100%;
-    text-align: center;
-    height: auto;
-    font-size: 100px;
-    width: 100%; 
-    height: 100%;
+.bg-warning-subtle {
+    background-color: rgba(255, 193, 7, 0.1) !important;
 }
 
-td , th , td p{
-    font-size: 14px !important;
- }
- 
- 
- .user-table td img {
-     width: 110px;
-     height: 110px;
-     object-fit: cover;
-  }
- 
-  .user-table p {
-     font-size: 14px;
-  }
- 
-  .edit-btn {
-     background: #414141;
-     color: white;
-     border-radius: 5px;
-     border: none;
-     cursor: pointer;
-     padding: 20px;
-  }
- 
-  .delete-btn {
-     background: #dc3545;
-     color: white;
-     border-radius: 5px;
-     border: none;
-     cursor: pointer;
-     padding: 10px;
-  }
- 
-  tbody {
-    border-style: hidden !important;
-    padding: 10px 0px !important;
-  }
- 
-  thead { 
-     background-color: #dbdbdbbf;
-     border-radius: 10px;
- 
-  }
- 
- 
- 
-  table {
-     font-size: 14px !important;
-     width: 100%;
-     border-collapse: separate;
-     border-spacing: 0;  /* Remove spacing between table cells */
-     border-radius: 10px; /* Rounded corners for the table */
-     overflow: hidden; /* Ensure rounded corners are visible */
-  }
- 
-  .col-btn div {
-     display:  flex;
-     justify-content: space-between;
-  }
- 
-  button {
-     padding: 5px;
-     border-radius: 10px;
-     border: solid 1px black;
-  }
- 
-  #user-profile {
-     width: 10%;
-     height: 10%;
-  }
- 
- p {
-     
- }
- 
- td {
-    border-bottom: solid rgb(213, 211, 211) 1px;
- }
- 
- th , td p {
-     width: 100%;
-     white-space: nowrap;  /* Prevents wrapping */
-     overflow: hidden;      /* Hides overflow */
-     text-overflow: ellipsis; /* Adds "..." if text overflows */
-   }
+.bg-info-subtle {
+    background-color: rgba(13, 202, 240, 0.1) !important;
+}
 
-   .status-badge {
-      padding: 10px;
-   }
+.bg-success-subtle {
+    background-color: rgba(25, 135, 84, 0.1) !important;
+}
+
+.bg-danger-subtle {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* Order Items Table */
+.table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.table thead {
+    background-color: #f8f9fa;
+}
+
+.table th {
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 0.875rem;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9ecef;
+    color: #2c3e50;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table tfoot {
+    background-color: #f8f9fa;
+}
+
+.table tfoot td {
+    border-bottom: none;
+    font-weight: 600;
+}
+
+/* Product Thumbnail */
+.product-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Shipping Details Card */
+.shipping-details .card {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.shipping-details h5 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.shipping-details .text-muted {
+    color: #6c757d !important;
+    font-size: 0.75rem;
+}
+
+.shipping-details p {
+    color: #2c3e50;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+/* Icons */
+fa-icon {
+    color: #6c757d;
+}
+
+.text-primary fa-icon {
+    color: #0d6efd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .order-header {
+        flex-direction: column;
+    }
+
+    .status-badge {
+        margin-top: 1rem;
+    }
+
+    .table-responsive {
+        margin: 0 -1rem;
+    }
+}
+
+/* Utility Classes */
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.text-end {
+    text-align: right !important;
+}
+
+.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}
+
+.gap-4 {
+    gap: 1.5rem !important;
+}
+
+.gap-5 {
+    gap: 3rem !important;
+}
+
+/* Remove old styles that are no longer needed */
+#product-image,
+.product-form,
+#bag-icon,
+.user-table,
+.edit-btn,
+.delete-btn,
+#user-profile {
+    display: none;
+}
