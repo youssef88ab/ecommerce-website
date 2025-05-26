@@ -18,6 +18,9 @@
           <div>
             <p>Total Revenue</p>
             <h3>${{ salesSummary.revenue | number:'1.0-0' }}</h3>
+            <span class="growth" [ngClass]="{'positive': salesSummary.revenueGrowth >= 0, 'negative': salesSummary.revenueGrowth < 0}">
+              {{ salesSummary.revenueGrowth >= 0 ? '+' : '' }}{{ salesSummary.revenueGrowth }}%
+            </span>
           </div>
         </div>
     
@@ -28,6 +31,9 @@
           <div>
             <p>Total Orders</p>
             <h3>{{ salesSummary.orders | number:'1.0-0' }}</h3>
+            <span class="growth" [ngClass]="{'positive': salesSummary.orderGrowth >= 0, 'negative': salesSummary.orderGrowth < 0}">
+              {{ salesSummary.orderGrowth >= 0 ? '+' : '' }}{{ salesSummary.orderGrowth }}%
+            </span>
           </div>
         </div>
     
@@ -38,6 +44,9 @@
           <div>
             <p>Avg. Order Value</p>
             <h3>${{ salesSummary.avgOrderValue | number:'1.0-2' }}</h3>
+            <span class="growth" [ngClass]="{'positive': salesSummary.avgOrderValueGrowth >= 0, 'negative': salesSummary.avgOrderValueGrowth < 0}">
+              {{ salesSummary.avgOrderValueGrowth >= 0 ? '+' : '' }}{{ salesSummary.avgOrderValueGrowth }}%
+            </span>
           </div>
         </div>
     
@@ -48,112 +57,61 @@
           <div>
             <p>Conversion Rate</p>
             <h3>{{ salesSummary.conversionRate }}%</h3>
+            <span class="growth" [ngClass]="{'positive': salesSummary.conversionRateGrowth >= 0, 'negative': salesSummary.conversionRateGrowth < 0}">
+              {{ salesSummary.conversionRateGrowth >= 0 ? '+' : '' }}{{ salesSummary.conversionRateGrowth }}%
+            </span>
           </div>
         </div>
       </div>
     
       <!-- Charts Section -->
       <div class="charts-grid">
-        <div class="chart-card">
+        <div class="chart-container">
           <div class="chart-header">
-            <h4>Revenue Overview</h4>
-            <button class="icon-button"><i class="fas fa-expand"></i></button>
-          </div>
-          <div class="chart-container">
-            <canvas id="revenueChart"></canvas>
-          </div>
-        </div>
-    
-        <div class="chart-card">
-          <div class="chart-header">
-            <h4>Sales by Category</h4>
-            <div class="dropdown">
-              <button class="icon-button"><i class="fas fa-filter"></i></button>
+            <h3>Revenue Overview</h3>
+            <div class="chart-controls">
+              <button [class.active]="chartPeriod === 'day'" (click)="setChartPeriod('day')">Day</button>
+              <button [class.active]="chartPeriod === 'week'" (click)="setChartPeriod('week')">Week</button>
+              <button [class.active]="chartPeriod === 'month'" (click)="setChartPeriod('month')">Month</button>
             </div>
           </div>
-          <div class="chart-container">
-            <canvas id="categoryChart"></canvas>
+          <canvas id="revenueChart"></canvas>
+        </div>
+    
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3>Sales by Category</h3>
           </div>
+          <canvas id="categoryChart"></canvas>
         </div>
       </div>
     
-      <!-- Data Tables Section -->
-      <div class="data-grid">
-        <div class="data-card">
-          <div class="data-header">
-            <h4>Top Selling Products</h4>
-          </div>
-          <div class="data-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Category</th>
-                  <th>Sold</th>
-                  <th>Revenue</th>
-      
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let product of topProducts">
-                  <td>{{ product.name }}</td>
-                  <td>{{ product.category }}</td>
-                  <td>{{ product.quantitySold | number:'1.0-0' }}</td>
-                  <td>${{ product.revenue | number:'1.0-0' }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-    
-        <div class="insights-card">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="fas fa-users"></i>
-              Customer Insights
-            </h3>
+      <!-- Customer Insights -->
+      <div class="insights-section">
+        <h3>Customer Insights</h3>
+        <div class="insights-grid">
+          <div class="insight-card">
+            <h4>New Customers</h4>
+            <p class="value">{{ customerInsights.newCustomers | number:'1.0-0' }}</p>
+            <span class="growth" [ngClass]="{'positive': customerInsights.newCustomerGrowth >= 0, 'negative': customerInsights.newCustomerGrowth < 0}">
+              {{ customerInsights.newCustomerGrowth >= 0 ? '+' : '' }}{{ customerInsights.newCustomerGrowth }}%
+            </span>
           </div>
         
-          <div class="insights-grid">
-            <!-- New Customers -->
-            <div class="insight-item">
-              <div class="icon-wrapper bg-blue-10">
-                <i class="fas fa-user-plus text-blue"></i>
-              </div>
-              <div class="metric-content">
-                <p class="metric-label">New Customers</p>
-                <div class="metric-value">
-                  <h3>{{ customerInsights.newCustomers | number:'1.0-0' }}</h3>
-                </div>
-              </div>
-            </div>
+          <div class="insight-card">
+            <h4>Repeat Customers</h4>
+            <p class="value">{{ customerInsights.repeatCustomers | number:'1.0-0' }}</p>
+            <span class="growth" [ngClass]="{'positive': customerInsights.repeatCustomerGrowth >= 0, 'negative': customerInsights.repeatCustomerGrowth < 0}">
+              {{ customerInsights.repeatCustomerGrowth >= 0 ? '+' : '' }}{{ customerInsights.repeatCustomerGrowth }}%
+            </span>
+          </div>
         
-            <!-- Repeat Customers -->
-            <div class="insight-item">
-              <div class="icon-wrapper bg-green-10">
-                <i class="fas fa-redo text-green"></i>
-              </div>
-              <div class="metric-content">
-                <p class="metric-label">Repeat Customers</p>
-                <div class="metric-value">
-                  <h3>{{ customerInsights.repeatCustomers | number:'1.0-0' }}</h3>
-     
-                </div>
-              </div>
-            </div>
-        
-            <!-- Avg. Customer Value -->
-            <div class="insight-item">
-              <div class="icon-wrapper bg-amber-10">
-                <i class="fas fa-star text-amber"></i>
-              </div>
-              <div class="metric-content">
-                <p class="metric-label">Avg. Customer Value</p>
-                <div class="metric-value">
-                  <h3>${{ customerInsights.avgCustomerValue | number:'1.0-2' }}</h3>
-                </div>
-              </div>
-            </div>
+          <div class="insight-card">
+            <h4>Avg. Customer Value</h4>
+            <p class="value">${{ customerInsights.avgCustomerValue | number:'1.0-2' }}</p>
+            <span class="growth" [ngClass]="{'positive': customerInsights.avgCustomerValueGrowth >= 0, 'negative': customerInsights.avgCustomerValueGrowth < 0}">
+              {{ customerInsights.avgCustomerValueGrowth >= 0 ? '+' : '' }}{{ customerInsights.avgCustomerValueGrowth }}%
+            </span>
           </div>
         </div>
       </div>
