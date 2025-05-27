@@ -37,6 +37,10 @@ public class AnalyticsService {
         return yearlySales;
     }
 
+    public Long getTotalOrders() {
+        Long totalOrders = orderRepo.count();
+        return  totalOrders;
+    }
 
 
 }

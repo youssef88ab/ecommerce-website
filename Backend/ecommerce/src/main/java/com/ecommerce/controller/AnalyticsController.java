@@ -33,4 +33,9 @@ public class AnalyticsController {
     public ResponseEntity<Stack<Long>> getYearlySales() {
         return  new ResponseEntity<>(analyticsService.getYearlySales() , HttpStatus.OK);
     }
+
+    @GetMapping("/totalOrders")
+    public ResponseEntity<Long> getTotalOrders() {
+        return new ResponseEntity<>(analyticsService.getTotalOrders() , HttpStatus.OK);
+    }
 }
