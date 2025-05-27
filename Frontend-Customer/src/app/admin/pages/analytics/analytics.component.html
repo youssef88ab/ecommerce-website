@@ -2,7 +2,7 @@
     <admin-sidebar class="sidebar"></admin-sidebar>
     <main class="content">
       <admin-navbar></admin-navbar>
-      <div class="dashboard-container">
+      <div class="dashboard-container p-3" >
         <!-- Header -->
         <div class="dashboard-header">
           <h2>Analytics Dashboard</h2>
@@ -17,7 +17,7 @@
             </div>
             <div>
               <p>Total Revenue</p>
-              <h3>${{ salesSummary.revenue | number:'1.0-0' }}</h3>
+              <h3>${{ totalSales }}</h3>
             </div>
           </div>
       
@@ -27,7 +27,7 @@
             </div>
             <div>
               <p>Total Orders</p>
-              <h3>{{ salesSummary.orders | number:'1.0-0' }}</h3>
+              <h3>{{ totalOrders }}</h3>
             </div>
           </div>
       

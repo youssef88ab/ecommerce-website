@@ -100,6 +100,9 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     avgCustomerValueGrowth: 5.3
   };
 
+  totalSales : number = 0 ; 
+  totalOrders: number = 0 ;
+
   private revenueChart: Chart | null = null;
   private categoryChart: Chart | null = null;
 
@@ -112,6 +115,8 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     this.fetchTopProducts();
     this.fetchYearlySales();
     this.initializeCharts();
+    this.fetchTotalSales();
+    this.fetchTotalOrders();
   }
 
   ngAfterViewInit(): void {
@@ -131,6 +136,29 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  fetchTotalSales() {
+    this.AnalyticsService.getTotalSales().subscribe({
+      next: (data) => {
+        this.totalSales = data ;
+      },
+      error: (err) => {
+        console.error('Failed To Fetch Total Sales');
+      }
+    });
+  }
+
+  fetchTotalOrders() {
+    this.AnalyticsService.getTotalOrders().subscribe({
+      next: (data) => {
+        this.totalOrders = data ;
+      },
+      error: (err) => {
+        console.error('Failed To Fetch Total Sales');
+      }
+    });
+  }
+
 
   initCharts(): void {
     const revenueCanvas = document.getElementById('revenueChart') as HTMLCanvasElement;
