@@ -60,7 +60,7 @@
                           </a>
                           <div class="d-flex flex-column ms-3">
                             <h6 class="fw-bold mb-1">Total Orders</h6>
-                            <h6 class="mb-0 fw-bold">{{ordersCount}}</h6>
+                            <h6 class="mb-0 fw-bold">{{ totalOrders }}</h6>
                           </div>
                         </div>
                       </div>
@@ -130,10 +130,10 @@
                           <tbody>
                             <tr *ngFor="let order of recentOrders">
                               <td>
-                                <img class="img-fluid " src="/Images/product1.png" alt="{{order.proudctName}}" style="max-height: 50px;">
+                                <img class="img-fluid " [src]="order.imageUrl" alt="{{order.name}}" style="max-height: 50px;">
                               </td>
-                              <td class="text-start align-middle ">{{order.proudctName}}</td>
-                              <td class="text-center align-middle">{{order.quantity}}</td>
+                              <td class="text-start align-middle ">{{order.name}}</td>
+                              <td class="text-center align-middle">{{order.stockQuantity}}</td>
                               <td class="text-center align-middle">${{order.price}}</td>
                             </tr>
                           </tbody>
@@ -165,14 +165,14 @@
                           <tbody>
                             <tr *ngFor="let product of topSellingProducts">
                               <td class="text-center align-middle">
-                                <img class="img-fluid rounded" style="max-height: 60px;" src="/Images/product1.png" [alt]="product.proudctName">
+                                <img class="img-fluid rounded" style="max-height: 60px;" [src]="product.imageUrl" [alt]="product.name">
                               </td>
                               <td class="text-start align-middle">
-                                {{ product.proudctName }}
+                                {{ product.name }}
                               </td>
                               <td class="text-center align-middle">${{ product.price | number:'1.2-2' }}</td>
-                              <td class="text-center align-middle">{{ product.quantity }}</td>
-                              <td class="text-center align-middle">${{product.quantity * product.price}}</td>
+                              <td class="text-center align-middle">{{ product.stockQuantity }}</td>
+                              <td class="text-center align-middle">${{product.stockQuantity * product.price}}</td>
                             </tr>
                           </tbody>
                         </table>

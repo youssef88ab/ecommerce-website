@@ -9,6 +9,7 @@ import { OrderItems } from '../../services/order.service';
 import { OrderItemsService } from '../../services/order-items.service';
 import { Product, ProductService } from '../../services/product.service';
 import { AnalyticsService } from '../../services/analytics.service';
+import { error } from 'node:console';
 
 
 @Component({
@@ -23,9 +24,9 @@ export class DashboardComponent {
 
   username: string | null = localStorage.getItem("username");
 
-  topSellingProducts: OrderItems[] = [];
+  topSellingProducts: Product[] = [];
 
-  recentOrders: OrderItems[] = [];
+  recentOrders: Product[] = [];
 
   productsCount: number = 0 ;
 
@@ -34,6 +35,8 @@ export class DashboardComponent {
   totalSales: number = 0 ;
 
   totalUsers: number = 0 ;
+
+  totalOrders: number = 0 ;
 
 
   xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -57,8 +60,7 @@ export class DashboardComponent {
     this.fetchOrdersCount();
     this.fetchTotalSales();
     this.fetchTotalUsers();
-    
-    // Fetch yearly sales last and create chart after data arrives
+    this.fetchTotalOrders();
     this.fetchYearlySales();
   }
   
@@ -107,7 +109,7 @@ export class DashboardComponent {
   }
 
   fetchRecentOrders(): void {
-    this.orderItemsService.getOrders().subscribe({
+    this.productService.getProducts().subscribe({
       next: (data) => {
         this.recentOrders = data.slice(0, 3);
       },
@@ -117,8 +119,19 @@ export class DashboardComponent {
     });
   }
 
+  fetchTotalOrders(): void {
+    this.analyticsService.getTotalOrders().subscribe({
+      next: (data) => {
+        this.totalOrders = data ; 
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
+
   fetchTopProducts(): void {
-    this.orderItemsService.getOrders().subscribe({
+    this.productService.getProducts().subscribe({
       next: (data) => {
         this.topSellingProducts = data.slice(0 , 5) ;
       }, 

@@ -47,13 +47,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let product of products">
+                <tr *ngFor="let product of paginatedProducts">
                   <td class="p-3 text-center">
                     <div
                       class="d-flex flex-row justify-content-start gap-2 align-items-center"
                     >
                       <img
-                        src="/Images/product1.png"
+                        [src]="product.imageUrl"
                         id="user-profile"
                         alt=""
                         class="img-fluid"
@@ -125,19 +125,37 @@
                 <tr>
                   <td colspan="5" class="border-0">
                     <div class="pagination d-flex justify-content-center">
-                      <ul
-                        class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3"
-                      >
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                        <li>5</li>
+                      <ul class="d-flex gap-3 list-unstyled mt-3">
+              
+                        <!-- PREVIOUS button -->
+                        <li class="page-item" style="cursor: pointer;">
+                          <button 
+                            class="btn btn-outline-dark"
+                            [disabled]="currentPage === 1"
+                            (click)="changePage(currentPage - 1)"
+                          >
+                            &laquo; Previous
+                          </button>
+                        </li>
+              
+                        <!-- NEXT button -->
+                        <li class="page-item" style="cursor: pointer;">
+                          <button 
+                            class="btn btn-outline-dark"
+                            [disabled]="currentPage === totalPages"
+                            (click)="changePage(currentPage + 1)"
+                          >
+                            Next &raquo;
+                          </button>
+                        </li>
+              
                       </ul>
                     </div>
                   </td>
                 </tr>
               </tfoot>
+              
+              
             </table>
           </div>
         </div>
