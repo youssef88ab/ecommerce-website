@@ -229,7 +229,7 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
         this.topProducts = data.slice(0, 3).map(product => ({
           name: product.name,
           category: product.category,
-          image: product.image,
+          image: product.imageUrl,
           quantitySold: 0,
           revenue: 0,
           growth: 0

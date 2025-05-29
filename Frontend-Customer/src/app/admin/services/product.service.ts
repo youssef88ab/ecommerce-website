@@ -9,7 +9,7 @@ export interface Product {
   description: string;
   price: number;
   category: string;
-  image: string;
+  imageUrl: string;
   stockQuantity: number;
   createdAt: Date;
   updatedAt: Date;

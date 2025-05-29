@@ -16,68 +16,89 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './manage-products.component.css' ,
   
 })
-export class ManageProductsComponent implements OnInit{
+export class ManageProductsComponent implements OnInit {
+  keyword: string = '';
 
-    keyword : string = '';
+  productsNumber: number = 0;
 
-    productsNumber : number = 0 ;
+  products: Product[] = [];
+  paginatedProducts: Product[] = [];  // <-- this will hold products for current page
 
-    products: Product[] = [] ; 
-    
-    constructor(private productService : ProductService) {
+  // Pagination variables
+  currentPage: number = 1;
+  itemsPerPage: number = 5;  // choose how many items per page
+  totalPages: number = 0;
 
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.fetchProducts();
+  }
+
+  fetchProducts(): void {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+        this.productsNumber = this.products.length;
+        this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
+        this.updatePaginatedProducts();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  updatePaginatedProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedProducts = this.products.slice(startIndex, endIndex);
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePaginatedProducts();
     }
+  }
   
-    ngOnInit(): void {
-        this.fetchProducts();
-    }
 
-    fetchProducts(): void {
-        this.productService.getProducts()
-      .subscribe({
+  deleteProduct(id: number): void {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.deleteProduct(id).subscribe({
+        next: () => {
+          this.products = this.products.filter(p => p.id !== id);
+          this.productsNumber = this.products.length;
+          this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
+          // Adjust currentPage if needed
+          if (this.currentPage > this.totalPages) {
+            this.currentPage = this.totalPages;
+          }
+          this.updatePaginatedProducts();
+        },
+        error: (err) => {
+          console.error('Error deleting product:', err);
+        }
+      });
+    }
+  }
+
+  onSearch(keyword: string): void {
+    if (!keyword) {
+      this.fetchProducts();
+    } else {
+      this.productService.searchProduct(keyword).subscribe({
         next: (data) => {
           this.products = data;
           this.productsNumber = this.products.length;
-          console.log('Fetched products:', data);  // Log the response data
-
+          this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
+          this.currentPage = 1;
+          this.updatePaginatedProducts();
         },
         error: (err) => {
           console.error(err);
         }
       });
     }
-
-    deleteProduct(id: number) : void {
-        console.log('Deleting product with id:', id);  // Log the id
-        if (confirm('Are you sure you want to delete this product?')) {
-            this.productService.deleteProduct(id)
-              .subscribe({
-                next: () => {
-                  this.products = this.products.filter(product => product.id !== id);
-                },
-                error: (err) => {
-                  console.error('Error deleting product:', err);
-                }
-              });
-            }
-        }
-
-    onSearch(keyword: string) : void {
-      if (keyword == ''){
-        this.fetchProducts();
-      }
-      else {
-        this.productService.searchProduct(keyword).subscribe({
-          next: (data) => {
-            this.products = data ;
-            console.log("Searched Product : " , data);
-          },
-          error: (err) => {
-            console.error(err);
-          }
-        })
-      }
-
-
-    }
+  }
 }

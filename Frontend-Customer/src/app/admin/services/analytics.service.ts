@@ -24,6 +24,6 @@ export class AnalyticsService {
     }
 
     getTotalOrders(): Observable<number> {
-      return this.http.get<number>((`${this.apiUrl}/totalOrders)`));
+      return this.http.get<number>(`${this.apiUrl}/totalOrders`);
     }
 }
