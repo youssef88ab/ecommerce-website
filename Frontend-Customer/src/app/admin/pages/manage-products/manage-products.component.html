@@ -22,6 +22,41 @@
                       [(ngModel)]="keyword"
                     />
                   </div>
+                  <div class="col-auto mx-2">
+                    <div class="dropdown">
+                      <button class="btn btn-outline-secondary dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="min-width: 150px;">
+                        <i class="bi" [ngClass]="{
+                          'bi-grid': !selectedCategory,
+                          'bi-laptop': selectedCategory === 'Computers & Accessories',
+                          'bi-phone': selectedCategory === 'Mobile Phones & Accessories',
+                          'bi-controller': selectedCategory === 'Gaming',
+                          'bi-tv': selectedCategory === 'Home Entertainment',
+                          'bi-headphones': selectedCategory === 'Audio & Headphones',
+                          'bi-watch': selectedCategory === 'Wearable Technology',
+                          'bi-camera': selectedCategory === 'Cameras & Photography',
+                          'bi-router': selectedCategory === 'Networking & Smart Home',
+                          'bi-printer': selectedCategory === 'Office Electronics',
+                          'bi-car-front': selectedCategory === 'Car Electronics',
+                          'bi-cpu': selectedCategory === 'Computer Components'
+                        }"></i>
+                        {{ selectedCategory ? selectedCategory : 'All Categories' }}
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = ''; onCategoryChange()"><i class="bi bi-grid"></i> All Categories</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Computers & Accessories'; onCategoryChange()"><i class="bi bi-laptop"></i> Computers & Accessories</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Mobile Phones & Accessories'; onCategoryChange()"><i class="bi bi-phone"></i> Mobile Phones & Accessories</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Gaming'; onCategoryChange()"><i class="bi bi-controller"></i> Gaming</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Home Entertainment'; onCategoryChange()"><i class="bi bi-tv"></i> Home Entertainment</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Audio & Headphones'; onCategoryChange()"><i class="bi bi-headphones"></i> Audio & Headphones</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Wearable Technology'; onCategoryChange()"><i class="bi bi-watch"></i> Wearable Technology</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Cameras & Photography'; onCategoryChange()"><i class="bi bi-camera"></i> Cameras & Photography</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Networking & Smart Home'; onCategoryChange()"><i class="bi bi-router"></i> Networking & Smart Home</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Office Electronics'; onCategoryChange()"><i class="bi bi-printer"></i> Office Electronics</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Car Electronics'; onCategoryChange()"><i class="bi bi-car-front"></i> Car Electronics</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Computer Components'; onCategoryChange()"><i class="bi bi-cpu"></i> Computer Components</a></li>
+                      </ul>
+                    </div>
+                  </div>
                   <div class="col-auto">
                     <button class="btn btn-dark px-4" (click)="onSearch(keyword)">
                       Search
@@ -109,6 +144,7 @@
                         [routerLink]="['../product-details', product.id]"
                       >
                         View Details
+
                       </button>
                       <button
                         mat-menu-item

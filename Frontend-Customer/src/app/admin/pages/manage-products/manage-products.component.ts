@@ -18,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ManageProductsComponent implements OnInit {
   keyword: string = '';
+  selectedCategory: string = '';
+  originalProducts: any[] = [];  // Store original list of products
   Math = Math;
 
   productsNumber: number = 0;
@@ -39,10 +41,14 @@ export class ManageProductsComponent implements OnInit {
   fetchProducts(): void {
     this.productService.getProducts().subscribe({
       next: (data) => {
+        this.originalProducts = data;  // Store original list
         this.products = data;
         this.productsNumber = this.products.length;
         this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
         this.updatePaginatedProducts();
+        // Log unique categories
+        const categories = [...new Set(data.map(p => p.category))];
+        console.log('Available categories:', categories);
       },
       error: (err) => {
         console.error(err);
@@ -103,21 +109,39 @@ export class ManageProductsComponent implements OnInit {
   }
 
   onSearch(keyword: string): void {
-    if (!keyword) {
-      this.fetchProducts();
-    } else {
+    if (keyword == '') {
+      this.products = [...this.originalProducts];  // Reset to original list
+      this.applyCategoryFilter();
+    }
+    else {
       this.productService.searchProduct(keyword).subscribe({
         next: (data) => {
           this.products = data;
-          this.productsNumber = this.products.length;
-          this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
-          this.currentPage = 1;
-          this.updatePaginatedProducts();
+          this.applyCategoryFilter();
         },
         error: (err) => {
-          console.error(err);
+          console.error('Error Searching Product');
         }
       });
     }
+  }
+
+  onCategoryChange(): void {
+    this.products = [...this.originalProducts];  // Reset to original list
+    if (this.keyword) {
+      this.onSearch(this.keyword);  // Re-apply search if there's a keyword
+    } else {
+      this.applyCategoryFilter();  // Just apply category filter
+    }
+  }
+
+  applyCategoryFilter(): void {
+    if (this.selectedCategory) {
+      this.products = this.products.filter(product => product.category === this.selectedCategory);
+    }
+    this.productsNumber = this.products.length;
+    this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.updatePaginatedProducts();
   }
 }

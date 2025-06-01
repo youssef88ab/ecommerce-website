@@ -67,9 +67,12 @@ export class OrderService {
     return this.http.get<Order[]>(`${this.apiUrl}/status/${status}`);
   }
 
+  searchOrders(keyword: string): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/search?keyword=${keyword}`);
+  }
+
   livraison(id : number): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/livraison/${id}` , {});
   }
-
 
 }
