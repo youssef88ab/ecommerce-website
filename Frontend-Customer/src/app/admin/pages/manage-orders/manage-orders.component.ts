@@ -33,6 +33,14 @@ export class ManageOrdersComponent implements OnInit {
 
   Orders: Order[] = [];
 
+  paginatedOrders: Order[] = [];  // <-- this will hold orders for current page
+
+  // Pagination variables
+  currentPage: number = 1;
+  itemsPerPage: number = 10;  // choose how many items per page
+  totalPages: number = 0;
+  Math = Math;
+
   constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
@@ -44,12 +52,27 @@ export class ManageOrdersComponent implements OnInit {
     this.orderService.getOrders().subscribe({
       next: (data) => {
         this.Orders = data;
-        console.log('Fetched Orders:', data); // Log the response data
+        this.totalPages = Math.ceil(this.Orders.length / this.itemsPerPage);
+        this.updatePaginatedOrders();
+        console.log('Fetched Orders:', data);
       },
       error: (err) => {
         console.error(err);
       },
     });
+  }
+
+  updatePaginatedOrders(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedOrders = this.Orders.slice(startIndex, endIndex);
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePaginatedOrders();
+    }
   }
 
   CancelOrder(id: number): void {

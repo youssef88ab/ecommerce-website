@@ -124,32 +124,64 @@
               <tfoot>
                 <tr>
                   <td colspan="5" class="border-0">
-                    <div class="pagination d-flex justify-content-center">
-                      <ul class="d-flex gap-3 list-unstyled mt-3">
-              
-                        <!-- PREVIOUS button -->
-                        <li class="page-item" style="cursor: pointer;">
-                          <button 
-                            class="btn btn-outline-dark"
-                            [disabled]="currentPage === 1"
-                            (click)="changePage(currentPage - 1)"
-                          >
-                            &laquo; Previous
-                          </button>
-                        </li>
-              
-                        <!-- NEXT button -->
-                        <li class="page-item" style="cursor: pointer;">
-                          <button 
-                            class="btn btn-outline-dark"
-                            [disabled]="currentPage === totalPages"
-                            (click)="changePage(currentPage + 1)"
-                          >
-                            Next &raquo;
-                          </button>
-                        </li>
-              
-                      </ul>
+                    <div class="pagination-container">
+    
+                      <div class="pagination d-flex justify-content-center">
+                        <ul class="d-flex gap-3 list-unstyled mt-3">
+                          <!-- First Page -->
+                          <li class="page-item" [class.disabled]="currentPage === 1">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === 1"
+                              (click)="changePage(1)"
+                              title="First Page"
+                            >
+                              &laquo;&laquo;
+                            </button>
+                          </li>
+
+                          <!-- PREVIOUS button -->
+                          <li class="page-item" [class.disabled]="currentPage === 1">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === 1"
+                              (click)="changePage(currentPage - 1)"
+                              title="Previous Page"
+                            >
+                              &laquo;
+                            </button>
+                          </li>
+
+                          <!-- Current Page Number -->
+                          <li class="page-item active">
+                            <span class="btn">{{ currentPage }} of {{ totalPages }}</span>
+                          </li>
+
+                          <!-- NEXT button -->
+                          <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === totalPages"
+                              (click)="changePage(currentPage + 1)"
+                              title="Next Page"
+                            >
+                              &raquo;
+                            </button>
+                          </li>
+
+                          <!-- Last Page -->
+                          <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === totalPages"
+                              (click)="changePage(totalPages)"
+                              title="Last Page"
+                            >
+                              &raquo;&raquo;
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </td>
                 </tr>
