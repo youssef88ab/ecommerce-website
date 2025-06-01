@@ -20,10 +20,15 @@ import { MatButtonModule } from '@angular/material/button';
 export class ManageUsersComponent implements OnInit {
 
     Users: User[] = [];
-
-    UserNumber: number = this.Users.length ;
-
+    paginatedUsers: User[] = [];  // <-- this will hold users for current page
+    UserNumber: number = this.Users.length;
     keyword: string = '';
+
+    // Pagination variables
+    currentPage: number = 1;
+    itemsPerPage: number = 10;  // choose how many items per page
+    totalPages: number = 0;
+    Math = Math;
   
     constructor(private UserService: UserService) {}
   
@@ -37,12 +42,27 @@ export class ManageUsersComponent implements OnInit {
         next: (data) => {
           this.Users = data;
           this.UserNumber = this.Users.length;
-          console.log('Fetched Users:', data); // Log the response data
+          this.totalPages = Math.ceil(this.Users.length / this.itemsPerPage);
+          this.updatePaginatedUsers();
+          console.log('Fetched Users:', data);
         },
         error: (err) => {
           console.error(err);
         },
       });
+    }
+
+    updatePaginatedUsers(): void {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.paginatedUsers = this.Users.slice(startIndex, endIndex);
+    }
+
+    changePage(page: number): void {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
+        this.updatePaginatedUsers();
+      }
     }
 
     onSearch(keyword: string): void {

@@ -39,45 +39,45 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let User of Users">
+                <tr *ngFor="let user of paginatedUsers">
                   <td class="p-3 text-center">
                     <div class="d-flex flex-row justify-content-start gap-2 align-items-center">
                       <img src="/assets/images/profile.png" alt="user" class="img-fluid rounded-circle" style="width: 50px; height: 50px;" />
   
                       <div class="d-flex flex-column">
-                        <p class="text-start fw-bold">{{ User.username }}</p>
+                        <p class="text-start fw-bold">{{ user.username }}</p>
                         <p class="text-start text-black text-opacity-75">
-                          {{ User.email }}
+                          {{ user.email }}
                         </p>
                       </div>
                     </div>
                   </td>
                   <td class="text-center">
-                    <ng-container *ngIf="User.role && User.role.length > 0">
-                      <div [ngSwitch]="User.role">
+                    <ng-container *ngIf="user.role && user.role.length > 0">
+                      <div [ngSwitch]="user.role">
                         <span *ngSwitchCase="'ADMIN'" class="badge bg-primary rounded-pill p-2 text-center">
-                          {{ User.role }}
+                          {{ user.role }}
                         </span>
                         <span *ngSwitchCase="'CUSTOMER'" class="badge bg-secondary rounded-pill p-2 text-center">
-                          {{ User.role }}
+                          {{ user.role }}
                         </span>
                         <span *ngSwitchCase="'DELIVERER'" class="badge bg-success rounded-pill p-2 text-center">
-                          {{ User.role }}
+                          {{ user.role }}
                         </span>
                         <span *ngSwitchDefault class="badge bg-info rounded-pill p-2 text-center">
-                          {{ User.role }}
+                          {{ user.role }}
                         </span>
                       </div>
                     </ng-container>
-                    <ng-container *ngIf="!User.role || User.role.length === 0">
+                    <ng-container *ngIf="!user.role || user.role.length === 0">
                       <span class="badge bg-light text-dark rounded-pill p-2 text-center">N/A</span>
                     </ng-container>
                   </td>
                   <td class="text-center">
-                    <p>{{ User.birthDate }}</p>
+                    <p>{{ user.birthDate }}</p>
                   </td>
                   <td class="text-center">
-                    <p>{{ User.dateAdded }}</p>
+                    <p>{{ user.dateAdded }}</p>
                   </td>
                   <td>
                     <button mat-icon-button [matMenuTriggerFor]="menu" class="no-shadow border-0">
@@ -85,13 +85,13 @@
                     </button>
                     
                     <mat-menu #menu="matMenu" class="custom-menu">
-                      <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['../edit-user', User.id]">
+                      <button mat-menu-item class="custom-menu-item mb-2" [routerLink]="['../edit-user', user.id]">
                         Edit
                       </button>
-                      <button mat-menu-item class="custom-menu-item" [routerLink]="['../user-details', User.id]">
+                      <button mat-menu-item class="custom-menu-item" [routerLink]="['../user-details', user.id]">
                         View Details
                       </button>
-                      <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteUser(User.id)">
+                      <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteUser(user.id)">
                         Delete
                       </button>
                     </mat-menu>
@@ -101,14 +101,63 @@
               <tfoot>
                 <tr>
                   <td colspan="5" class="border-0">
-                    <div class="pagination d-flex justify-content-center">
-                      <ul class="d-flex flex-row justify-content-center align-items-center gap-4 list-unstyled mt-3">
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                        <li>5</li>
-                      </ul>
+                    <div class="pagination-container">
+                      <div class="pagination d-flex justify-content-center">
+                        <ul class="d-flex gap-3 list-unstyled mt-3">
+                          <!-- First Page -->
+                          <li class="page-item" [class.disabled]="currentPage === 1">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === 1"
+                              (click)="changePage(1)"
+                              title="First Page"
+                            >
+                              &laquo;&laquo;
+                            </button>
+                          </li>
+
+                          <!-- PREVIOUS button -->
+                          <li class="page-item" [class.disabled]="currentPage === 1">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === 1"
+                              (click)="changePage(currentPage - 1)"
+                              title="Previous Page"
+                            >
+                              &laquo;
+                            </button>
+                          </li>
+
+                          <!-- Current Page Number -->
+                          <li class="page-item active">
+                            <span class="btn">{{ currentPage }} of {{ totalPages }}</span>
+                          </li>
+
+                          <!-- NEXT button -->
+                          <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === totalPages"
+                              (click)="changePage(currentPage + 1)"
+                              title="Next Page"
+                            >
+                              &raquo;
+                            </button>
+                          </li>
+
+                          <!-- Last Page -->
+                          <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <button 
+                              class="btn"
+                              [disabled]="currentPage === totalPages"
+                              (click)="changePage(totalPages)"
+                              title="Last Page"
+                            >
+                              &raquo;&raquo;
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </td>
                 </tr>

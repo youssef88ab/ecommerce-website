@@ -38,7 +38,7 @@ public class AnalyticsService {
     }
 
     public Long getTotalOrders() {
-        Long totalOrders = orderRepo.count();
+        Long totalOrders = orderRepo.getTotalOrders();
         return  totalOrders;
     }
 

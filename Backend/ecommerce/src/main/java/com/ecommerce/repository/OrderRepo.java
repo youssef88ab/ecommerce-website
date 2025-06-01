@@ -20,6 +20,11 @@ public interface OrderRepo extends JpaRepository<Order , Long> {
     @Query("SELECT SUM(o.totalPrice) FROM Order o")
     public Long getTotalSales();
 
+    @Query("SELECT COUNT(*) FROM Order o")
+    public Long getTotalOrders();
+
+
+
     @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE FUNCTION('MONTH', o.orderDate) = :month")
     Long findByOrderMonth(@Param("month") int month);
 

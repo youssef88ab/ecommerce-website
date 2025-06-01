@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ManageProductsComponent implements OnInit {
   keyword: string = '';
+  Math = Math;
 
   productsNumber: number = 0;
 
@@ -26,7 +27,7 @@ export class ManageProductsComponent implements OnInit {
 
   // Pagination variables
   currentPage: number = 1;
-  itemsPerPage: number = 5;  // choose how many items per page
+  itemsPerPage: number = 10;  // choose how many items per page
   totalPages: number = 0;
 
   constructor(private productService: ProductService) {}
@@ -61,7 +62,25 @@ export class ManageProductsComponent implements OnInit {
       this.updatePaginatedProducts();
     }
   }
-  
+
+  getPageNumbers(): number[] {
+    const pages: number[] = [];
+    const maxVisiblePages = 3;
+    
+    let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(this.totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
+  }
 
   deleteProduct(id: number): void {
     if (confirm('Are you sure you want to delete this product?')) {
