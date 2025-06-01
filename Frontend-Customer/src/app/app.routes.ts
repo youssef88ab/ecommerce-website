@@ -33,6 +33,7 @@ import { AnalyticsComponent } from './admin/pages/analytics/analytics.component'
 import { DelivererLayoutComponent } from './admin/components/deliverer-layout/deliverer-layout.component';
 import { DelivrerComponent } from './admin/pages/delivrer/delivrer.component';
 import { AdminLoginComponent } from './admin/pages/login/login.component';
+import { ManageCategoriesComponent } from './admin/pages/manage-categories/manage-categories.component';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'manage-categories', component: ManageCategoriesComponent },
       { path: 'manage-products', component: ManageProductsComponent },
       { path: 'add-product', component: AddProductComponent },
       { path: 'edit-product/:productId', component: EditProductComponent },

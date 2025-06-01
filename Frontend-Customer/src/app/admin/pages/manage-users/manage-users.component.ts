@@ -23,6 +23,8 @@ export class ManageUsersComponent implements OnInit {
     paginatedUsers: User[] = [];  // <-- this will hold users for current page
     UserNumber: number = this.Users.length;
     keyword: string = '';
+    selectedRole: string = '';
+    originalUsers: User[] = [];  // Store original list of users
 
     // Pagination variables
     currentPage: number = 1;
@@ -40,6 +42,7 @@ export class ManageUsersComponent implements OnInit {
     fetchUsers(): void {
       this.UserService.getUsers().subscribe({
         next: (data) => {
+          this.originalUsers = data;  // Store original list
           this.Users = data;
           this.UserNumber = this.Users.length;
           this.totalPages = Math.ceil(this.Users.length / this.itemsPerPage);
@@ -67,19 +70,39 @@ export class ManageUsersComponent implements OnInit {
 
     onSearch(keyword: string): void {
       if (keyword == '') {
-        this.fetchUsers();
+        this.Users = [...this.originalUsers];  // Reset to original list
+        this.applyRoleFilter();
       }
       else {
         this.UserService.searchUser(keyword).subscribe({
           next: (data) => {
-            this.Users = data; 
+            this.Users = data;
+            this.applyRoleFilter();
           },
           error: (err) => {
             console.error('Error Searching User');
           }
         })
       }
+    }
 
+    onRoleChange(): void {
+      this.Users = [...this.originalUsers];  // Reset to original list
+      if (this.keyword) {
+        this.onSearch(this.keyword);  // Re-apply search if there's a keyword
+      } else {
+        this.applyRoleFilter();  // Just apply role filter
+      }
+    }
+
+    applyRoleFilter(): void {
+      if (this.selectedRole) {
+        this.Users = this.Users.filter(user => user.role === this.selectedRole);
+      }
+      this.UserNumber = this.Users.length;
+      this.totalPages = Math.ceil(this.Users.length / this.itemsPerPage);
+      this.currentPage = 1;
+      this.updatePaginatedUsers();
     }
 
     deleteUser(id: number): void {

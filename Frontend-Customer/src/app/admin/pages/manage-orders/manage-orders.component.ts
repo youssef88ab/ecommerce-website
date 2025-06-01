@@ -28,6 +28,8 @@ import { MatButtonModule } from '@angular/material/button';
 export class ManageOrdersComponent implements OnInit {
 
   keyword: string = '';
+  selectedStatus: string = '';
+  originalOrders: any[] = [];  // Store original list of orders
 
   ordersCount: number = 0 ;
 
@@ -51,6 +53,7 @@ export class ManageOrdersComponent implements OnInit {
   fetchOrders(): void {
     this.orderService.getOrders().subscribe({
       next: (data) => {
+        this.originalOrders = data;  // Store original list
         this.Orders = data;
         this.totalPages = Math.ceil(this.Orders.length / this.itemsPerPage);
         this.updatePaginatedOrders();
@@ -154,8 +157,50 @@ export class ManageOrdersComponent implements OnInit {
     return (`${year}, ${monthstr}, ${day}`);
   }
 
-  onSearch(keyword: string) {
-    
+  onSearch(keyword: string): void {
+    if (keyword == '') {
+      this.Orders = [...this.originalOrders];  // Reset to original list
+      this.applyStatusFilter();
+    }
+    else {
+      this.orderService.searchOrders(keyword).subscribe({
+        next: (data: Order[]) => {
+          this.Orders = data;
+          this.applyStatusFilter();
+        },
+        error: (err: any) => {
+          console.error('Error Searching Orders');
+        }
+      });
+    }
   }
-  
+
+  onStatusChange(): void {
+    this.Orders = [...this.originalOrders];  // Reset to original list
+    if (this.keyword) {
+      this.onSearch(this.keyword);  // Re-apply search if there's a keyword
+    } else {
+      this.applyStatusFilter();  // Just apply status filter
+    }
+  }
+
+  applyStatusFilter(): void {
+    if (this.selectedStatus) {
+      this.Orders = this.Orders.filter(order => order.status === this.selectedStatus);
+    }
+    this.ordersCount = this.Orders.length;
+    this.totalPages = Math.ceil(this.Orders.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.updatePaginatedOrders();
+  }
+
+  deleteOrder(id: number): void {
+    if (confirm('Are You Sure You Want To Delete This Order')) {
+      this.orderService.deleteOrder(id).subscribe({
+        error: (err) => {
+          console.error(err);
+        },
+      });
+    }
+  }
 }

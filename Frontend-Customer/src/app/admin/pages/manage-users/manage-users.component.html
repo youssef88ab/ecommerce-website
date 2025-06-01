@@ -21,6 +21,25 @@
                       [(ngModel)]="keyword"
                     />
                   </div>
+                  <div class="col-auto mx-2">
+                    <div class="dropdown">
+                      <button class="btn btn-outline-secondary dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="min-width: 150px;">
+                        <i class="bi" [ngClass]="{
+                          'bi-people': !selectedRole,
+                          'bi-shield-lock': selectedRole === 'ADMIN',
+                          'bi-person': selectedRole === 'CUSTOMER',
+                          'bi-truck': selectedRole === 'DELIVERER'
+                        }"></i>
+                        {{ selectedRole ? selectedRole : 'All Roles' }}
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedRole = ''; onRoleChange()"><i class="bi bi-people"></i> All Roles</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedRole = 'ADMIN'; onRoleChange()"><i class="bi bi-shield-lock"></i> Admin</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedRole = 'CUSTOMER'; onRoleChange()"><i class="bi bi-person"></i> Customer</a></li>
+                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedRole = 'DELIVERER'; onRoleChange()"><i class="bi bi-truck"></i> Deliverer</a></li>
+                      </ul>
+                    </div>
+                  </div>
                   <div class="col-auto">
                     <button class="btn btn-dark px-4" (click)="onSearch(keyword)">Search</button>
                   </div>
@@ -90,6 +109,7 @@
                       </button>
                       <button mat-menu-item class="custom-menu-item" [routerLink]="['../user-details', user.id]">
                         View Details
+
                       </button>
                       <button mat-menu-item class="custom-menu-item delete-item mt-2" (click)="deleteUser(user.id)">
                         Delete
