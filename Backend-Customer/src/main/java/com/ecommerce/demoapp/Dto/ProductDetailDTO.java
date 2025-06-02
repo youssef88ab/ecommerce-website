@@ -1,6 +1,5 @@
 package com.ecommerce.demoapp.Dto;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductDetailDTO {
@@ -9,15 +8,15 @@ public class ProductDetailDTO {
     private int rating ;
     private int review_count ;
     private String description;
-    private BigDecimal originalPrice;
-    private BigDecimal price;
+    private Double originalPrice;
+    private Double price;
     private String mainImgUrl ;
     private List<String> imageGallery;
     private int stockQuantity;
     
     public ProductDetailDTO() {}
 
-    public ProductDetailDTO(int id, String name, int rating, int review_count, String description, BigDecimal price, BigDecimal originalPrice, String imgUrl, List<String> imgGallery, int stockQuan) {
+    public ProductDetailDTO(int id, String name, int rating, int review_count, String description, Double price, Double originalPrice, String imgUrl, List<String> imgGallery, int stockQuan) {
         this.productId = id;
         this.productName = name;
         this.rating = rating ;
@@ -52,10 +51,10 @@ public class ProductDetailDTO {
     public String getDescription() {
         return this.description;
     }
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return this.price ;
     }
-    public BigDecimal getOriginalPrice() {
+    public Double getOriginalPrice() {
         return this.originalPrice ;
     }
     public String getImg() {

@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark px-4 custom-navbar">
+    <!-- Left side remains the same -->
     <a class="navbar-brand d-flex align-items-center" href="#">
         <img src="/Images/Cyberlife.JPG" width="30" height="30" class="d-inline-block align-top me-2" alt="">
         <span style='font-family: "Boldonse", system-ui; font-weight: 300; font-style: italic;'>Cybershop</span>
@@ -7,10 +8,12 @@
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
+            <!-- Your existing menu items remain the same -->
             <li class="nav-item"><a routerLink="/" class="nav-link" href="#">Home</a></li>
-            <li class="nav-item"><a routerLink="shop" class="nav-link" >Shop</a></li>
+            <li class="nav-item"><a routerLink="shop" class="nav-link">Shop</a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" routerLink="categories" data-bs-toggle="dropdown">Categories</a>
                 <ul class="dropdown-menu">
@@ -24,32 +27,63 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Community</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">About Us</a></li>
+                    <li><a class="dropdown-item" href="contact-us">About Us</a></li>
                     <li><a class="dropdown-item" href="#">Blog</a></li>
                 </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
         </ul>
+        
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
-      </form>
-      <div class="ms-3 cart-cont">
-        <a routerLink="cart" class="btn btn-light position-relative">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                3
-            </span>
-        </a>
-      </div>
-      <div class="ms-3 dropdown">
-          <a class="btn btn-outline-light dropdown-toggle" role="button" data-bs-toggle="dropdown">
-              <i class="bi bi-person-circle"></i> Account
-          </a>
-          <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="login">Log in</a></li>
-              <li><a class="dropdown-item" routerLink="signup">Sign up</a></li>
-          </ul>
-      </div>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+        
+        <div class="ms-3 cart-cont">
+            <a routerLink="cart" class="btn btn-light position-relative">
+                <i class="fas fa-shopping-cart"></i>
+                <span *ngIf="cartCount > 0"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ cartCount }}
+              </span>
+            </a>
+        </div>
+        <!--
+        <div class="overlay" id="overlay">
+            <div class="popup">
+                <h2>Êtes-vous sûr de vouloir vous déconnecter ?</h2>
+                <div class="popup-buttons">
+                    <button id="confirmLogout" class="yes">Oui, déconnecter</button>
+                    <button id="cancelLogout" class="no">Annuler</button>
+                </div>
+            </div>
+        </div> Logout Popup-->
+        <!-- Updated Account Section with Conditional Rendering -->
+        <div class="ms-3 dropdown" *ngIf="!isLoggedIn()">
+            <a class="btn btn-outline-light dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i> Account
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" routerLink="login">Log in</a></li>
+                <li><a class="dropdown-item" routerLink="signup">Sign up</a></li>
+            </ul>
+        </div>
+        
+        <div class="ms-3 dropdown" *ngIf="isLoggedIn()">
+            <a class="btn btn-outline-light dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                <img [src]="userProfileImage || 'assets/default-profile.png'" 
+                     class="rounded-circle" 
+                     width="30" 
+                     height="30"
+                     alt="Profile">
+                <span class="username-text">{{username}}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" routerLink="profile">Profile</a></li>
+                <li><a class="dropdown-item" routerLink="orders">My Orders</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" >Logout</a></li>
+              </ul>
+        </div>
     </div>
 </nav>

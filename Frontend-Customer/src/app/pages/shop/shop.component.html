@@ -88,7 +88,7 @@
                                 ${{product.originalPrice.toFixed(2)}}
                               </span>
                             </div>
-                            <button class="btn btn-add-to-cart">
+                            <button class="btn btn-add-to-cart" (click)="onAddToCart(product.productId)">
                               <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
                           </div>

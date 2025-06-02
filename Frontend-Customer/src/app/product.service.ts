@@ -38,4 +38,7 @@ export class ProductService {
   getProductById(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
+  addToCart(productId: number) {
+    return this.http.post('http://localhost:8080/cart/add', { productId }, { withCredentials: true });
+  }  
 }

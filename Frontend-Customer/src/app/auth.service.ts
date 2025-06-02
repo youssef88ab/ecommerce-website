@@ -12,12 +12,19 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string) {
-    return this.http.post<any>(`${this.apiUrl}/login`, {email, password})
+    return this.http.post<any>(`${this.apiUrl}/login`, {email, password}, { withCredentials: true })
     .subscribe({
       next: (response) => {
+        
         localStorage.setItem('auth_token', response.token);
         localStorage.setItem('user_role', response.role);
         localStorage.setItem('username', response.username);
+        if(response.imgUrl == null) {
+          localStorage.setItem('profileImg', '/Images/default-profile.jpg');
+        }
+        else {
+          localStorage.setItem('profileImg', response.imgUrl);
+        }
         this.redirectBasedOnRole(response.role);
       },
       error: (error) => {

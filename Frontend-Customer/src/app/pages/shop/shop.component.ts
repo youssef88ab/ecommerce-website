@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CategoryService, SubCategory,  Category} from '../../category.service';
 import { ProductService } from '../../product.service';
 import { Router } from '@angular/router';
+import { CartService } from '../../cart.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ShopComponent implements OnInit{
   currentPage = 0;
   totalPages = 0;
 
-  constructor(private categoryService: CategoryService, private productService: ProductService, private router: Router) {}
+  constructor(private categoryService: CategoryService, private productService: ProductService, private router: Router, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.loadProducts(0);
@@ -51,5 +52,18 @@ export class ShopComponent implements OnInit{
         if (!this.isOnSale(product)) return 0;
         return Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
       }
+
+      onAddToCart(productId: number) {
+        this.productService.addToCart(productId).subscribe({
+          next: () => {
+            alert('Product added to cart!');
+            this.cartService.loadCartCount();
+          },
+          error: (err) => {
+            console.error('Error adding to cart:', err);
+            alert('Failed to add product to cart.');
+          }
+        });
+      }      
      } 
   

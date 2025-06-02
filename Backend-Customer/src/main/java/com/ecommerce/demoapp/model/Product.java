@@ -1,6 +1,5 @@
 package com.ecommerce.demoapp.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,10 +15,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Table(name = "products")
@@ -46,11 +50,11 @@ public class Product {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
+    @Column(name = "price", nullable = false, precision = 10)
+    private Double price;
 
-    @Column(name = "original_price", precision = 10, scale = 2, nullable = false)
-    private BigDecimal originalPrice;
+    @Column(name = "original_price", precision = 10, nullable = false)
+    private Double originalPrice;
 
     @Column(name = "stock_quantity", nullable = false)
     private int stockQuantity;
@@ -67,6 +71,9 @@ public class Product {
     @Column(name = "last_ordered_date")
     private LocalDateTime lastOrderedDate;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CartItem> cartItems;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
@@ -82,7 +89,7 @@ public class Product {
 
     // Admin form constructor
     public Product(Subcategory subcategory, String productName, int rating, String description, 
-                  BigDecimal originalPrice, Integer stockQuantity, String mainImgUrl) {
+                  Double originalPrice, Integer stockQuantity, String mainImgUrl) {
         this.subcategory = subcategory;
         this.productName = productName;
         this.rating = rating ;
@@ -96,7 +103,7 @@ public class Product {
     }
 
     // Business logic methods
-    public void updatePrice(BigDecimal newPrice) {
+    public void updatePrice(Double newPrice) {
         // Only update current price, original remains unchanged
         this.price = newPrice;
     }
@@ -113,11 +120,11 @@ public class Product {
         }
     }
     public int getProductId() {
-        return productId;
+        return this.productId;
     }
 
     public Subcategory getSubcategory() {
-        return subcategory;
+        return this.subcategory;
     }
 
     public void setSubcategory(Subcategory subcategory) {
@@ -125,7 +132,7 @@ public class Product {
     }
 
     public String getProductName() {
-        return productName;
+        return this.productName;
     }
 
     public void setProductName(String productName) {
@@ -151,19 +158,26 @@ public class Product {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public List<CartItem> getCartItem() {
+        return this.cartItems;
+    }
+
+    public void setCartItem(List<CartItem> cartItems) {
+        this.cartItems = cartItems ;
+    }
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public BigDecimal getOriginalPrice() {
+    public Double getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setOriginalPrice(BigDecimal originalPrice) {
+    public void setOriginalPrice(Double originalPrice) {
         this.originalPrice = originalPrice;
     }
 

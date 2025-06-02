@@ -1,0 +1,79 @@
+<div class="profile-page-container d-flex">
+  <!-- Sidebar -->
+  <app-profile-sidebar></app-profile-sidebar>
+  
+  <!-- Main Content -->
+  <div class="profile-main-content flex-grow-1 p-4">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading profile data...</p>
+    </div>
+
+    <!-- Not Logged In State -->
+    <div *ngIf="!isLoading && !usernameAvailable" class="alert alert-warning">
+      Please login to view your profile
+      <a routerLink="/login" class="btn btn-sm btn-outline-warning ms-2">Login</a>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading && usernameAvailable" class="alert alert-danger">
+      {{error}}
+      <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadUserData()">Retry</button>
+    </div>
+
+    <!-- Profile Content -->
+    <div *ngIf="!isLoading && !error && usernameAvailable && userData">
+      <!-- Profile Header -->
+      <div class="profile-header mb-4">
+        <div class="d-flex align-items-center">
+          <img [src]="userData.profileImage || 'assets/default-profile.png'" 
+               class="rounded-circle me-4" 
+               width="120" 
+               height="120"
+               alt="Profile">
+          <div>
+            <h2 class="fw-bold mb-1">{{userData.username}}</h2>
+            <p class="text-muted mb-1">Member since {{userData.createdAt | date}}</p>
+            <span class="badge bg-primary">{{userData.role}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Details Card -->
+      <div class="card mb-4">
+        <div class="card-header bg-white">
+          <h5 class="mb-0 fw-bold">Personal Information</h5>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-3 fw-bold">Username</div>
+            <div class="col-md-9">{{userData.username}}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-3 fw-bold">Email</div>
+            <div class="col-md-9">{{userData.email}}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-3 fw-bold">First Name</div>
+            <div class="col-md-9">{{userData.firstName || 'Not provided'}}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-3 fw-bold">Last Name</div>
+            <div class="col-md-9">{{userData.lastName || 'Not provided'}}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-3 fw-bold">Phone</div>
+            <div class="col-md-9">{{userData.phone || 'Not provided'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 fw-bold">Member Since</div>
+            <div class="col-md-9">{{userData.createdAt | date:'longDate'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

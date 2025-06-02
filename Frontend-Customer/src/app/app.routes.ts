@@ -5,6 +5,7 @@ import { MainComponent } from './main/main.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PlainComponent } from './plain/plain.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 
 /*import { SignupComponent } from './pages/signup/signup.component';*/
@@ -17,7 +18,7 @@ import { AdminLayoutComponent } from './admin/components/admin-layout/admin-layo
 import { DashboardComponent } from './admin/pages/dashboard/dashboard.component';
 import { AuthGuardService } from './admin/services/auth-guard.service';
 import { LogoutComponent } from './admin/pages/logout/logout.component';
-import { ContactUsComponent } from './admin/pages/contact-us/contact-us.component';
+import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { ManageProductsComponent } from './admin/pages/manage-products/manage-products.component';
 import { ManageOrdersComponent } from './admin/pages/manage-orders/manage-orders.component';
 import { AddProductComponent } from './admin/pages/add-product/add-product.component';
@@ -55,6 +56,8 @@ export const routes: Routes = [
       // { path: 'signup', component: SignupComponent },
       { path: 'forgot-pass', component: ForgotPassComponent },
       { path: 'verify-code', component: VerifyCodeComponent },
+      { path: 'contact-us', component: ContactUsComponent },
+      { path: 'profile', component: ProfileComponent}
     ],
   },
   // Admin-protected routes
@@ -84,7 +87,7 @@ export const routes: Routes = [
   {
     path: 'logout', component: LogoutComponent
   },
-  { path: 'contact-us', component: ContactUsComponent },
+
   // Delivrer Protected Routes
   {
     path: 'deliverer',
