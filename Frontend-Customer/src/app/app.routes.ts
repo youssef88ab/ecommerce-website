@@ -52,7 +52,6 @@ export const routes: Routes = [
     component: PlainComponent, // Contains only <router-outlet>
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'admin-login', component: AdminLoginComponent },
       // { path: 'signup', component: SignupComponent },
       { path: 'forgot-pass', component: ForgotPassComponent },
       { path: 'verify-code', component: VerifyCodeComponent },
