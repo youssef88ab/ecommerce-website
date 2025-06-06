@@ -3,20 +3,35 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../services/product.service';
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-manage-products',
-  imports: [FormsModule, CommonModule, RouterModule, SidebarComponent, AdminNavbarComponent , MatMenuModule , MatIconModule , MatButtonModule ],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    FontAwesomeModule,
+    AdminNavbarComponent,
+    SidebarComponent
+  ],
   templateUrl: './manage-products.component.html',
-  styleUrl: './manage-products.component.css' ,
-  
+  styleUrl: './manage-products.component.css'
 })
 export class ManageProductsComponent implements OnInit {
+  // Font Awesome icons
+  faMagnifyingGlass = faMagnifyingGlass;
+
   keyword: string = '';
   selectedCategory: string = '';
   originalProducts: any[] = [];  // Store original list of products

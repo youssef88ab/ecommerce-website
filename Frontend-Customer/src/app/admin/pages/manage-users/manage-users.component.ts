@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { OnInit } from '@angular/core';
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -9,15 +9,30 @@ import {Component} from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-manage-users',
-  imports: [FormsModule , AdminNavbarComponent, SidebarComponent , CommonModule , RouterModule  , MatButtonModule , MatIconModule , MatMenuModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    FontAwesomeModule,
+    AdminNavbarComponent,
+    SidebarComponent
+  ],
   templateUrl: './manage-users.component.html',
   styleUrl: './manage-users.component.css'
 })
 export class ManageUsersComponent implements OnInit {
+  // Font Awesome icons
+  faMagnifyingGlass = faMagnifyingGlass;
+  faPlus = faPlus;
 
     Users: User[] = [];
     paginatedUsers: User[] = [];  // <-- this will hold users for current page

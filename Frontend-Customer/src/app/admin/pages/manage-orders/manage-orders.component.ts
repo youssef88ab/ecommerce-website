@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { CommonModule } from '@angular/common';
 import { OrderService, Order } from '../../services/order.service';
@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-manage-orders',
@@ -19,7 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
     RouterModule,
     MatButtonModule , 
     MatIconModule , 
-    MatMenuModule
+    MatMenuModule,
+    FontAwesomeModule
   ],
   templateUrl: './manage-orders.component.html',
   standalone: true,
@@ -42,6 +45,8 @@ export class ManageOrdersComponent implements OnInit {
   itemsPerPage: number = 10;  // choose how many items per page
   totalPages: number = 0;
   Math = Math;
+
+  faMagnifyingGlass = faMagnifyingGlass;
 
   constructor(private orderService: OrderService) {}
 

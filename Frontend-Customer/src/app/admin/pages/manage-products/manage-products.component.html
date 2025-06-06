@@ -5,26 +5,27 @@
       <admin-navbar></admin-navbar>
       <div class="row">
         <div class="col-lg-12">
-          <div class="card rounded-0 d-flex flex-column gap-3 flex-start">
-            <div class="utils d-flex justify-content-between align-items-center">
-              <p class="fw-bold m-0">
-                All Products
-                <span class="text-black-50">{{ productsNumber }}</span>
-              </p>
-              <div class="d-flex align-items-center gap-3">
-                <form class="row g-2 align-items-center w-100">
-                  <div class="col-auto mx-2">
+          <div class="card rounded-0 d-flex flex-column gap-0 flex-start">
+            <div class="utils d-flex justify-content-between align-items-center p-4 border-bottom bg-light">
+              <div class="d-flex align-items-center gap-4">
+                <form class="d-flex align-items-center gap-3">
+                  <div class="search-box position-relative" style="width: 300px;">
+                    <fa-icon [icon]="faMagnifyingGlass" class="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></fa-icon>
                     <input
                       type="search"
-                      class="form-control px-3 py-2"
+                      class="form-control ps-5 py-2 border-0 shadow-sm"
                       name="keyword"
-                      placeholder="Search product.."
+                      placeholder="Search products..."
                       [(ngModel)]="keyword"
                     />
                   </div>
-                  <div class="col-auto mx-2">
+                  <button class="btn btn-primary px-4 d-flex align-items-center gap-2 shadow-sm" (click)="onSearch(keyword)">
+                    <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+                    Search
+                  </button>
+                  <div class="category-filter">
                     <div class="dropdown">
-                      <button class="btn btn-outline-secondary dropdown-toggle px-4 py-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="min-width: 150px;">
+                      <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 px-4 py-2 shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="min-width: 200px;">
                         <i class="bi" [ngClass]="{
                           'bi-grid': !selectedCategory,
                           'bi-laptop': selectedCategory === 'Computers & Accessories',
@@ -39,37 +40,33 @@
                           'bi-car-front': selectedCategory === 'Car Electronics',
                           'bi-cpu': selectedCategory === 'Computer Components'
                         }"></i>
-                        {{ selectedCategory ? selectedCategory : 'All Categories' }}
+                        <span class="text-truncate">{{ selectedCategory ? selectedCategory : 'All Categories' }}</span>
                       </button>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = ''; onCategoryChange()"><i class="bi bi-grid"></i> All Categories</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Computers & Accessories'; onCategoryChange()"><i class="bi bi-laptop"></i> Computers & Accessories</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Mobile Phones & Accessories'; onCategoryChange()"><i class="bi bi-phone"></i> Mobile Phones & Accessories</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Gaming'; onCategoryChange()"><i class="bi bi-controller"></i> Gaming</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Home Entertainment'; onCategoryChange()"><i class="bi bi-tv"></i> Home Entertainment</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Audio & Headphones'; onCategoryChange()"><i class="bi bi-headphones"></i> Audio & Headphones</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Wearable Technology'; onCategoryChange()"><i class="bi bi-watch"></i> Wearable Technology</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Cameras & Photography'; onCategoryChange()"><i class="bi bi-camera"></i> Cameras & Photography</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Networking & Smart Home'; onCategoryChange()"><i class="bi bi-router"></i> Networking & Smart Home</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Office Electronics'; onCategoryChange()"><i class="bi bi-printer"></i> Office Electronics</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Car Electronics'; onCategoryChange()"><i class="bi bi-car-front"></i> Car Electronics</a></li>
-                        <li><a class="dropdown-item ps-2 py-2" (click)="selectedCategory = 'Computer Components'; onCategoryChange()"><i class="bi bi-cpu"></i> Computer Components</a></li>
+                      <ul class="dropdown-menu shadow-sm border-0" style="min-width: 200px;">
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = ''; onCategoryChange()"><i class="bi bi-grid"></i> All Categories</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Computers & Accessories'; onCategoryChange()"><i class="bi bi-laptop"></i> Computers & Accessories</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Mobile Phones & Accessories'; onCategoryChange()"><i class="bi bi-phone"></i> Mobile Phones & Accessories</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Gaming'; onCategoryChange()"><i class="bi bi-controller"></i> Gaming</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Home Entertainment'; onCategoryChange()"><i class="bi bi-tv"></i> Home Entertainment</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Audio & Headphones'; onCategoryChange()"><i class="bi bi-headphones"></i> Audio & Headphones</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Wearable Technology'; onCategoryChange()"><i class="bi bi-watch"></i> Wearable Technology</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Cameras & Photography'; onCategoryChange()"><i class="bi bi-camera"></i> Cameras & Photography</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Networking & Smart Home'; onCategoryChange()"><i class="bi bi-router"></i> Networking & Smart Home</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Office Electronics'; onCategoryChange()"><i class="bi bi-printer"></i> Office Electronics</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Car Electronics'; onCategoryChange()"><i class="bi bi-car-front"></i> Car Electronics</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2 p-2" (click)="selectedCategory = 'Computer Components'; onCategoryChange()"><i class="bi bi-cpu"></i> Computer Components</a></li>
                       </ul>
                     </div>
                   </div>
-                  <div class="col-auto">
-                    <button class="btn btn-dark px-4" (click)="onSearch(keyword)">
-                      Search
-                    </button>
-                  </div>
                 </form>
-                <button
-                  class="btn btn-dark col-auto px-4 py-2"
-                  [routerLink]="['../add-product']"
-                >
-                  Add Product
-                </button>
               </div>
+              <button
+                class="btn btn-success d-flex align-items-center gap-2 px-4 py-2 shadow-sm"
+                [routerLink]="['../add-product']"
+              >
+                <i class="fas fa-plus"></i>
+                Add Product
+              </button>
             </div>
             <table class="user-table">
               <thead class="">
@@ -122,35 +119,21 @@
                     <p>${{ product.price }}</p>
                   </td>
                   <td>
-                    <button
-                      mat-icon-button
-                      [matMenuTriggerFor]="menu"
-                      class="no-shadow border-0"
-                    >
-                      <mat-icon>&#8942;</mat-icon>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="no-shadow border-0 rounded-circle bg-light">
+                      <mat-icon class="text-muted">&#8942;</mat-icon>
                     </button>
   
                     <mat-menu #menu="matMenu" class="custom-menu">
-                      <button
-                        mat-menu-item
-                        class="custom-menu-item mb-2"
-                        [routerLink]="['../edit-product', product.id]"
-                      >
+                      <button mat-menu-item class="custom-menu-item d-flex align-items-center gap-2 p-2" [routerLink]="['../edit-product', product.id]">
+                        <i class="bi bi-pencil"></i>
                         Edit
                       </button>
-                      <button
-                        mat-menu-item
-                        class="custom-menu-item"
-                        [routerLink]="['../product-details', product.id]"
-                      >
+                      <button mat-menu-item class="custom-menu-item d-flex align-items-center gap-2 p-2" [routerLink]="['../product-details', product.id]">
+                        <i class="bi bi-eye"></i>
                         View Details
-
                       </button>
-                      <button
-                        mat-menu-item
-                        class="custom-menu-item delete-item mt-2"
-                        (click)="deleteProduct(product.id)"
-                      >
+                      <button mat-menu-item class="custom-menu-item d-flex align-items-center gap-2 p-2 delete-item" (click)="deleteProduct(product.id)">
+                        <i class="bi bi-trash"></i>
                         Delete
                       </button>
                     </mat-menu>
