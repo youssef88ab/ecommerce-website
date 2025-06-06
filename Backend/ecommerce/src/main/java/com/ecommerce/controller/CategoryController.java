@@ -40,11 +40,11 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CategoryDTO>> searchCategories(@RequestParam String keyword) {
+        public ResponseEntity<List<CategoryDTO>> searchCategories(@RequestParam String keyword) {
         return new ResponseEntity<>(categoryService.searchCategories(keyword), HttpStatus.OK);
     }
 }
