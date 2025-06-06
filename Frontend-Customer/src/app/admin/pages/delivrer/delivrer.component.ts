@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

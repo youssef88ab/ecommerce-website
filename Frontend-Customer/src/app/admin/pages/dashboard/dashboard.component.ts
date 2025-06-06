@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import Chart from 'chart.js/auto';
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { OrderItems } from '../../services/order.service';
 import { OrderItemsService } from '../../services/order-items.service';

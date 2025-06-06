@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
 import { Router, RouterModule } from '@angular/router'; // Import Router for navigation
 import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from '../admin-sidebar/admin-sidebar.component';
+import { SidebarComponent } from '../../components/admin-sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
