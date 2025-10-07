@@ -284,9 +284,9 @@ See [`LICENSE`](LICENSE) for details.
 ## 📬 Contact
 
 **Author:** Youssef Abou Eljihad
-📧 Email: [youssef@example.com](mailto:youssef@example.com)
-🌐 GitHub: [@yourusername](https://github.com/yourusername)
-💼 LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
+📧 Email: [youssef@example.com](mailto:youssef.aboueljihad@gmail.com)
+🌐 GitHub: [@yourusername](https://github.com/youssef88ab)
+💼 LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/youssefabx)
 
 ---
 
