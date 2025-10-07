@@ -1,0 +1,110 @@
+# ==========================
+# 🌐 FRONTEND (React + Vite + TypeScript)
+# ==========================
+
+# Dependencies
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# Environment variables
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.production.local
+
+# Logs and temporary files
+frontend/*.log
+frontend/coverage/
+frontend/jest-html-reporters-*.html
+frontend/storybook-static/
+
+# IDE / Editor
+frontend/.vscode/
+frontend/.idea/
+frontend/.history/
+frontend/*.swp
+frontend/*.swo
+frontend/*.bak
+frontend/*.tmp
+
+# OS files
+frontend/.DS_Store
+frontend/Thumbs.db
+
+# TypeScript build info
+frontend/*.tsbuildinfo
+
+
+# ==========================
+# ⚙️ BACKEND (Spring Boot + Maven)
+# ==========================
+
+# Maven
+backend/target/
+backend/pom.xml.tag
+backend/pom.xml.releaseBackup
+backend/pom.xml.versionsBackup
+backend/logs/
+backend/*.log
+
+# Gradle (if ever used)
+backend/.gradle/
+backend/build/
+
+# Java / IntelliJ / Eclipse
+backend/.idea/
+backend/.project
+backend/.classpath
+backend/.settings/
+backend/*.iml
+backend/out/
+backend/bin/
+
+# Spring Boot config
+backend/.env
+backend/application-*.yml
+backend/application-*.properties
+
+# OS files
+backend/.DS_Store
+backend/Thumbs.db
+
+
+# ==========================
+# 🧠 GLOBAL / SYSTEM
+# ==========================
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+.history/
+
+# Logs
+*.log
+
+# Environment files (root)
+.env
+.env.*
+
+# Node / Java caches
+node_modules/
+target/
+build/
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage reports
+coverage/
