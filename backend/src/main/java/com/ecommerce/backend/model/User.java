@@ -26,7 +26,7 @@ public class User {
     private List<Order> orders = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.CUSTOMER;
+    private Role role = Role.ROLE_CUSTOMER;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
