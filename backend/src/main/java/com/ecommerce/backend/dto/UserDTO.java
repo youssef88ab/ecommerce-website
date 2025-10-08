@@ -1,7 +1,9 @@
 package com.ecommerce.backend.dto;
 
 import com.ecommerce.backend.enums.Role;
+import lombok.Data;
 
+@Data
 public class UserDTO {
     private Long id;
     private String username;
