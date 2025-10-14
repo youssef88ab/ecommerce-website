@@ -19,7 +19,7 @@ public class CartMapper {
         cart.setTotalPrice(cartDTO.getTotalPrice());
 
         // ! Here you should use streams and CartItem Mapper ;
-        cart.setItems(cartDTO.getItems());
+        cart..setItems(cartDTO.getItems());
 
         User user = new User();
         user.setId(cartDTO.getUserId());
