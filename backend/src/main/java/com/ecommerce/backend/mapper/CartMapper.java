@@ -6,9 +6,13 @@ import com.ecommerce.backend.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class CartMapper {
+
+    private final CartItemMapper cartItemMapper;
 
     public Cart toEntity(CartDTO cartDTO) {
 
@@ -17,12 +21,12 @@ public class CartMapper {
         Cart cart = new Cart();
         cart.setId(cartDTO.getId());
         cart.setTotalPrice(cartDTO.getTotalPrice());
-
-        // ! Here you should use streams and CartItem Mapper ;
-        cart..setItems(cartDTO.getItems());
+        cart.setItems(cartDTO.getItems().stream().map(cartItemMapper::toEntity).collect(Collectors.toList()));
 
         User user = new User();
+
         user.setId(cartDTO.getUserId());
+
         cart.setUser(user);
 
         return cart;
@@ -35,11 +39,9 @@ public class CartMapper {
         CartDTO cartDTO = new CartDTO();
 
         cartDTO.setId(cart.getId());
-        cartDTO.setTotalPrice(cart.getTotalPrice());
         cartDTO.setUserId(cart.getUser().getId());
-
-        // ! Here you should use streams and CartItem Mapper ;
-        cartDTO.setItems(cart.setItems(););
+        cartDTO.setTotalPrice(cart.getTotalPrice());
+        cartDTO.setItems(cart.getItems().stream().map(cartItemMapper::toDTO).collect(Collectors.toList()));
 
         return cartDTO;
     }

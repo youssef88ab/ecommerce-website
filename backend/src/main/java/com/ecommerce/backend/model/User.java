@@ -19,11 +19,17 @@ public class User {
 
     private String username;
     private String password;
+
+    @Column(unique = true)
     private String email;
+
     private String phone;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true )
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Payment> payments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_CUSTOMER;

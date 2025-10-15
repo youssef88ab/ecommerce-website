@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
     // * Get All Products
     @Override
     public List<ProductDTO> getProducts() {
-        return productRepository.findAll().stream().map(productMapper.toDTO()).collect(Collectors.toList());
+        return productRepository.findAll().stream().map(productMapper::toDTO).collect(Collectors.toList());
     }
 
     // * Get Products By Category
@@ -34,14 +34,12 @@ public class ProductServiceImpl implements ProductService {
 
     // * Get Product By Name
     @Override
-    public ProductDTO getProductByName() {
-        return null;
-    }
+    public ProductDTO getProductByName(String name) { return productRepository.findByName(name).map(productMapper::toDTO).orElse(null); }
 
     // * Get Product By ID
     @Override
     public ProductDTO getProductById(Long id) {
-        return productRepository.findById().map(productMapper.toDTO()).orElse(null);
+        return productRepository.findById(id).map(productMapper::toDTO).orElse(null);
     }
 
     // * Add Product
@@ -62,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO updateProduct(Long id, ProductDTO updatedProduct) {
 
         // * Create Optional Product
-        Optional<Product> productOptional = productRepository.findById(id);
+        Optional<Product> productOptional = productRepository.findByName(updatedProduct.getName());
 
         // * if it exists
         if (productOptional.isPresent())

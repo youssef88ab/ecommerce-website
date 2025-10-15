@@ -7,11 +7,16 @@ import com.ecommerce.backend.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class OrderMapper {
 
-    Order toEntity(OrderDTO orderDTO) {
+    OrderItemMapper orderItemMapper ;
+    PaymentMapper paymentMapper ;
+
+    public Order toEntity(OrderDTO orderDTO) {
 
         if (orderDTO == null) { return null; }
 
@@ -21,9 +26,8 @@ public class OrderMapper {
         order.setStatus(orderDTO.getStatus());
         order.setOrderDate(orderDTO.getOrderDate());
         order.setTotalAmount(orderDTO.getTotalAmount());
-
-        // ! User streams plus mapper here ;
-        order.setItems();
+        order.setPayment(paymentMapper.toEntity(orderDTO.getPayment()));
+        order.setItems(orderDTO.getItems().stream().map(orderItemMapper::toEntity).collect(Collectors.toList()));
 
         User user = new User();
 
@@ -31,13 +35,10 @@ public class OrderMapper {
 
         order.setUser(user);
 
-        // ! Use Payment Mapper ;
-        order.setPayment(orderDTO.getPayment());
-
         return order;
     }
 
-    OrderDTO toDTO(Order order) {
+    public OrderDTO toDTO(Order order) {
 
         if (order == null) { return null; }
 
@@ -46,15 +47,12 @@ public class OrderMapper {
         orderDTO.setId(order.getId());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setOrderDate(order.getOrderDate());
-        orderDTO.setTotalAmount(order.getTotalAmount());
         orderDTO.setUserId(order.getUser().getId());
-
-        // ! User streams plus mapper here
-        orderDTO.setItems(order.getItems());
-
-        // ! Use Payment Mapper ;
-        orderDTO.setPayment(order.getPayment());
+        orderDTO.setTotalAmount(order.getTotalAmount());
+        orderDTO.setPayment(paymentMapper.toDTO(order.getPayment()));
+        orderDTO.setItems(order.getItems().stream().map(orderItemMapper::toDto).collect(Collectors.toList()));
 
         return orderDTO;
     }
+
 }

@@ -28,6 +28,11 @@ public class Payment {
     @Column(nullable = false)
     private double amount;
 
+    @ManyToOne(fetch = FetchType.LAZY , optional = false)
+    @JoinColumn(name = "user_id" , nullable = false)
+    private User user;
+
+
     @Column(nullable = false, updatable = false)
     private Timestamp paymentDate = Timestamp.from(Instant.now());
 

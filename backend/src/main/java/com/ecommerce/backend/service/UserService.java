@@ -18,10 +18,10 @@ public interface UserService {
     UserDTO getUserByEmail(String email);
 
     // * Register User
-    UserDTO registerUser(UserDTO user);
+    UserDTO registerUser(UserDTO addedUser);
 
     // * Update User
-    UserDTO updateUser(Long id , User updatedUser);
+    UserDTO updateUser(Long id , UserDTO updatedUser);
 
     // * Deleter User
     void deleterUser(Long id);
