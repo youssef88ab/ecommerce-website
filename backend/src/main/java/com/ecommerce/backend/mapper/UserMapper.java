@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserMapper {
 
-    private AddressMapper addressMapper ;
+    private final AddressMapper addressMapper ;
 
     public User toEntity(UserDTO userDTO) {
 
@@ -40,6 +40,7 @@ public class UserMapper {
 
         userDTO.setId(user.getId());
         userDTO.setRole(user.getRole());
+        userDTO.setPhone(user.getPhone());
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
 

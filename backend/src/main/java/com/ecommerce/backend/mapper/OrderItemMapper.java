@@ -4,7 +4,11 @@ import com.ecommerce.backend.dto.OrderDTO;
 import com.ecommerce.backend.dto.OrderItemDTO;
 import com.ecommerce.backend.model.OrderItem;
 import com.ecommerce.backend.model.Product;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class OrderItemMapper {
 
     OrderItem toEntity(OrderItemDTO orderItemDTO) {
