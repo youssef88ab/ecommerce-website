@@ -1,26 +1,48 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.dto.UserDTO;
-import com.ecommerce.backend.service.UserService;
+import com.ecommerce.backend.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService ;
+    private final UserServiceImpl userService ;
 
+    // * Get Users
     @GetMapping
     public List<UserDTO> getUsers() {
-        return  userService.getUsers();
+        return userService.getUsers();
     }
 
-    @GetMapping("")
+    // * Get User By ID
+    @GetMapping("/{id}")
+    public UserDTO getUser(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
 
+    // * Add User
+    @PostMapping()
+    public UserDTO addUser(@RequestBody UserDTO user) {
+        return userService.registerUser(user);
+    }
+
+    // * Update User
+    @PutMapping("/{id}")
+    public UserDTO updateUser(@PathVariable Long id , @RequestBody UserDTO user) {
+        return userService.updateUser(id , user);
+    }
+
+    // * Delete User
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleterUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }
