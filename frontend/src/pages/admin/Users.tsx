@@ -1,8 +1,7 @@
 import DashboardLayout from "../../layouts/DashboardLayout";
 import PageTitle from "../../components/admin/PageTitle";
 import SearchBar from "../../components/admin/SearchBar";
-import { useState } from "react";
-import mockUsers from "../../data/mockUsers";
+import { useState, useEffect } from "react";
 import FilterByButton from "../../components/admin/FilterByButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,6 +13,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faAndroid } from "@fortawesome/free-brands-svg-icons";
 import Pagination from "../../components/admin/Pagination";
+import UsersTable from "../../components/admin/UsersTable";
+import { fetchAllUsers } from "../../services/userService";
+import type { User } from "../../types/components";
 
 
 export default function Users() {
@@ -27,8 +29,18 @@ export default function Users() {
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
 
+    const [users, setUsers] = useState<User[]>([]);
+
+    useEffect(() => {
+        const loadUsers = async () => {
+            const data = await fetchAllUsers();
+            setUsers(data);
+        };
+        loadUsers();
+    }, []);
+
     // Total Users
-    const totalUsers = mockUsers.length;
+    const totalUsers = users.length;
 
     // Handle Page Change 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -56,17 +68,15 @@ export default function Users() {
 
 
     // Filter & Search Algorithm
-    const filteredUsers = mockUsers
+    const filteredUsers = users
         .filter(
             (user) =>
-                user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 user.email.toLowerCase().includes(searchTerm.toLowerCase())
         )
         .filter(
             (user) =>
-                (!filters.gender || user.gender === filters.gender) &&
-                (!filters.level || user.level_id === parseInt(filters.level)) &&
-                (!filters.device_type || user.device_type === filters.device_type)
+                (!filters.gender || user.gender === filters.gender) 
         );
 
     // Displayed User in paginated page
@@ -125,6 +135,8 @@ export default function Users() {
                     />
                 </div>
             </div>
+            {/* Users Table */}
+            <UsersTable users={paginatedUsers} />
         </DashboardLayout>
     );
 }

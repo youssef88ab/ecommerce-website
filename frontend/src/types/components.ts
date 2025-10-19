@@ -11,3 +11,13 @@ export interface FilterByButtonProps {
     onChange: (value: string | number) => void;
     options: Option[];
 }
+
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    phone: string;
+    gender: "Male" | "Female" | string;
+    registrationDate: string;
+    role: string;
+}
