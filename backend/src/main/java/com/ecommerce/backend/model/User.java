@@ -1,5 +1,6 @@
 package com.ecommerce.backend.model;
 
+import com.ecommerce.backend.enums.Gender;
 import com.ecommerce.backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,6 +25,9 @@ public class User {
     private String email;
 
     private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true )
     private List<Order> orders = new ArrayList<>();
