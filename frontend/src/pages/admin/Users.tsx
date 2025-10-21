@@ -10,12 +10,18 @@ import {
     faVenus,
     faStar,
     faAppleWhole,
+    faShoppingCart,
+    faClipboardList,
+    faUserTie,
+    faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { faAndroid } from "@fortawesome/free-brands-svg-icons";
 import Pagination from "../../components/admin/Pagination";
 import UsersTable from "../../components/admin/UsersTable";
 import { fetchAllUsers } from "../../services/userService";
 import type { User } from "../../types/components";
+import Metric from "../../components/admin/Metric";
+import type { showRole } from "../../utils/functions";
 
 
 export default function Users() {
@@ -57,15 +63,13 @@ export default function Users() {
     const [filters, setFilters] = useState({
         gender: "",
         device_type: "",
-        level: "",
+        role: "",
     });
 
     // Handle Filter Change
     const handleFilterChange = (filterName: keyof typeof filters, value: string | number) => {
         setFilters((prev) => ({ ...prev, [filterName]: value }));
     };
-
-
 
     // Filter & Search Algorithm
     const filteredUsers = users
@@ -76,7 +80,7 @@ export default function Users() {
         )
         .filter(
             (user) =>
-                (!filters.gender || user.gender === filters.gender) 
+                (!filters.gender || user.gender === filters.gender)
         );
 
     // Displayed User in paginated page
@@ -84,6 +88,26 @@ export default function Users() {
 
     return (
         <DashboardLayout>
+            <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
+                <Metric
+                    title={"Total Utilisateurs"}
+                    icon={faUsers}
+                    data={837}
+                    percentage={0.4}
+                />
+                <Metric
+                    title={"Total Orders"}
+                    icon={faShoppingCart}
+                    data={1358}
+                    percentage={0.1}
+                />
+                <Metric
+                    title={"Total Abonnements"}
+                    icon={faClipboardList}
+                    data={1400}
+                    percentage={-0.7}
+                />
+            </div>
             <PageTitle title={'All Users'} icon={faUsers} />
             <div className="flex flex-col items-center md:flex-row gap-4 mb-3">
                 <div className="w-full md:w-1/3">
@@ -105,23 +129,12 @@ export default function Users() {
                             ]}
                         />
                         <FilterByButton
-                            label="Device Type"
-                            value={filters.device_type}
-                            onChange={(value) => handleFilterChange("device_type", value)}
+                            label="Role"
+                            value={filters.role}
+                            onChange={(value) => handleFilterChange("role", value)}
                             options={[
-                                { value: "Android", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faAndroid} className="text-green-500" /> Android</span> },
-                                { value: "iOS", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faAppleWhole} className="text-gray-700" /> iOS</span> },
-                            ]}
-                        />
-                        <FilterByButton
-                            label="Level"
-                            value={filters.level}
-                            onChange={(value) => handleFilterChange("level", value)}
-                            options={[
-                                { value: "1", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faStar} className="text-yellow-500" /> Level 1</span> },
-                                { value: "2", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faStar} className="text-yellow-500" /> Level 2</span> },
-                                { value: "3", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faStar} className="text-yellow-500" /> Level 3</span> },
-                                { value: "4", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faStar} className="text-red-500" /> Level 4</span> },
+                                { value: "1", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faUserTie} className="text-grey-500" /> ADMIN</span> },
+                                { value: "2", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faUser} className="text-green-700" /> CUSTOMER</span> },
                             ]}
                         />
                     </div>

@@ -5,6 +5,8 @@ import type { User } from "../../types/components";
 import React from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { showRole } from "../../utils/functions";
+import { showRegistrationDateTime } from "../../utils/functions";
 
 // ✅ Define component props type
 interface UserRowProps {
@@ -41,7 +43,7 @@ const UserRow: React.FC<UserRowProps> = ({
         <div className="flex items-center gap-3">
           <img
             className="rounded-full w-10 h-10 object-cover border-2 border-gray-100"
-            src=""
+            src="src/images/avatar.png"
             alt={`${user.username}'s avatar`}
           />
           <div>
@@ -67,7 +69,16 @@ const UserRow: React.FC<UserRowProps> = ({
       </td>
 
       {/* Registration Date */}
-      <td className="py-4 text-gray-600">{user.registrationDate}</td>
+      <td className="py-4 text-gray-600">{showRegistrationDateTime(user.registrationDate)}</td>
+
+      {/* Role */}
+      <td className="py-4 text-gray-600 text-center">
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${showRole(user.role) === "ADMIN"
+          ? "bg-gray-50 text-black"
+          : "bg-green-50 text-green-700"
+          }`}>
+          {showRole(user.role)}
+        </span> </td>
 
       {/* View Button */}
       <td className="py-4 text-center">

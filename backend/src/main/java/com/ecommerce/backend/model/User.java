@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column(updatable = false , nullable = false)
+    private Timestamp registrationDate = Timestamp.from(Instant.now());
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true )
     private List<Order> orders = new ArrayList<>();

@@ -24,6 +24,7 @@ public class UserMapper {
         user.setGender(userDTO.getGender());
         user.setPhone(userDTO.getPhone());
         user.setUsername(userDTO.getUsername());
+        user.setRegistrationDate(userDTO.getRegistrationDate());
 
         if (userDTO.getAddress() != null) {
             user.setAddress(addressMapper.toEntity(userDTO.getAddress()));
@@ -44,6 +45,7 @@ public class UserMapper {
         userDTO.setPhone(user.getPhone());
         userDTO.setEmail(user.getEmail());
         userDTO.setGender(user.getGender());
+        userDTO.setRegistrationDate(user.getRegistrationDate());
         userDTO.setUsername(user.getUsername());
 
         if (user.getAddress() != null) {

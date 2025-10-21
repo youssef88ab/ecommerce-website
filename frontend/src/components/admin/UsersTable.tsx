@@ -43,7 +43,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }) => {
               scope="col"
               className="py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
             >
-              Date d'inscription
+              Registration Date
             </th>
             <th
               scope="col"
