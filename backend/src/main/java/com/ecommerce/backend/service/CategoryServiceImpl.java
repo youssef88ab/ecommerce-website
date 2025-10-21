@@ -2,9 +2,13 @@ package com.ecommerce.backend.service;
 
 import com.ecommerce.backend.dto.CategoryDTO;
 import com.ecommerce.backend.dto.ProductDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO createCategory(CategoryDTO category) {
