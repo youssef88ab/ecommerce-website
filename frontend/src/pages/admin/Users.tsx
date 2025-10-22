@@ -1,28 +1,23 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
-import PageTitle from "../../components/admin/PageTitle";
-import SearchBar from "../../components/admin/SearchBar";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import FilterByButton from "../../components/admin/FilterByButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DashboardLayout from "../../layouts/DashboardLayout";
+import Pagination from "../../components/admin/Pagination";
+import UsersTable from "../../components/admin/UsersTable";
+import { fetchAllUsers } from "../../services/userService";
+import PageTitle from "../../components/admin/PageTitle";
+import SearchBar from "../../components/admin/SearchBar";
+import type { User } from "../../types/components";
+import Metric from "../../components/admin/Metric";
 import {
     faUsers,
     faMars,
     faVenus,
-    faStar,
-    faAppleWhole,
     faShoppingCart,
     faClipboardList,
     faUserTie,
     faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { faAndroid } from "@fortawesome/free-brands-svg-icons";
-import Pagination from "../../components/admin/Pagination";
-import UsersTable from "../../components/admin/UsersTable";
-import { fetchAllUsers } from "../../services/userService";
-import type { User } from "../../types/components";
-import Metric from "../../components/admin/Metric";
-import type { showRole } from "../../utils/functions";
-
 
 export default function Users() {
 
