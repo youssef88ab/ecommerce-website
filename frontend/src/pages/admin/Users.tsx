@@ -34,13 +34,7 @@ export default function Users() {
 
     const [users, setUsers] = useState<User[]>([]);
 
-    useEffect(() => {
-        if (userPageResponse) {
-            setUsers(userPageResponse.content || []);
-            console.log("Users : ", users);
-        }
-    }, [userPageResponse]);
-
+    useEffect(() => { if (userPageResponse) { setUsers(userPageResponse.content || []); } }, [userPageResponse]);
 
     // * Total Users
     const [usersCount, setUsersCount] = useState(0);
@@ -57,17 +51,14 @@ export default function Users() {
         loadUsersCount();
     });
 
-    // Handle Search Change
+    // * Handle Search Change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
         setPage(0); // ! Reset page to 0 when search term changes
     };
 
     // * Handle Page Change 
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-        void event;
-        setPage(newPage);
-    };
+    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => { void event; setPage(newPage);};
 
     // * Handle Change Rows Per Page
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -84,11 +75,11 @@ export default function Users() {
     // * Load User 
     useEffect(() => {
         const loadUsers = async () => {
-            const data = await fetchAllUsers(page, rowsPerPage, sort, filters.gender, filters.role , searchTerm);
+            const data = await fetchAllUsers(page, rowsPerPage, sort, filters.gender, filters.role, searchTerm);
             setUserPageResponse(data);
         };
         loadUsers();
-    }, [page, rowsPerPage, filters , searchTerm]);
+    }, [page, rowsPerPage, filters, searchTerm]);
 
     // * Handle Filter Change
     const handleFilterChange = (filterName: keyof typeof filters, value: string | number) => {
@@ -119,7 +110,7 @@ export default function Users() {
             </div>
             <PageTitle title={'All Users'} icon={faUsers} />
             <div className="flex flex-col items-center md:flex-row gap-4 mb-3">
-                <div className="w-full md:w-1/3">
+                <div className="w-full md:w-1/3  bg-white rounded-2xl">
                     <SearchBar
                         searchTerm={searchTerm}
                         onSearchChange={handleSearchChange}

@@ -12,6 +12,10 @@ export interface FilterByButtonProps {
     options: Option[];
 }
 
+export interface OrdersTableProps {
+    orders: Order[];
+}
+
 export interface User {
     id: number;
     username: string;
@@ -22,7 +26,34 @@ export interface User {
     role: string;
 }
 
-// Define the Pageable Metadata structure
+export interface Payment {
+    id: number;
+    amount: number;
+    method: string;
+    status: string;
+    orderId: number;
+    paymentDate: string;
+}
+
+export interface OrderItem {
+    id: number;
+    quantity: number;
+    subtotal: number;
+    productId: number;
+    productName: string;
+    productPrice: number;
+}
+
+export interface Order {
+    id: number;
+    userId: number;
+    items: OrderItem[];
+    totalAmount: number;
+    status: string;
+    orderDate: string;
+    payment: Payment;
+}
+
 export interface Pageable {
     pageNumber: number;
     pageSize: number;
@@ -32,8 +63,8 @@ export interface Pageable {
     unpaged: boolean;
 }
 
-export interface UserPageResponse {
-    content: User[]; 
+interface PageResponse<T> {
+    content: T[];
     pageable: Pageable;
     totalPages: number;
     totalElements: number;
@@ -44,3 +75,7 @@ export interface UserPageResponse {
     numberOfElements: number;
     empty: boolean;
 }
+
+export interface UserPageResponse extends PageResponse<User> { }
+
+export interface OrderPageResponse extends PageResponse<Order> { }
