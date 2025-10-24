@@ -21,3 +21,26 @@ export interface User {
     registrationDate: string;
     role: string;
 }
+
+// Define the Pageable Metadata structure
+export interface Pageable {
+    pageNumber: number;
+    pageSize: number;
+    sort: { sorted: boolean; unsorted: boolean; empty: boolean };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+}
+
+export interface UserPageResponse {
+    content: User[]; 
+    pageable: Pageable;
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    first: boolean;
+    size: number;
+    number: number;
+    numberOfElements: number;
+    empty: boolean;
+}

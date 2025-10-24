@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import React from "react";
-import { tableVariants, rowVariants } from "../../variants/animations";
+import { tableVariants, rowVariants } from "../../../variants/animations";
 import UserRow from "./UserRow";
-import type { User } from "../../types/components";
+import type { User } from "../../../types/components";
 
 
 interface UsersTableProps {

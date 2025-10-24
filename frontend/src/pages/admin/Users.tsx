@@ -4,11 +4,11 @@ import Metric from "../../components/admin/Metric";
 import PageTitle from "../../components/admin/PageTitle";
 import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
-import UsersTable from "../../components/admin/UsersTable";
-import { fetchAllUsers } from "../../services/userService";
+import UsersTable from "../../components/admin/users/UsersTable";
+import { fetchAllUsers, getUsersCount } from "../../services/userService";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { UserPageResponse } from "../../services/userService";
+import type { UserPageResponse } from "../../types/components";
 import FilterByButton from "../../components/admin/FilterByButton";
 import {
     faUsers,
@@ -28,51 +28,69 @@ export default function Users() {
     // * Pagination 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const startIndex = page * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
     const sort: string = "id,asc";
 
     const [userPageResponse, setUserPageResponse] = useState<UserPageResponse | undefined>(undefined);
-
-    // * Load User 
-    useEffect(() => {
-        const loadUsers = async () => {
-            const data = await fetchAllUsers(page, rowsPerPage, sort);
-            setUserPageResponse(data);
-        };
-        loadUsers();
-    }, [page, rowsPerPage]);
 
     const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
         if (userPageResponse) {
             setUsers(userPageResponse.content || []);
-            console.log("Users : " , users);
+            console.log("Users : ", users);
         }
     }, [userPageResponse]);
 
-    // Total Users
-    const totalUsers = userPageResponse?.totalElements;
 
-    // Handle Page Change 
+    // * Total Users
+    const [usersCount, setUsersCount] = useState(0);
+    useEffect(() => {
+        const loadUsersCount = async () => {
+            try {
+                const count = await getUsersCount();
+                setUsersCount(count);
+            } catch (error) {
+                console.error("Failed to load user count:", error);
+            }
+        };
+
+        loadUsersCount();
+    });
+
+    // Handle Search Change
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+        setPage(0); // ! Reset page to 0 when search term changes
+    };
+
+    // * Handle Page Change 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+        void event;
         setPage(newPage);
     };
 
-    // Handle Change Rows Per Page
+    // * Handle Change Rows Per Page
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
 
-    // Filter Options
+    // * Filter Options
     const [filters, setFilters] = useState({
         gender: "",
         role: "",
     });
 
-    // Handle Filter Change
+    // * Load User 
+    useEffect(() => {
+        const loadUsers = async () => {
+            const data = await fetchAllUsers(page, rowsPerPage, sort, filters.gender, filters.role , searchTerm);
+            setUserPageResponse(data);
+        };
+        loadUsers();
+    }, [page, rowsPerPage, filters , searchTerm]);
+
+    // * Handle Filter Change
     const handleFilterChange = (filterName: keyof typeof filters, value: string | number) => {
         setFilters((prev) => ({ ...prev, [filterName]: value }));
     };
@@ -83,7 +101,7 @@ export default function Users() {
                 <Metric
                     title={"Total Utilisateurs"}
                     icon={faUsers}
-                    data={totalUsers ?? 0}
+                    data={usersCount}
                     percentage={0.4}
                 />
                 <Metric
@@ -104,7 +122,7 @@ export default function Users() {
                 <div className="w-full md:w-1/3">
                     <SearchBar
                         searchTerm={searchTerm}
-                        onSearchChange={(e) => setSearchTerm(e.target.value)}
+                        onSearchChange={handleSearchChange}
                         placeholder="Search users by name or email..."
                     />
                 </div>
@@ -115,8 +133,8 @@ export default function Users() {
                             value={filters.gender}
                             onChange={(value) => handleFilterChange("gender", value)}
                             options={[
-                                { value: "Male", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faMars} className="text-blue-500" /> Male</span> },
-                                { value: "Female", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faVenus} className="text-pink-500" /> Female</span> },
+                                { value: "MALE", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faMars} className="text-blue-500" /> Male</span> },
+                                { value: "FEMALE", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faVenus} className="text-pink-500" /> Female</span> },
                             ]}
                         />
                         <FilterByButton
@@ -124,8 +142,8 @@ export default function Users() {
                             value={filters.role}
                             onChange={(value) => handleFilterChange("role", value)}
                             options={[
-                                { value: "1", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faUserTie} className="text-grey-500" /> ADMIN</span> },
-                                { value: "2", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faUser} className="text-green-700" /> CUSTOMER</span> },
+                                { value: "ROLE_ADMIN", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faUserTie} className="text-grey-500" /> ADMIN</span> },
+                                { value: "ROLE_CUSTOMER", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faUser} className="text-green-700" /> CUSTOMER</span> },
                             ]}
                         />
                     </div>

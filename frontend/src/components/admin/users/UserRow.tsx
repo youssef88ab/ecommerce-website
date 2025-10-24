@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import type { Variants, Transition } from "framer-motion";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import type { User } from "../../types/components";
+import type { User } from "../../../types/components";
 import React from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { showRole } from "../../utils/functions";
-import { showRegistrationDateTime } from "../../utils/functions";
+import { showRole } from "../../../utils/functions";
+import { showRegistrationDateTime } from "../../../utils/functions";
 
 // ✅ Define component props type
 interface UserRowProps {

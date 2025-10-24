@@ -1,12 +1,18 @@
 package com.ecommerce.backend.service;
 
 import com.ecommerce.backend.dto.UserDTO;
+import com.ecommerce.backend.enums.Gender;
 import com.ecommerce.backend.enums.Role;
 import com.ecommerce.backend.mapper.AddressMapper;
 import com.ecommerce.backend.mapper.UserMapper;
 import com.ecommerce.backend.model.User;
 import com.ecommerce.backend.repository.UserRepository;
+import com.ecommerce.backend.specifications.UserSpecification;
+import lombok.Generated;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +28,16 @@ public class UserServiceImpl implements UserService {
     private final AddressMapper addressMapper ;
 
     @Override
-    public List<UserDTO> getUsers() {
-        return userRepository.findAll().stream().map(userMapper::toDTO).collect(Collectors.toList());
+    public Page<UserDTO> getAllUsers(Pageable pageable , Gender gender , Role role, String search) {
+
+        // * 1. Build the dynamic WHERE clause using the Specification class
+        Specification<User> spec = UserSpecification.filterBy(gender, role, search);
+
+        // * 2. Execute the single findAll method, passing the dynamic Specification
+        Page<User> userPage = userRepository.findAll(spec, pageable);
+
+        // * 3. Map and return
+        return userPage.map(userMapper::toDTO);
     }
 
     @Override
@@ -89,8 +103,13 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    // * Delete Users
     @Override
     public void deleterUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    // * Get Users Count
+    @Override
+    public Long getUsersCount() { return userRepository.count(); }
 }

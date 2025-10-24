@@ -1,12 +1,15 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.dto.UserDTO;
+import com.ecommerce.backend.enums.Gender;
+import com.ecommerce.backend.enums.Role;
 import com.ecommerce.backend.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -18,8 +21,9 @@ public class UserController {
 
     // * Get Users
     @GetMapping
-    public List<UserDTO> getUsers() {
-        return userService.getUsers();
+    public Page<UserDTO> getUsers(@PageableDefault(size = 20, sort = "id") Pageable pageable , @RequestParam(required = false) Gender gender, @RequestParam(required = false) Role role , @RequestParam(required = false) String search)
+    {
+        return userService.getAllUsers(pageable , gender , role , search);
     }
 
     // * Get User By ID
@@ -45,5 +49,11 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleterUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // * Get Users Count
+    @GetMapping("/count")
+    public Long getUsersCount() {
+        return userService.getUsersCount();
     }
 }

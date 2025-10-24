@@ -45,7 +45,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
                     <div className="flex items-center">
                         <img
                             className="w-8 h-8"
-                            src="https://cdn.prod.website-files.com/61241693df6a919162546d4e/612d214b1c0a550f86c31148_Frame%20223.png"
+                            src="src/images/logo.png"
                             alt="Logo"
                             loading="lazy"
                         />
@@ -77,7 +77,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
                 </div>
                 {/* Sidebar Items (scrollable) */}
                 <div className="flex-1 overflow-y-auto p-4">
-                    <ul className="flex flex-col gap-2">
+                    <ul className="flex flex-col gap-5">
                         {menuItems.map((item) => (
                             <SidebarItem
                                 key={item.route}
