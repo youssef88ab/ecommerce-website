@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react"
-import FilterByButton from "../../components/admin/FilterByButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DashboardLayout from "../../layouts/DashboardLayout";
+import type { User } from "../../types/components";
+import Metric from "../../components/admin/Metric";
+import PageTitle from "../../components/admin/PageTitle";
+import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
 import UsersTable from "../../components/admin/UsersTable";
 import { fetchAllUsers } from "../../services/userService";
-import PageTitle from "../../components/admin/PageTitle";
-import SearchBar from "../../components/admin/SearchBar";
-import type { User } from "../../types/components";
-import Metric from "../../components/admin/Metric";
+import DashboardLayout from "../../layouts/DashboardLayout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { UserPageResponse } from "../../services/userService";
+import FilterByButton from "../../components/admin/FilterByButton";
 import {
     faUsers,
     faMars,
@@ -21,27 +22,38 @@ import {
 
 export default function Users() {
 
-    // Searching
+    // * Searching
     const [searchTerm, setSearchTerm] = useState("");
 
-    // Pagination 
+    // * Pagination 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
+    const sort: string = "id,asc";
+
+    const [userPageResponse, setUserPageResponse] = useState<UserPageResponse | undefined>(undefined);
+
+    // * Load User 
+    useEffect(() => {
+        const loadUsers = async () => {
+            const data = await fetchAllUsers(page, rowsPerPage, sort);
+            setUserPageResponse(data);
+        };
+        loadUsers();
+    }, [page, rowsPerPage]);
 
     const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
-        const loadUsers = async () => {
-            const data = await fetchAllUsers();
-            setUsers(data);
-        };
-        loadUsers();
-    }, []);
+        if (userPageResponse) {
+            setUsers(userPageResponse.content || []);
+            console.log("Users : " , users);
+        }
+    }, [userPageResponse]);
 
     // Total Users
-    const totalUsers = users.length;
+    const totalUsers = userPageResponse?.totalElements;
 
     // Handle Page Change 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -57,7 +69,6 @@ export default function Users() {
     // Filter Options
     const [filters, setFilters] = useState({
         gender: "",
-        device_type: "",
         role: "",
     });
 
@@ -66,28 +77,13 @@ export default function Users() {
         setFilters((prev) => ({ ...prev, [filterName]: value }));
     };
 
-    // Filter & Search Algorithm
-    const filteredUsers = users
-        .filter(
-            (user) =>
-                user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.email.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .filter(
-            (user) =>
-                (!filters.gender || user.gender === filters.gender)
-        );
-
-    // Displayed User in paginated page
-    const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
-
     return (
         <DashboardLayout>
             <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
                 <Metric
                     title={"Total Utilisateurs"}
                     icon={faUsers}
-                    data={837}
+                    data={totalUsers ?? 0}
                     percentage={0.4}
                 />
                 <Metric
@@ -137,14 +133,14 @@ export default function Users() {
                     <Pagination
                         page={page}
                         handleChangePage={handleChangePage}
-                        rowsPerPage={rowsPerPage}
+                        rowsPerPage={userPageResponse?.size ?? 0}
                         handleChangeRowsPerPage={handleChangeRowsPerPage}
-                        count={totalUsers}
+                        count={userPageResponse?.totalElements ?? 0}
                     />
                 </div>
             </div>
             {/* Users Table */}
-            <UsersTable users={paginatedUsers} />
+            <UsersTable users={users} />
         </DashboardLayout>
     );
 }
