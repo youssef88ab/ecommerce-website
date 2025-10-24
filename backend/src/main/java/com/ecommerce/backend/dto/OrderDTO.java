@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class OrderDTO {
     private Long id;
-    private Long userId;
+    private UserDTO user;
     private List<OrderItemDTO> items;
     private double totalAmount;
     private OrderStatus status;

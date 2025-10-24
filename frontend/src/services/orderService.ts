@@ -17,7 +17,6 @@ export async function fetchAllOrders(
     size: number = 10,
     sort: string = "id,asc",
     status: string ,
-    paymentMethod: string,
     searchTerm: string
 ): Promise<OrderPageResponse> {
     const url = new URL(BASE_URL);
@@ -28,9 +27,6 @@ export async function fetchAllOrders(
 
     if (status) {
         url.searchParams.append('status', status);
-    }
-    if (paymentMethod) {
-        url.searchParams.append('paymentMethod', paymentMethod); 
     }
     if (searchTerm) {
         url.searchParams.append('search', searchTerm); 

@@ -46,7 +46,7 @@ export interface OrderItem {
 
 export interface Order {
     id: number;
-    userId: number;
+    user: User;
     items: OrderItem[];
     totalAmount: number;
     status: string;

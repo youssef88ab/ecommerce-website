@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DashboardLayout from "../../layouts/DashboardLayout";
+import Metric from "../../components/admin/Metric";
 import PageTitle from "../../components/admin/PageTitle";
 import SearchBar from "../../components/admin/SearchBar";
+import Pagination from "../../components/admin/Pagination";
+import DashboardLayout from "../../layouts/DashboardLayout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterByButton from "../../components/admin/FilterByButton";
+import OrdersTable from "../../components/admin/orders/OrdersTable";
+import type { Order, OrderPageResponse } from "../../types/components";
+import { fetchAllOrders, getOrdersCount } from "../../services/orderService";
 import {
-    faBox,
     faCartShopping,
     faCircleCheck,
     faSpinner,
     faClock,
     faCircleXmark,
-    faBook,
-    faBoxOpen,
     faUsers,
     faShoppingCart,
     faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
-import type { Order, OrderPageResponse } from "../../types/components";
-import { fetchAllOrders, getOrdersCount } from "../../services/orderService";
-import OrdersTable from "../../components/admin/orders/OrdersTable";
-import Metric from "../../components/admin/Metric";
-import Pagination from "../../components/admin/Pagination";
-
-
 
 export default function Orders() {
     // * Searching
@@ -43,6 +38,7 @@ export default function Orders() {
     // * Total Users
     const [ordersCount, setOrdersCount] = useState(0);
 
+    // * Load Users Count 
     useEffect(() => {
         const loadUsersCount = async () => {
             try {
@@ -74,23 +70,24 @@ export default function Orders() {
     // * Filter Options
     const [filters, setFilters] = useState({
         status: "",
-        paymentMethod: "",
     });
 
-    // * Load User 
+    // * Load Orders 
     useEffect(() => {
-        const loadUsers = async () => {
-            const data = await fetchAllOrders(page, rowsPerPage, sort, filters.status, filters.paymentMethod, searchTerm);
+        const loadOrders = async () => {
+            const data = await fetchAllOrders(page, rowsPerPage, sort, filters.status, searchTerm);
             setordersPageResponse(data);
         };
-        loadUsers();
+        loadOrders();
     }, [page, rowsPerPage, filters, searchTerm]);
 
 
     // * Handle Filter Change
     const handleFilterChange = (filterName: keyof typeof filters, value: string | number) => {
-        setFilters((prev) => ({ ...prev, [filterName]: value }));
+        setFilters((prev) => ({ ...prev, [filterName]: value.toString() }));
     };
+
+
 
     return (
         <DashboardLayout>
@@ -130,20 +127,9 @@ export default function Orders() {
                             value={filters.status}
                             onChange={(value) => handleFilterChange("status", value)}
                             options={[
-                                { value: "Completed", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCircleCheck} className="text-green-500" /> Completed</span> },
-                                { value: "Processing", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faSpinner} className="text-blue-500" /> Processing</span> },
-                                { value: "Pending", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faClock} className="text-yellow-500" /> Pending</span> },
-                                { value: "Cancelled", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCircleXmark} className="text-red-500" /> Cancelled</span> },
-                            ]}
-                        />
-                        <FilterByButton
-                            label="Payment"
-                            value={filters.paymentMethod}
-                            onChange={(value) => handleFilterChange("paymentMethod", value)}
-                            options={[
-                                { value: "Credit Card", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faBox} className="text-blue-500" /> Credit Card</span> },
-                                { value: "PayPal", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faBoxOpen} className="text-green-500" /> PayPal</span> },
-                                { value: "Bank Transfer", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faBook} className="text-purple-500" /> Bank Transfer</span> },
+                                { value: "PENDING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faSpinner} className="text-green-500" /> Pending</span> },
+                                { value: "SHIPPED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCircleCheck} className="text-blue-500" /> Shipped</span> },
+                                { value: "DELIVERED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faClock} className="text-red-500" /> Delivered</span> },
                             ]}
                         />
                     </div>

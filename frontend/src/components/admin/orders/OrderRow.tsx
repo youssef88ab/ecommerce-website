@@ -50,8 +50,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
             <td className="py-4">
                 <div className="flex items-center gap-2">
                     <div>
-                        <h2 className="font-medium text-md">{order.userId}</h2>
-                        <p className="text-gray-600 text-sm">{order.userId}</p>
+                        <h2 className="font-medium text-md text-black">{order.user?.username || "N/A"}</h2>
+                        <p className="text-gray-600 text-sm">{order.user?.email || "N/A"}</p>
                     </div>
                 </div>
             </td>

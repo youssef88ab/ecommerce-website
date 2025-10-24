@@ -4,6 +4,9 @@ import com.ecommerce.backend.dto.OrderDTO;
 import com.ecommerce.backend.dto.PaymentDTO;
 import com.ecommerce.backend.enums.OrderStatus;
 import com.ecommerce.backend.model.Invoice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface OrderService {
@@ -12,7 +15,7 @@ public interface OrderService {
     OrderDTO placeOrder(Long cartId , PaymentDTO paymentInfo);
 
     // * Get Orders
-    List<OrderDTO> getOrders();
+    Page<OrderDTO> getOrders(Pageable pageable , OrderStatus status , String search);
 
     // * Get Order By id
     OrderDTO getOrderById(Long id);
@@ -28,4 +31,7 @@ public interface OrderService {
 
     // * Generates and retrieves the formal invoice/receipt for the order.
     Invoice generateInvoice(Long orderId);
+
+    // * Get Orders Count
+    Long getOrdersCount();
 }

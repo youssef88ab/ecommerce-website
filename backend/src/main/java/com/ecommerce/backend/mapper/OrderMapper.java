@@ -13,8 +13,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderMapper {
 
-    OrderItemMapper orderItemMapper ;
-    PaymentMapper paymentMapper ;
+    private final OrderItemMapper orderItemMapper ;
+    private final PaymentMapper paymentMapper ;
+    private final UserMapper userMapper;
 
     public Order toEntity(OrderDTO orderDTO) {
 
@@ -26,12 +27,11 @@ public class OrderMapper {
         order.setStatus(orderDTO.getStatus());
         order.setOrderDate(orderDTO.getOrderDate());
         order.setTotalAmount(orderDTO.getTotalAmount());
+        order.setUser(userMapper.toEntity(orderDTO.getUser()));
         order.setPayment(paymentMapper.toEntity(orderDTO.getPayment()));
         order.setItems(orderDTO.getItems().stream().map(orderItemMapper::toEntity).collect(Collectors.toList()));
 
         User user = new User();
-
-        user.setId(orderDTO.getUserId());
 
         order.setUser(user);
 
@@ -47,7 +47,7 @@ public class OrderMapper {
         orderDTO.setId(order.getId());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setOrderDate(order.getOrderDate());
-        orderDTO.setUserId(order.getUser().getId());
+        orderDTO.setUser(userMapper.toDTO(order.getUser()));
         orderDTO.setTotalAmount(order.getTotalAmount());
         orderDTO.setPayment(paymentMapper.toDTO(order.getPayment()));
         orderDTO.setItems(order.getItems().stream().map(orderItemMapper::toDto).collect(Collectors.toList()));
