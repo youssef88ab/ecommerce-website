@@ -5,6 +5,7 @@ import {
     faApplePay,
 } from "@fortawesome/free-brands-svg-icons";
 import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function showRole(role: string) {
     return role.split('_')[1];
@@ -30,30 +31,24 @@ export const renderPaymentMethod = (paymentMethod: string) => {
     let color = "text-gray-700";
     let bg = "bg-gray-100";
 
-    switch (paymentMethod.toLowerCase()) {
-        case "paypal":
+    switch (paymentMethod) {
+        case "PAYPAL":
             icon = faCcPaypal;
             label = "PayPal";
             color = "text-blue-700";
             bg = "bg-blue-100";
             break;
-        case "visa":
+        case "VISA":
             icon = faCcVisa;
             label = "Visa";
             color = "text-indigo-700";
             bg = "bg-indigo-100";
             break;
-        case "mastercard":
+        case "MASTERCARD":
             icon = faCcMastercard;
             label = "MasterCard";
             color = "text-red-700";
             bg = "bg-red-100";
-            break;
-        case "apple pay":
-            icon = faApplePay;
-            label = "Apple Pay";
-            color = "text-black";
-            bg = "bg-gray-200";
             break;
         default:
             icon = faCreditCard;
@@ -61,4 +56,12 @@ export const renderPaymentMethod = (paymentMethod: string) => {
             color = "text-gray-700";
             bg = "bg-gray-100";
     }
+
+
+    return (
+        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${color} ${bg}`}>
+            <FontAwesomeIcon icon={icon} />
+            {label}
+        </span>
+    );
 }
