@@ -1,9 +1,9 @@
 package com.ecommerce.backend.enums;
 
 public enum PaymentMethod {
-    CREDIT_CARD,
+    VISA,
     PAYPAL,
-    BANK_TRANSFER,
-    CASH_ON_DELIVERY
+    CREDIT_CARD,
+    MASTERCARD
 }
 

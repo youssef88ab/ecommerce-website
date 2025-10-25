@@ -61,7 +61,7 @@ const OrderRow: React.FC<OrderRowProps> = ({
                     ${order.totalAmount.toFixed(2)}
                 </span>
             </td>
-            <td className="py-4">
+            <td className="py-4 text-center">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-50 text-gray-700">
                     {renderPaymentMethod(order.payment.method)}
                 </span>
