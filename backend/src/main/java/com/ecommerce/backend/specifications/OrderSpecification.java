@@ -1,6 +1,7 @@
 package com.ecommerce.backend.specifications;
 
 import com.ecommerce.backend.enums.OrderStatus;
+import com.ecommerce.backend.enums.PaymentMethod;
 import com.ecommerce.backend.model.Order;
 import com.ecommerce.backend.model.User;
 import jakarta.persistence.criteria.Predicate;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public final class OrderSpecification {
     // * Method to combine all specifications (filters and search)
-    public static Specification<Order> filterBy(OrderStatus status, String search) {
+    public static Specification<Order> filterBy(OrderStatus status , PaymentMethod paymentMethod, String search) {
         // * Starts with an empty specification, then combines using AND
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -19,6 +20,9 @@ public final class OrderSpecification {
             // * 1. Gender Filter
             if (status != null) {
                 predicates.add(cb.equal(root.get("status"), status));
+            }
+            if (paymentMethod != null) {
+                predicates.add(cb.equal(root.get("payment").get("method") , paymentMethod));
             }
 
             // * 2. Search Term (search) Filter: username LIKE %q% OR email LIKE %q%
