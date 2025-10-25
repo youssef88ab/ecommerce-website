@@ -38,6 +38,12 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
             >
               Amount
             </th>
+                  <th
+              scope="col"
+              className="py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Payment Method
+            </th>
             <th
               scope="col"
               className="py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
