@@ -3,6 +3,7 @@ package com.ecommerce.backend.service;
 import com.ecommerce.backend.dto.OrderDTO;
 import com.ecommerce.backend.dto.PaymentDTO;
 import com.ecommerce.backend.enums.OrderStatus;
+import com.ecommerce.backend.enums.PaymentMethod;
 import com.ecommerce.backend.model.Invoice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ public interface OrderService {
     OrderDTO placeOrder(Long cartId , PaymentDTO paymentInfo);
 
     // * Get Orders
-    Page<OrderDTO> getOrders(Pageable pageable , OrderStatus status , String search);
+    Page<OrderDTO> getOrders(Pageable pageable , OrderStatus status , PaymentMethod paymentMethod, String search);
 
     // * Get Order By id
     OrderDTO getOrderById(Long id);

@@ -3,6 +3,7 @@ package com.ecommerce.backend.controller;
 import com.ecommerce.backend.dto.OrderDTO;
 import com.ecommerce.backend.enums.Gender;
 import com.ecommerce.backend.enums.OrderStatus;
+import com.ecommerce.backend.enums.PaymentMethod;
 import com.ecommerce.backend.enums.Role;
 import com.ecommerce.backend.service.OrderServiceImpl;
 import jdk.jshell.Snippet;
@@ -22,8 +23,8 @@ public class OrderController {
 
     // * Get All Orders
     @GetMapping
-    public Page<OrderDTO> getAllOrders(@PageableDefault(size = 20, sort = "id") Pageable pageable , @RequestParam(required = false) OrderStatus status , @RequestParam(required = false) String search) {
-        return orderService.getOrders(pageable, status , search);
+    public Page<OrderDTO> getAllOrders(@PageableDefault(size = 20, sort = "id") Pageable pageable , @RequestParam(required = false) OrderStatus status , @RequestParam(required = false) PaymentMethod paymentMethod , @RequestParam(required = false) String search) {
+        return orderService.getOrders(pageable, status , paymentMethod , search);
     }
 
     // * Get Orders Count

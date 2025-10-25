@@ -11,16 +11,19 @@ import type { Order, OrderPageResponse } from "../../types/components";
 import { fetchAllOrders, getOrdersCount } from "../../services/orderService";
 import {
     faCartShopping,
-    faCircleCheck,
     faSpinner,
-    faClock,
-    faCircleXmark,
     faUsers,
     faShoppingCart,
     faClipboardList,
     faTruckFast,
     faCheck,
+    faCreditCard,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+    faCcVisa as faCcVisaBrand,
+    faCcPaypal as faCcPaypalBrand,
+    faCcMastercard as faCcMastercardBrand,
+} from "@fortawesome/free-brands-svg-icons";
 
 export default function Orders() {
     // * Searching
@@ -73,12 +76,13 @@ export default function Orders() {
     // * Filter Options
     const [filters, setFilters] = useState({
         status: "",
+        paymentMethod: ""
     });
 
     // * Load Orders 
     useEffect(() => {
         const loadOrders = async () => {
-            const data = await fetchAllOrders(page, rowsPerPage, sort, filters.status, searchTerm);
+            const data = await fetchAllOrders(page, rowsPerPage, sort, filters.status, filters.paymentMethod ,  searchTerm);
             setordersPageResponse(data);
         };
         loadOrders();
@@ -134,6 +138,18 @@ export default function Orders() {
                                 { value: "SHIPPED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faTruckFast} className="text-orange-500" /> Shipped</span> },
                                 { value: "DELIVERED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-green-500" /> Delivered</span> },
                             ]}
+                        />
+                        <FilterByButton
+                            label="Method"
+                            value={filters.paymentMethod}
+                            onChange={(value) => handleFilterChange("paymentMethod", value)}
+                            options={[
+                                { value: "VISA,", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcVisaBrand} className="text-blue-600" /> Visa</span> },
+                                { value: "PAYPAL", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcPaypalBrand} className="text-blue-500" /> PayPal</span> },
+                                { value: "MASTERCARD", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcMastercardBrand} className="text-red-600" /> MasterCard</span> },
+                                { value: "CREDIT_CARD", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCreditCard} className="text-gray-800" /> Credit Card</span> },
+                            ]}
+                            data-testid="method-filter-trigger"
                         />
                     </div>
                     <Pagination

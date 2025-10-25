@@ -4,6 +4,7 @@ import com.ecommerce.backend.dto.OrderDTO;
 import com.ecommerce.backend.dto.PaymentDTO;
 import com.ecommerce.backend.enums.Gender;
 import com.ecommerce.backend.enums.OrderStatus;
+import com.ecommerce.backend.enums.PaymentMethod;
 import com.ecommerce.backend.mapper.OrderMapper;
 import com.ecommerce.backend.model.Invoice;
 import com.ecommerce.backend.model.Order;
@@ -36,9 +37,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<OrderDTO> getOrders(Pageable pageable, OrderStatus status , String search) {
+    public Page<OrderDTO> getOrders(Pageable pageable, OrderStatus status , PaymentMethod paymentMethod , String search) {
         // * 1. Build the dynamic WHERE clause using the Specification class
-        Specification<Order> spec = OrderSpecification.filterBy(status, search);
+        Specification<Order> spec = OrderSpecification.filterBy(status, paymentMethod , search);
 
         // * 2. Execute the single findAll method, passing the dynamic Specification
         Page<Order> orderPage = orderRepository.findAll(spec, pageable);
