@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import type { Order } from "../../../types/components";
 import { IconButton, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { renderPaymentMethod } from "../../../utils/functions";
 
 interface OrderRowProps {
     order: Order;
@@ -58,6 +59,11 @@ const OrderRow: React.FC<OrderRowProps> = ({
             <td className="py-4 text-center">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">
                     ${order.totalAmount.toFixed(2)}
+                </span>
+            </td>
+            <td className="py-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-50 text-gray-700">
+                    {renderPaymentMethod(order.payment.method)}
                 </span>
             </td>
             <td className="py-4 text-gray-600">{formatDate(order.orderDate)}</td>
