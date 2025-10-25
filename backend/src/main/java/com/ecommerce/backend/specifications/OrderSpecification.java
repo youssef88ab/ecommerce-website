@@ -27,8 +27,11 @@ public final class OrderSpecification {
 
                 // Build the OR condition: (username LIKE... OR email LIKE...)
                 Predicate searchPredicate = cb.or(
-                        cb.like(cb.lower(root.get("user_id")), likePattern),
-                        cb.like(cb.lower(root.get("id")), likePattern)
+                        cb.like(cb.lower(root.get("user").get("username")), likePattern),
+                        cb.like(cb.lower(root.get("user").get("email")), likePattern),
+
+                        cb.like(cb.lower(cb.function("to_char", String.class, root.get("user").get("id"), cb.literal("999999999999"))), likePattern),
+                        cb.like(cb.lower(cb.function("to_char", String.class, root.get("id"), cb.literal("999999999999"))), likePattern)
                 );
                 predicates.add(searchPredicate);
             }
