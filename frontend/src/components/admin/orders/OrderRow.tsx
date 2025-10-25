@@ -1,10 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import type { Order } from "../../../types/components";
+import { IconButton, Tooltip } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 interface OrderRowProps {
     order: Order;
@@ -55,33 +55,38 @@ const OrderRow: React.FC<OrderRowProps> = ({
                     </div>
                 </div>
             </td>
-            <td className="py-4">
+            <td className="py-4 text-center">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">
                     ${order.totalAmount.toFixed(2)}
                 </span>
             </td>
             <td className="py-4 text-gray-600">{formatDate(order.orderDate)}</td>
-            <td className="py-4">
+            <td className="py-4 text-center">
                 <span
-                    className={`px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full ${order.status === "Completed"
-                            ? "bg-green-100 text-green-800"
-                            : order.status === "Processing"
-                                ? "bg-blue-100 text-blue-800"
-                                : order.status === "Pending"
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : "bg-red-100 text-red-800"
+                    className={`px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full ${order.status === "DELIVERED"
+                        ? "bg-green-100 text-green-800"
+                        : order.status === "SHIPPED"
+                            ? "bg-orange-100 text-orange-800"
+                            : order.status === "PENDING"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
                         }`}
                 >
                     {order.status}
                 </span>
             </td>
             <td className="py-4 text-center">
-                <button
-                    onClick={handleViewDetails}
-                    className="text-blue-600 hover:text-blue-800 transition-colors"
-                >
-                    <FontAwesomeIcon icon={faEye} />
-                </button>
+                <Tooltip title="View Details" arrow placement="top">
+                    <IconButton
+                        onClick={() => handleViewDetails()}
+                        size="small"
+                        color="info"
+                        aria-label={`View details for ${order.id}`}
+                        className="hover:bg-blue-50 transition-colors duration-200"
+                    >
+                        <VisibilityIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
             </td>
         </motion.tr>
     );

@@ -18,6 +18,8 @@ import {
     faUsers,
     faShoppingCart,
     faClipboardList,
+    faTruckFast,
+    faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Orders() {
@@ -57,6 +59,7 @@ export default function Orders() {
         setSearchTerm(e.target.value);
         setPage(0); // ! Reset page to 0 when search term changes
     };
+
 
     // * Handle Page Change 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => { void event; setPage(newPage); };
@@ -101,7 +104,7 @@ export default function Orders() {
                 <Metric
                     title={"Total Orders"}
                     icon={faShoppingCart}
-                    data={1358}
+                    data={ordersCount}
                     percentage={0.1}
                 />
                 <Metric
@@ -117,7 +120,7 @@ export default function Orders() {
                     <SearchBar
                         searchTerm={searchTerm}
                         onSearchChange={handleSearchChange}
-                        placeholder="Search orders by number, customer name or email..."
+                        placeholder="Search orders by id, customer name or email..."
                     />
                 </div>
                 <div className="flex-1 flex flex-wrap gap-1 items-center justify-between">
@@ -127,9 +130,9 @@ export default function Orders() {
                             value={filters.status}
                             onChange={(value) => handleFilterChange("status", value)}
                             options={[
-                                { value: "PENDING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faSpinner} className="text-green-500" /> Pending</span> },
-                                { value: "SHIPPED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCircleCheck} className="text-blue-500" /> Shipped</span> },
-                                { value: "DELIVERED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faClock} className="text-red-500" /> Delivered</span> },
+                                { value: "PENDING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faSpinner} className="text-yellow-500" /> Pending</span> },
+                                { value: "SHIPPED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faTruckFast} className="text-orange-500" /> Shipped</span> },
+                                { value: "DELIVERED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-green-500" /> Delivered</span> },
                             ]}
                         />
                     </div>

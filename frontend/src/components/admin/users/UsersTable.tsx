@@ -35,7 +35,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }) => {
             </th>
             <th
               scope="col"
-              className="py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
+              className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
             >
               Gender
             </th>

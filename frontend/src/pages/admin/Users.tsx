@@ -54,7 +54,7 @@ export default function Users() {
     // * Handle Search Change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
-        setPage(0); // ! Reset page to 0 when search term changes
+        setPage(0); 
     };
 
     // * Handle Page Change 
@@ -84,6 +84,7 @@ export default function Users() {
     // * Handle Filter Change
     const handleFilterChange = (filterName: keyof typeof filters, value: string | number) => {
         setFilters((prev) => ({ ...prev, [filterName]: value }));
+        setPage(0);
     };
 
     return (

@@ -57,9 +57,9 @@ const UserRow: React.FC<UserRowProps> = ({
       <td className="py-4 text-gray-600">{user.phone}</td>
 
       {/* Gender */}
-      <td className="py-4">
+      <td className="py-4 text-center">
         <span
-          className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${user.gender === "Female"
+          className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${user.gender === "FEMALE"
             ? "bg-pink-50 text-pink-700"
             : "bg-blue-50 text-blue-700"
             }`}
