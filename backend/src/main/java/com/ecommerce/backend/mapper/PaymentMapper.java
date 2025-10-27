@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PaymentMapper {
 
-    Payment toEntity(PaymentDTO paymentDTO) {
+    public Payment toEntity(PaymentDTO paymentDTO) {
 
         if (paymentDTO == null) { return null; }
 
@@ -31,7 +31,7 @@ public class PaymentMapper {
         return payment;
     }
 
-    PaymentDTO toDTO(Payment payment) {
+    public PaymentDTO toDTO(Payment payment) {
 
         if (payment == null) { return null; }
 

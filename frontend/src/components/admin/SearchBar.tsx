@@ -17,7 +17,7 @@ export default function SearchBar({
 }: SearchBarProps) {
     return (
         <motion.div
-            className="relative w-full"
+            className="relative w-full bg-white rounded-2xl"
             variants={cardVariants}
             initial="hidden"
             animate="visible"

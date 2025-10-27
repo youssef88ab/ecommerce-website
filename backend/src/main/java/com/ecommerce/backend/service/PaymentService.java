@@ -4,7 +4,16 @@ package com.ecommerce.backend.service;
 // ! This is responsible for handling all interactions with external payment gateways (Stripe, PayPal, etc.). |
 // * -------------------------------------------------------------------------------------------------------- *
 
+import com.ecommerce.backend.dto.PaymentDTO;
+import com.ecommerce.backend.enums.PaymentMethod;
+import com.ecommerce.backend.enums.PaymentStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface PaymentService {
+
+    // * Get Payments
+    Page<PaymentDTO> getAllPayments(Pageable pageable , PaymentStatus status , PaymentMethod method , String search);
 
     // * Initiates and processes a payment transaction for a given order amount.
     // todo : PaymentResponse processPayment(PaymentRequest request);
@@ -20,4 +29,7 @@ public interface PaymentService {
 
     // * Validates the authenticity of incoming messages from the payment gateway.
     // todo : boolean verifyWebhookSignature(HttpServletRequest request)
+
+    // * Get Counts
+    Long getPaymentsCount();
 }
