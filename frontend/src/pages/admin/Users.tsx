@@ -111,7 +111,7 @@ export default function Users() {
             </div>
             <PageTitle title={'All Users'} icon={faUsers} />
             <div className="flex flex-col items-center md:flex-row gap-4 mb-3">
-                <div className="w-full md:w-1/3  bg-white rounded-2xl">
+                <div className="w-full md:w-1/3 ">
                     <SearchBar
                         searchTerm={searchTerm}
                         onSearchChange={handleSearchChange}

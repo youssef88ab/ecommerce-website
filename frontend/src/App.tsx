@@ -3,6 +3,7 @@ import { BrowserRouter as Router , Routes , Route } from 'react-router-dom'
 import Dashboard from './pages/admin/Dashboard'
 import Users from './pages/admin/Users'
 import Orders from './pages/admin/Orders'
+import Payments from './pages/admin/Payments'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path='users' element={<Users />} />
           <Route path='/orders' element={<Orders />} />
+          <Route path='/payments' element={<Payments />} />
         </Routes>
       </Router>
     </div>

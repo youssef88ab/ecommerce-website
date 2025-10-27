@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
-import Metric from "../../components/admin/Metric";
 import PageTitle from "../../components/admin/PageTitle";
 import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
 import DashboardLayout from "../../layouts/DashboardLayout";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterByButton from "../../components/admin/FilterByButton";
-import OrdersTable from "../../components/admin/orders/OrdersTable";
-import type { Order, OrderPageResponse } from "../../types/components";
-import { fetchAllOrders, getOrdersCount } from "../../services/orderService";
 import {
-    faCartShopping,
-    faSpinner,
+    faCreditCard,
+    faCircleCheck,
+    faClock,
+    faCircleXmark,
+    faMoneyBillTransfer,
     faUsers,
     faShoppingCart,
     faClipboardList,
-    faTruckFast,
     faCheck,
-    faCreditCard,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faCcVisa as faCcVisaBrand,
     faCcPaypal as faCcPaypalBrand,
     faCcMastercard as faCcMastercardBrand,
+    faApplePay as faApplePayBrand
 } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { Payment, PaymentPageResponse } from "../../types/components";
+import Metric from "../../components/admin/Metric";
+import { fetchAllPayments, getPaymentsCount } from "../../services/paymentsService";
+import PaymentsTable from "../../components/admin/payments/PaymentsTable";
 
-export default function Orders() {
+export default function Payments() {
+
     // * Searching
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -34,27 +37,26 @@ export default function Orders() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const sort: string = "id,asc";
 
-    const [orderPageResponse, setordersPageResponse] = useState<OrderPageResponse | undefined>(undefined);
+    const [paymentPageResponse, setpaymentsPageResponse] = useState<PaymentPageResponse | undefined>(undefined);
 
-    const [orders, setOrders] = useState<Order[]>([]);
+    const [payments, setPayments] = useState<Payment[]>([]);
 
-    useEffect(() => { if (orderPageResponse) { setOrders(orderPageResponse.content || []); } }, [orderPageResponse]);
+    useEffect(() => { if (paymentPageResponse) { setPayments(paymentPageResponse.content || []); } }, [paymentPageResponse]);
 
-    // * Total Users
-    const [ordersCount, setOrdersCount] = useState(0);
+    // * Total Payments
+    const [paymentsCount, setPaymentsCount] = useState(0);
 
-    // * Load Users Count 
+    // * Load Payments Count 
     useEffect(() => {
-        const loadUsersCount = async () => {
+        const loadPaymentsCount = async () => {
             try {
-                const count = await getOrdersCount();
-                setOrdersCount(count);
+                const count = await getPaymentsCount();
+                setPaymentsCount(count);
             } catch (error) {
-                console.error("Failed to load user count:", error);
+                console.error("Failed to load payments count:", error);
             }
         };
-
-        loadUsersCount();
+        loadPaymentsCount();
     });
 
     // * Handle Search Change
@@ -76,14 +78,14 @@ export default function Orders() {
     // * Filter Options
     const [filters, setFilters] = useState({
         status: "",
-        paymentMethod: ""
+        method: ""
     });
 
-    // * Load Orders 
+    // * Load Payments 
     useEffect(() => {
         const loadOrders = async () => {
-            const data = await fetchAllOrders(page, rowsPerPage, sort, filters.status, filters.paymentMethod ,  searchTerm);
-            setordersPageResponse(data);
+            const data = await fetchAllPayments(page, rowsPerPage, sort, filters.status, filters.method, searchTerm);
+            setpaymentsPageResponse(data);
         };
         loadOrders();
     }, [page, rowsPerPage, filters, searchTerm]);
@@ -100,13 +102,13 @@ export default function Orders() {
                 <Metric
                     title={"Total Utilisateurs"}
                     icon={faUsers}
-                    data={ordersCount}
+                    data={paymentsCount}
                     percentage={0.4}
                 />
                 <Metric
                     title={"Total Orders"}
                     icon={faShoppingCart}
-                    data={ordersCount}
+                    data={paymentsCount}
                     percentage={0.1}
                 />
                 <Metric
@@ -116,13 +118,13 @@ export default function Orders() {
                     percentage={-0.7}
                 />
             </div>
-            <PageTitle title={"All Orders"} icon={faCartShopping} />
+            <PageTitle title={'All Payments'} icon={faCreditCard} />
             <div className="flex flex-col items-center md:flex-row gap-4 mb-3">
-                <div className="w-full md:w-1/3">
+                <div className="w-full md:w-1/3 ">
                     <SearchBar
                         searchTerm={searchTerm}
                         onSearchChange={handleSearchChange}
-                        placeholder="Search orders by id, customer name or email..."
+                        placeholder="Search payments by ID, customer name or email..."
                     />
                 </div>
                 <div className="flex-1 flex flex-wrap gap-1 items-center justify-between">
@@ -132,36 +134,41 @@ export default function Orders() {
                             value={filters.status}
                             onChange={(value) => handleFilterChange("status", value)}
                             options={[
-                                { value: "PENDING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faSpinner} className="text-yellow-500" /> Pending</span> },
-                                { value: "SHIPPED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faTruckFast} className="text-orange-500" /> Shipped</span> },
-                                { value: "DELIVERED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-green-500" /> Delivered</span> },
+                                { value: "COMPLETED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-green-500" /> Completed</span> },
+                                { value: "PENDING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faClock} className="text-yellow-500" /> Pending</span> },
+                                { value: "FAILED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCircleXmark} className="text-red-500" /> Failed</span> },
+                                { value: "REFUNDED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faMoneyBillTransfer} className="text-blue-500" /> Refunded</span> },
                             ]}
+                            data-testid="status-filter-trigger"
                         />
                         <FilterByButton
                             label="Method"
-                            value={filters.paymentMethod}
-                            onChange={(value) => handleFilterChange("paymentMethod", value)}
+                            value={filters.method}
+                            onChange={(value) => handleFilterChange("method", value)}
                             options={[
-                                { value: "VISA,", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcVisaBrand} className="text-blue-600" /> Visa</span> },
+                                { value: "VISA", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcVisaBrand} className="text-blue-600" /> Visa</span> },
                                 { value: "PAYPAL", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcPaypalBrand} className="text-blue-500" /> PayPal</span> },
-                                { value: "MASTERCARD", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcMastercardBrand} className="text-red-600" /> MasterCard</span> },
-                                { value: "CREDIT_CARD", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCreditCard} className="text-gray-800" /> Credit Card</span> },
+                                { value: "CREDIT_CARD", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCcMastercardBrand} className="text-red-600" /> MasterCard</span> },
+                                { value: "MASTERCARD", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faApplePayBrand} className="text-gray-800" /> Apple Pay</span> },
                             ]}
                             data-testid="method-filter-trigger"
                         />
                     </div>
+
                     <Pagination
                         page={page}
                         handleChangePage={handleChangePage}
-                        rowsPerPage={orderPageResponse?.size ?? 0}
+                        rowsPerPage={paymentPageResponse?.size ?? 0}
                         handleChangeRowsPerPage={handleChangeRowsPerPage}
-                        count={orderPageResponse?.totalElements ?? 0}
+                        count={paymentPageResponse?.totalElements ?? 0}
                     />
                 </div>
             </div>
 
-            {/* Orders Table */}
-            <OrdersTable orders={orders} />
+            {/* Payments Table */}
+            <div className="">
+                <PaymentsTable payments={payments} />
+            </div>
         </DashboardLayout>
     );
 }

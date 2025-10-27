@@ -79,3 +79,5 @@ interface PageResponse<T> {
 export interface UserPageResponse extends PageResponse<User> { }
 
 export interface OrderPageResponse extends PageResponse<Order> { }
+
+export interface PaymentPageResponse extends PageResponse<Payment> { }
