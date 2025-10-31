@@ -54,6 +54,21 @@ export interface Order {
     payment: Payment;
 }
 
+export interface Category {
+    id: number; 
+    name: string;
+    description: string;
+}
+
+export interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    category: Category;
+}
+
 export interface Pageable {
     pageNumber: number;
     pageSize: number;
@@ -81,3 +96,5 @@ export interface UserPageResponse extends PageResponse<User> { }
 export interface OrderPageResponse extends PageResponse<Order> { }
 
 export interface PaymentPageResponse extends PageResponse<Payment> { }
+
+export interface ProductPageResponse extends PageResponse<Product> { }

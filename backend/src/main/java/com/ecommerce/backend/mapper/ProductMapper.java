@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProductMapper {
 
-    private CategoryMapper categoryMapper ;
+    private final CategoryMapper categoryMapper ;
 
     public Product toEntity(ProductDTO productDTO) {
 

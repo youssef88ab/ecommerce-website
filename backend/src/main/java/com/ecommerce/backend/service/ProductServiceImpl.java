@@ -4,9 +4,16 @@ import com.ecommerce.backend.dto.ProductDTO;
 import com.ecommerce.backend.mapper.CategoryMapper;
 import com.ecommerce.backend.mapper.ProductMapper;
 import com.ecommerce.backend.model.Product;
+import com.ecommerce.backend.model.User;
 import com.ecommerce.backend.repository.ProductRepository;
+import com.ecommerce.backend.specifications.ProductSpecification;
+import com.ecommerce.backend.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +29,16 @@ public class ProductServiceImpl implements ProductService {
 
     // * Get All Products
     @Override
-    public List<ProductDTO> getProducts() {
-        return productRepository.findAll().stream().map(productMapper::toDTO).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> getAllProducts(Pageable pageable, String category , String search) {
+        // * 1. Build the dynamic WHERE clause using the Specification class
+        Specification<Product> spec = ProductSpecification.filterBy(category, search);
+
+        // * 2. Execute the single findAll method, passing the dynamic Specification
+        Page<Product> productPage = productRepository.findAll(spec, pageable);
+
+        // * 3. Map and return
+        return productPage.map(productMapper::toDTO);
     }
 
     // * Get Products By Category
@@ -85,4 +100,7 @@ public class ProductServiceImpl implements ProductService {
     // * Delete Product
     @Override
     public void deleterProduct(Long id) { productRepository.deleteById(id); }
+
+    // * Get Products Count
+    public Long getProductsCount() { return productRepository.count(); }
 }

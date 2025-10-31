@@ -1,15 +1,12 @@
 package com.ecommerce.backend.specifications;
 
+import java.util.List;
+import java.util.ArrayList;
+import com.ecommerce.backend.model.Payment;
+import jakarta.persistence.criteria.Predicate;
 import com.ecommerce.backend.enums.PaymentMethod;
 import com.ecommerce.backend.enums.PaymentStatus;
-import com.ecommerce.backend.model.Payment;
-import com.ecommerce.backend.model.User;
-import com.ecommerce.backend.enums.Gender;
-import com.ecommerce.backend.enums.Role;
 import org.springframework.data.jpa.domain.Specification;
-import jakarta.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class PaymentSpecification {
     // * Method to combine all specifications (filters and search)
