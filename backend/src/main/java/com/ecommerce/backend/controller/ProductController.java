@@ -1,26 +1,28 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.ProductDTO;
-import com.ecommerce.backend.service.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import com.ecommerce.backend.dto.ProductDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.data.web.PageableDefault;
+import com.ecommerce.backend.service.ProductServiceImpl;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/products")
 public class ProductController {
 
-    ProductServiceImpl productService ;
+    private final ProductServiceImpl productService ;
 
     // * Get Products
     @GetMapping
-    public List<ProductDTO> getProducts() {
-        return productService.getProducts();
+    public Page<ProductDTO> getProducts(@PageableDefault(size = 20, sort = "id") Pageable pageable , @RequestParam(required = false) String category , @RequestParam(required = false) String search)
+    {
+        return productService.getAllProducts(pageable , category , search);
     }
-
     // * Get Product By Name
     @GetMapping("/{name}")
     public ProductDTO getProduct(@PathVariable String name) {
@@ -45,4 +47,8 @@ public class ProductController {
         productService.deleterProduct(id);
         return ResponseEntity.noContent().build();
     }
+
+    // * Get Products Count
+    @GetMapping("/count")
+    public Long getProductsCount() { return  productService.getProductsCount(); }
 }
