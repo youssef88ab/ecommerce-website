@@ -5,7 +5,7 @@ import type { Product, User } from "../../../types/components";
 import React from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { showRole } from "../../../utils/functions";
+import { renderProductStock, showRole } from "../../../utils/functions";
 import { showRegistrationDateTime } from "../../../utils/functions";
 
 // ✅ Define component props type
@@ -53,32 +53,16 @@ const UserRow: React.FC<ProductRowProps> = ({
                 </div>
             </td>
 
-            {/* Phone */}
-            <td className="py-4 text-gray-600">{product.price}</td>
-
-            {/* Gender */}
-            <td className="py-4 text-center">
-                <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${product.name === "FEMALE"
-                        ? "bg-pink-50 text-pink-700"
-                        : "bg-blue-50 text-blue-700"
-                        }`}
-                >
-                    {product.name}
-                </span>
+            {/* Category */}
+            <td className="py-4 text-center text-sm font-medium text-gray-900">
+                {product.category.name}
             </td>
 
-            {/* Registration Date */}
-            <td className="py-4 text-gray-600"></td>
+            {/* Quantity */}
+            <td className="py-4 text-center text-gray-600">{product.stock}</td>
 
-            {/* Role */}
-            <td className="py-4 text-gray-600 text-center">
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${showRole(product.name) === "ADMIN"
-                    ? "bg-gray-50 text-black"
-                    : "bg-green-50 text-green-700"
-                    }`}>
-                    {showRole(product.name)}
-                </span> </td>
+            {/* Stock Status */}
+            <td className="py-4 text-center text-gray-600">{renderProductStock(product.stock)}</td>
 
             {/* View Button */}
             <td className="py-4 text-center">

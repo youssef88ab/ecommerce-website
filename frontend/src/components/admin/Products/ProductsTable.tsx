@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import React from "react";
 import { tableVariants, rowVariants } from "../../../variants/animations";
-import type { Product, User } from "../../../types/components";
+import type { Product } from "../../../types/components";
 import ProductRow from "./ProductRow";
 
 
@@ -25,31 +25,25 @@ const UsersTable: React.FC<ProductTableProbs> = ({ products }) => {
                             scope="col"
                             className="py-4 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
                         >
-                            username
-                        </th>
-                        <th
-                            scope="col"
-                            className="py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
-                        >
-                            Phone
+                            name
                         </th>
                         <th
                             scope="col"
                             className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
                         >
-                            Gender
-                        </th>
-                        <th
-                            scope="col"
-                            className="py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
-                        >
-                            Registration Date
+                            quantity
                         </th>
                         <th
                             scope="col"
                             className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
                         >
-                            Level
+                            category
+                        </th>
+                        <th
+                            scope="col"
+                            className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
+                        >
+                            stock level
                         </th>
                         <th
                             scope="col"

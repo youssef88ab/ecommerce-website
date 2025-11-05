@@ -14,6 +14,10 @@ import {
     faShoppingCart,
     faClipboardList,
     faCheck,
+    faMobileAlt,
+    faBook,
+    faCouch,
+    faTshirt,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faCcVisa as faCcVisaBrand,
@@ -82,11 +86,11 @@ export default function Products() {
 
     // * Load Products 
     useEffect(() => {
-        const loadOrders = async () => {
-            const data = await fetchAllProducts(page, rowsPerPage, sort,  filters.category, searchTerm);
+        const loadProducts = async () => {
+            const data = await fetchAllProducts(page, rowsPerPage, sort, filters.category, searchTerm);
             setProductsPageResponse(data);
         };
-        loadOrders();
+        loadProducts();
     }, [page, rowsPerPage, filters, searchTerm]);
 
 
@@ -129,17 +133,18 @@ export default function Products() {
                 <div className="flex-1 flex flex-wrap gap-1 items-center justify-between">
                     <div className="flex">
                         <FilterByButton
-                            label="Status"
+                            label="Category"
                             value={filters.category}
                             onChange={(value) => handleFilterChange("category", value)}
                             options={[
-                                { value: "COMPLETED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-green-500" /> Completed</span> },
-                                { value: "PENDING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faClock} className="text-yellow-500" /> Pending</span> },
-                                { value: "FAILED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCircleXmark} className="text-red-500" /> Failed</span> },
-                                { value: "REFUNDED", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faMoneyBillTransfer} className="text-blue-500" /> Refunded</span> },
+                                { value: "ELECTRONICS", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faMobileAlt} className="text-blue-500" /> Electronics</span> },
+                                { value: "CLOTHING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faTshirt} className="text-pink-500" /> Clothing</span> },
+                                { value: "HOME", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCouch} className="text-green-500" /> Home</span> },
+                                { value: "BOOKS", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faBook} className="text-yellow-500" /> Books</span> },
                             ]}
-                            data-testid="status-filter-trigger"
+                            data-testid="category-filter-trigger"
                         />
+
                     </div>
 
                     <Pagination

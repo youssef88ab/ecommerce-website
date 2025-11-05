@@ -10,7 +10,10 @@ import {
     faHourglassHalf,
     faTimesCircle,
     faUndoAlt,
-    faCheck
+    faCheck,
+    faTriangleExclamation,
+    faCircleCheck,
+    faCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -42,7 +45,7 @@ export const renderPaymentDate = (date: string) => {
 
 
 
-export const renderPaymentStatus = (payment_status : string) => {
+export const renderPaymentStatus = (payment_status: string) => {
     if (!payment_status) return null;
 
     let icon = faHourglassHalf;
@@ -91,7 +94,6 @@ export const renderPaymentStatus = (payment_status : string) => {
     );
 };
 
-
 export const renderPaymentMethod = (paymentMethod: string) => {
     if (!paymentMethod) return null;
 
@@ -126,6 +128,34 @@ export const renderPaymentMethod = (paymentMethod: string) => {
             bg = "bg-gray-100";
     }
 
+
+    return (
+        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${color} ${bg}`}>
+            <FontAwesomeIcon icon={icon} />
+            {label}
+        </span>
+    );
+}
+
+export const renderProductStock = (stock: number) => {
+    if (!stock) { return null; }
+
+    let icon = faCircle;
+    let label = 'MID';
+    let color = "text-yellow-700";
+    let bg = "bg-yellow-100";
+
+    if (stock >= 50) {
+        label = 'HIGH'
+        color = 'text-green-700'
+        bg = "bg-green-100"
+    }
+
+    else if (stock <= 15) {
+        label = 'LOW'
+        color = 'text-red-700'
+        bg = "bg-red-100"
+    }
 
     return (
         <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${color} ${bg}`}>
