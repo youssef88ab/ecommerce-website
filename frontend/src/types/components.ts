@@ -69,6 +69,25 @@ export interface Product {
     category: Category;
 }
 
+
+interface Address {
+    line1: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+}
+
+interface Customer {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+}
+
+type OrderStatus = 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+
+
 export interface Pageable {
     pageNumber: number;
     pageSize: number;
