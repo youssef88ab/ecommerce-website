@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import type { Variants, Transition } from "framer-motion";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import type { Product, User } from "../../../types/components";
 import React from "react";
 import { IconButton, Tooltip } from "@mui/material";
@@ -77,6 +79,31 @@ const UserRow: React.FC<ProductRowProps> = ({
                         <VisibilityIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
+            </td>
+
+            <td className="py-4 text-center">
+                <div className="flex justify-center items-center gap-3">
+                    <Tooltip title="Edit Product" arrow placement="top">
+                        <IconButton
+                            size="small"
+                            color="default"
+                            aria-label="edit"
+                            className="hover:bg-gray-50 transition-colors duration-200"
+                        >
+                            <EditIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete Product" arrow placement="top">
+                        <IconButton
+                            size="small"
+                            color="error"
+                            aria-label="delete"
+                            className="hover:bg-red-50 transition-colors duration-200"
+                        >
+                            <DeleteIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                </div>
             </td>
         </motion.tr>
     );
