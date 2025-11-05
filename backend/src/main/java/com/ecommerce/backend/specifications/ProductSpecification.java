@@ -14,7 +14,7 @@ public final class ProductSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             // * 1. Category Filter
-            if (category != null) {
+            if (category != null && !category.trim().isEmpty()) {
                 predicates.add(cb.equal(root.get("category").get("name"), category));
             }
 
