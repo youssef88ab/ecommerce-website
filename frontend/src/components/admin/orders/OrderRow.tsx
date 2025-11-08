@@ -24,8 +24,8 @@ const OrderRow: React.FC<OrderRowProps> = ({
 }) => {
     const navigate = useNavigate();
 
-    const handleViewDetails = () => {
-        navigate("/order", { state: { order } });
+    const handleViewDetails = (id : number) => {
+        navigate(`/orders/${id}`);
     };
 
     const formatDate = (dateString: string) => {
@@ -84,7 +84,7 @@ const OrderRow: React.FC<OrderRowProps> = ({
             <td className="py-4 text-center">
                 <Tooltip title="View Details" arrow placement="top">
                     <IconButton
-                        onClick={() => handleViewDetails()}
+                        onClick={() => handleViewDetails(order.id)}
                         size="small"
                         color="info"
                         aria-label={`View details for ${order.id}`}
