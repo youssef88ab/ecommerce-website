@@ -72,19 +72,12 @@ export interface Product {
 }
 
 
-interface Address {
+export interface Address {
     line1: string;
     city: string;
     state: string;
     zip: string;
     country: string;
-}
-
-interface Customer {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
 }
 
 export interface Pageable {

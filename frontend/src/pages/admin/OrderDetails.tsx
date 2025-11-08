@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faShoppingBag,
@@ -7,89 +7,15 @@ import {
     faUser,
     faMapMarkerAlt,
     faCalendarAlt,
-    faCheckCircle,
-    faTimesCircle,
-    faSyncAlt,
     faPrint,
-    faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import PageTitle from "../../components/admin/PageTitle";
 import { useParams } from "react-router-dom";
 import { getOrderById } from "../../services/orderService";
 import type { Order } from "../../types/components";
-import type { OrderStatus } from "../../types/components";
-
-// --- TYPESCRIPT INTERFACES ---
-
-interface Address {
-    line1: string;
-    city: string;
-    state: string;
-    zip: string;
-    country: string;
-}
-
-interface Item {
-    id: string;
-    name: string;
-    sku: string;
-    quantity: number;
-    price: number;
-}
-
-interface Payment {
-    method: string;
-    transactionId: string;
-    subtotal: number;
-    shippingFee: number;
-    tax: number;
-    total: number;
-}
-
-interface Customer {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-}
-
-
-
-
-const DetailCard: React.FC<{ title: string; icon: any; children: React.ReactNode }> = ({
-    title,
-    icon,
-    children,
-}) => (
-    <div className="bg-white rounded-xl shadow-lg p-5 border border-gray-100 h-full
-                    transform transition duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <div className="flex items-center gap-3 mb-4 border-b pb-3">
-            <FontAwesomeIcon icon={icon} className="text-indigo-500 w-4 h-4" />
-            <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
-        </div>
-        <div className="space-y-2 text-sm text-gray-600">{children}</div>
-    </div>
-);
-
-
-const StatusBadge: React.FC<{ status: OrderStatus }> = ({ status }) => {
-    let style = { text: "text-gray-700", bg: "bg-gray-100", icon: faSyncAlt };
-    if (status === "DELIVERED") style = { text: "text-green-700", bg: "bg-green-100", icon: faCheckCircle };
-    if (status === "SHIPPED" || status === "PROCESSING")
-        style = { text: "text-blue-700", bg: "bg-blue-100", icon: faTruck };
-    if (status === "CANCELLED") style = { text: "text-red-700", bg: "bg-red-100", icon: faTimesCircle };
-
-    return (
-        <span
-            className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${style.bg} ${style.text}`}
-        >
-            <FontAwesomeIcon icon={style.icon} className="w-4 h-4" />
-            {status}
-        </span>
-    );
-};
-
+import { DetailCard } from "../../components/admin/orders/DetailCard";
+import { StatusBadge } from "../../components/admin/orders/StatusBadge";
 
 export default function OrderDetails() {
 
@@ -101,17 +27,14 @@ export default function OrderDetails() {
     // * Load Order 
     useEffect(() => {
         const loadOrder = async () => {
-
             // * If no id 
             if (!id) return;
-
             // * Parse id from strign to num 
             const numericId = Number(id);
             if (isNaN(numericId)) {
                 console.error("Invalid ID");
                 return;
             }
-
             // * Call API Service 
             try {
                 const data = await getOrderById(numericId);
@@ -134,16 +57,6 @@ export default function OrderDetails() {
                 })
                 : "",
         [order?.orderDate]
-    );
-
-    const renderAddress = (address: Address) => (
-        <>
-            <p>{address.line1}</p>
-            <p>
-                {address.city}, {address.state} {address.zip}
-            </p>
-            <p>{address.country}</p>
-        </>
     );
 
     return (
