@@ -1,10 +1,10 @@
-import type { OrderPageResponse } from "../types/components";
+import type { Order, OrderPageResponse } from "../types/components";
 
 // * Api Url
 const BASE_URL = "http://localhost:8080/api/orders";
 
 /**
- * Fetches a paginated list of orders from the Spring Boot API.
+ * Fetches a paginated list of orders from the Backend API.
  * @param page The requested page number (0-indexed).
  * @param size The number of items per page.
  * @param sort The sorting criteria (e.g., 'username,asc').
@@ -16,8 +16,8 @@ export async function fetchAllOrders(
     page: number = 0,
     size: number = 10,
     sort: string = "id,asc",
-    status: string ,
-    paymentMethod: string, 
+    status: string,
+    paymentMethod: string,
     searchTerm: string
 ): Promise<OrderPageResponse> {
     const url = new URL(BASE_URL);
@@ -30,10 +30,10 @@ export async function fetchAllOrders(
         url.searchParams.append('status', status);
     }
     if (paymentMethod) {
-        url.searchParams.append('paymentMethod' , paymentMethod);
+        url.searchParams.append('paymentMethod', paymentMethod);
     }
     if (searchTerm) {
-        url.searchParams.append('search', searchTerm); 
+        url.searchParams.append('search', searchTerm);
     }
 
     try {
@@ -50,7 +50,43 @@ export async function fetchAllOrders(
         // Cast the parsed JSON response to our defined interface
         const data: OrderPageResponse = await response.json();
         return data;
-    } catch (error) {
+    }
+
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+/**
+ * Get Order by ID from backend API.
+ * @param id the id of order.
+ * @returns A promise that resolves to the structured UserPageResponse.
+ * @throws An error if the network request fails or the response status is not OK.
+ */
+
+export async function getOrderById(id: number) : Promise<Order> {
+    const url = `${BASE_URL}/${id}`;
+
+    // * get Order from backend 
+    try {
+        const response = await fetch(url.toString());
+
+        if (!response.ok) {
+            // Throw an error with details from the api response if possible 
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP ERROR ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        // Cast the parsed JSON response to our defined interface 
+        const data: Order = await response.json();
+        return data;
+    }
+
+    catch (error) {
         console.error("Error during user fetch:", error);
         // Throw a specific error or return a default response for the UI layer
         throw error;
@@ -59,20 +95,20 @@ export async function fetchAllOrders(
 
 export async function getOrdersCount() {
 
-    const url = BASE_URL + "/count" ; 
+    const url = BASE_URL + "/count";
 
     try {
         const response = await fetch(url);
 
         if (!response.ok) {
-             // Throw an error with details from the API response if possible
+            // Throw an error with details from the API response if possible
             const errorBody = await response.json();
             throw new Error(
                 `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
             );
         }
 
-        const length: number = await response.json(); 
+        const length: number = await response.json();
         console.log("Length : " + length);
         return length;
     }

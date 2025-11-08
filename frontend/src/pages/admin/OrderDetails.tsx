@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faShoppingBag,
@@ -15,6 +15,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import PageTitle from "../../components/admin/PageTitle";
+import { useParams } from "react-router-dom";
+import { getOrderById } from "../../services/orderService";
+import type { Order } from "../../types/components";
+import type { OrderStatus } from "../../types/components";
 
 // --- TYPESCRIPT INTERFACES ---
 
@@ -50,58 +54,8 @@ interface Customer {
     phone: string;
 }
 
-type OrderStatus = "Pending" | "Processing" | "Shipped" | "Delivered" | "Cancelled";
 
-interface Order {
-    id: string;
-    status: OrderStatus;
-    date: string;
-    customer: Customer;
-    shippingAddress: Address;
-    billingAddress: Address;
-    items: Item[];
-    payment: Payment;
-}
 
-// --- MOCK DATA ---
-const mockOrder: Order = {
-    id: "ORD-93847",
-    status: "Shipped",
-    date: "2024-10-25T10:00:00Z",
-    customer: {
-        id: "USR-001",
-        name: "Jane Doe",
-        email: "jane.doe@example.com",
-        phone: "+1 (555) 123-4567",
-    },
-    shippingAddress: {
-        line1: "123 Commerce St",
-        city: "Metropolis",
-        state: "CA",
-        zip: "90210",
-        country: "USA",
-    },
-    billingAddress: {
-        line1: "123 Commerce St",
-        city: "Metropolis",
-        state: "CA",
-        zip: "90210",
-        country: "USA",
-    },
-    items: [
-        { id: "P-101", name: "Premium Wireless Headset", sku: "WH-4500", quantity: 1, price: 199.99 },
-        { id: "P-205", name: "Ergonomic Desk Mat", sku: "DM-200", quantity: 2, price: 29.5 },
-        { id: "P-310", name: "Ultra HD Webcam", sku: "WC-720", quantity: 1, price: 125.0 },
-    ],
-    payment: {
-        method: "Visa **** 4242",
-        transactionId: "TXN-998877",
-        subtotal: 383.99,
-        shippingFee: 15.0,
-        tax: 23.04,
-        total: 422.03,
-    },
-};
 
 const DetailCard: React.FC<{ title: string; icon: any; children: React.ReactNode }> = ({
     title,
@@ -121,10 +75,10 @@ const DetailCard: React.FC<{ title: string; icon: any; children: React.ReactNode
 
 const StatusBadge: React.FC<{ status: OrderStatus }> = ({ status }) => {
     let style = { text: "text-gray-700", bg: "bg-gray-100", icon: faSyncAlt };
-    if (status === "Delivered") style = { text: "text-green-700", bg: "bg-green-100", icon: faCheckCircle };
-    if (status === "Shipped" || status === "Processing")
+    if (status === "DELIVERED") style = { text: "text-green-700", bg: "bg-green-100", icon: faCheckCircle };
+    if (status === "SHIPPED" || status === "PROCESSING")
         style = { text: "text-blue-700", bg: "bg-blue-100", icon: faTruck };
-    if (status === "Cancelled") style = { text: "text-red-700", bg: "bg-red-100", icon: faTimesCircle };
+    if (status === "CANCELLED") style = { text: "text-red-700", bg: "bg-red-100", icon: faTimesCircle };
 
     return (
         <span
@@ -136,34 +90,50 @@ const StatusBadge: React.FC<{ status: OrderStatus }> = ({ status }) => {
     );
 };
 
-// --- MAIN PAGE ---
 
-export const OrderDetails: React.FC = () => {
-    const order: Order = mockOrder;
-    const [isProcessing, setIsProcessing] = useState(false);
+export default function OrderDetails() {
 
-    const handlePrint = useCallback(() => {
-        window.print();
-    }, []);
+    // * Get id From url 
+    const { id } = useParams<{ id: string }>();
 
-    const handleChangeStatus = useCallback(() => {
-        setIsProcessing(true);
-        setTimeout(() => {
-            console.error("Simulated: Order status updated!");
-            setIsProcessing(false);
-        }, 1500);
-    }, []);
+    const [order, setOrder] = useState<Order | null>(null);
+
+    // * Load Order 
+    useEffect(() => {
+        const loadOrder = async () => {
+
+            // * If no id 
+            if (!id) return;
+
+            // * Parse id from strign to num 
+            const numericId = Number(id);
+            if (isNaN(numericId)) {
+                console.error("Invalid ID");
+                return;
+            }
+
+            // * Call API Service 
+            try {
+                const data = await getOrderById(numericId);
+                setOrder(data);
+            } catch (error) {
+                console.error("Failed to load order", error);
+            }
+        };
+        loadOrder();
+    }, [id]);
 
     const formattedDate = useMemo(
         () =>
-            new Date(order.date).toLocaleString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-            }),
-        [order.date]
+            order ? new Date(order.orderDate).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })
+                : "",
+        [order?.orderDate]
     );
 
     const renderAddress = (address: Address) => (
@@ -179,11 +149,10 @@ export const OrderDetails: React.FC = () => {
     return (
         <DashboardLayout>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <PageTitle title={`Order #${order.id} Details`} icon={faShoppingBag}/>
+                <PageTitle title={`Order #${order?.id} Details`} icon={faShoppingBag} />
 
                 <div className="flex flex-wrap gap-3 mt-4 sm:mt-0">
                     <button
-                        onClick={handlePrint}
                         className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-150"
                     >
                         <FontAwesomeIcon icon={faPrint} className="w-4 h-4" />
@@ -196,39 +165,37 @@ export const OrderDetails: React.FC = () => {
             {/* --- TOP DETAIL CARDS --- */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
                 <DetailCard title="Customer Information" icon={faUser}>
-                    <p className="font-semibold text-indigo-600">{order.customer.name}</p>
+                    <p className="font-semibold text-indigo-600">{order?.user.username}</p>
                     <p>
                         Email:{" "}
                         <a
-                            href={`mailto:${order.customer.email}`}
+                            href={`mailto:${order?.user.email}`}
                             className="text-blue-500 hover:underline"
                         >
-                            {order.customer.email}
+                            {order?.user.email}
                         </a>
                     </p>
-                    <p>Phone: {order.customer.phone}</p>
-                    <p>Customer ID: {order.customer.id}</p>
+                    <p>Phone: {order?.user.phone}</p>
+                    <p>Customer ID: {order?.user.id}</p>
                 </DetailCard>
 
                 <DetailCard title="Shipping Address" icon={faTruck}>
-                    <p className="font-medium">{order.customer.name}</p>
-                    {renderAddress(order.shippingAddress)}
+                    <p className="font-medium">{order?.user.username}</p>
                 </DetailCard>
 
                 <DetailCard title="Billing Address" icon={faMapMarkerAlt}>
-                    <p className="font-medium">{order.customer.name}</p>
-                    {renderAddress(order.billingAddress)}
+                    <p className="font-medium">{order?.user.username}</p>
                 </DetailCard>
 
                 <DetailCard title="Payment Details" icon={faCreditCard}>
                     <p>
-                        Method: <span className="font-semibold">{order.payment.method}</span>
+                        Method: <span className="font-semibold">{order?.payment.method}</span>
                     </p>
-                    <p>Transaction ID: {order.payment.transactionId}</p>
+                    <p>Transaction ID: {order?.payment.id}</p>
                     <p>
                         Total Paid:{" "}
                         <span className="font-bold text-green-600">
-                            ${order.payment.total.toFixed(2)}
+                            ${order?.payment.amount.toFixed(2)}
                         </span>
                     </p>
                 </DetailCard>
@@ -245,13 +212,13 @@ export const OrderDetails: React.FC = () => {
                             <span className="font-medium text-gray-700">{formattedDate}</span>
                         </p>
                     </div>
-                    <StatusBadge status={order.status} />
+                    <StatusBadge status={order?.status ?? "PROCESSING"} />
                 </div>
 
                 {/* ITEMS TABLE */}
                 <div className="mt-6 border-t pt-4">
                     <h4 className="text-lg font-semibold text-gray-700 mb-3">
-                        Items Ordered ({order.items.length})
+                        Items Ordered ({order?.items.length})
                     </h4>
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
@@ -275,23 +242,23 @@ export const OrderDetails: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
-                                {order.items.map((item) => (
+                                {order?.items.map((item) => (
                                     <tr
                                         key={item.id}
                                         className="hover:bg-gray-50 transition duration-100"
                                     >
                                         <td className="px-3 py-3 text-sm font-medium text-gray-900">
-                                            {item.name}
+                                            {item.productName}
                                         </td>
-                                        <td className="px-3 py-3 text-sm text-gray-500">{item.sku}</td>
+                                        <td className="px-3 py-3 text-sm text-gray-500">{item.productId}</td>
                                         <td className="px-3 py-3 text-sm text-center text-gray-500">
                                             {item.quantity}
                                         </td>
                                         <td className="px-3 py-3 text-sm text-right text-gray-500">
-                                            ${item.price.toFixed(2)}
+                                            ${item.productPrice.toFixed(2)}
                                         </td>
                                         <td className="px-3 py-3 text-sm font-semibold text-gray-800 text-right">
-                                            ${(item.quantity * item.price).toFixed(2)}
+                                            ${(item.quantity * item.productPrice).toFixed(2)}
                                         </td>
                                     </tr>
                                 ))}
@@ -306,24 +273,24 @@ export const OrderDetails: React.FC = () => {
                         <div className="flex justify-between">
                             <span className="text-gray-600">Subtotal:</span>
                             <span className="font-medium text-gray-800">
-                                ${order.payment.subtotal.toFixed(2)}
+                                ${order?.payment.amount.toFixed(2)}
                             </span>
                         </div>
                         <div className="flex justify-between">
                             <span className="text-gray-600">Shipping:</span>
                             <span className="font-medium text-gray-800">
-                                ${order.payment.shippingFee.toFixed(2)}
+                                ${0}
                             </span>
                         </div>
                         <div className="flex justify-between">
                             <span className="text-gray-600">Tax (6%):</span>
                             <span className="font-medium text-gray-800">
-                                ${order.payment.tax.toFixed(2)}
+                                ${0}
                             </span>
                         </div>
                         <div className="flex justify-between border-t pt-2 text-base font-bold text-gray-900">
                             <span>ORDER TOTAL:</span>
-                            <span>${order.payment.total.toFixed(2)}</span>
+                            <span>${0}</span>
                         </div>
                     </div>
                 </div>
@@ -332,5 +299,3 @@ export const OrderDetails: React.FC = () => {
     );
 
 };
-
-export default OrderDetails;

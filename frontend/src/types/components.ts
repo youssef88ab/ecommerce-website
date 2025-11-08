@@ -44,12 +44,14 @@ export interface OrderItem {
     productPrice: number;
 }
 
+export type OrderStatus = "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED";
+
 export interface Order {
     id: number;
     user: User;
     items: OrderItem[];
     totalAmount: number;
-    status: string;
+    status: OrderStatus;
     orderDate: string;
     payment: Payment;
 }
@@ -84,9 +86,6 @@ interface Customer {
     email: string;
     phone: string;
 }
-
-type OrderStatus = 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
-
 
 export interface Pageable {
     pageNumber: number;
