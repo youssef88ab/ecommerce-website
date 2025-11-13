@@ -22,7 +22,7 @@ public interface OrderService {
     OrderDTO getOrderById(Long id);
 
     // * Get Orders By User
-    List<OrderDTO> getOrdersByUser(Long userId);
+    Page<OrderDTO> getOrdersByUser(Long userId , Pageable pageable, OrderStatus status , PaymentMethod paymentMethod , String search);
 
     // * Get Orders By Status
     List<OrderDTO> getOrdersByStatus(OrderStatus orderStatus);

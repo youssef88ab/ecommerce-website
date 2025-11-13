@@ -66,7 +66,7 @@ export async function fetchAllOrders(
  * @throws An error if the network request fails or the response status is not OK.
  */
 
-export async function getOrderById(id: number) : Promise<Order> {
+export async function getOrderById(id: number): Promise<Order> {
     const url = `${BASE_URL}/${id}`;
 
     // * get Order from backend 
@@ -109,8 +109,52 @@ export async function getOrdersCount() {
         }
 
         const length: number = await response.json();
-        console.log("Length : " + length);
         return length;
+    }
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+export async function getOrdersByUserId(
+    id: number,
+    page: number = 0,
+    size: number = 10,
+    sort: string = "id,asc",
+    status: string,
+    paymentMethod: string,
+    searchTerm: string): Promise<OrderPageResponse> {
+
+    const url = new URL(`${BASE_URL}/user/${id}`);
+
+    url.searchParams.append("page", page.toString());
+    url.searchParams.append("size", size.toString());
+    url.searchParams.append("sort", sort);
+
+    if (status) {
+        url.searchParams.append('status', status);
+    }
+    if (paymentMethod) {
+        url.searchParams.append('paymentMethod', paymentMethod);
+    }
+    if (searchTerm) {
+        url.searchParams.append('search', searchTerm);
+    }
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            // Throw an error with details from the api response if possible 
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP Error ${response.status}: ${errorBody.message || "Uknown error"}`
+            );
+        }
+        const orders: OrderPageResponse = await response.json();
+        return orders;
     }
     catch (error) {
         console.error("Error during user fetch:", error);

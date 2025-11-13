@@ -1,4 +1,4 @@
-import type { UserPageResponse } from "../types/components";
+import type { User, UserPageResponse } from "../types/components";
 
 // * Api Url
 const BASE_URL = "http://localhost:8080/api/users";
@@ -51,6 +51,40 @@ export async function fetchAllUsers(
         const data: UserPageResponse = await response.json();
         return data;
     } catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+/**
+ * Get Order by ID from backend API.
+ * @param id the id of User.
+ * @returns A promise that resolves to the structured UserPageResponse.
+ * @throws An error if the network request fails or the response status is not OK.
+ */
+
+export async function getUserById(id: number) : Promise<User> {
+    const url = `${BASE_URL}/${id}`;
+
+    // * get Order from backend 
+    try {
+        const response = await fetch(url.toString());
+
+        if (!response.ok) {
+            // Throw an error with details from the api response if possible 
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP ERROR ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        // Cast the parsed JSON response to our defined interface 
+        const data: User = await response.json();
+        return data;
+    }
+
+    catch (error) {
         console.error("Error during user fetch:", error);
         // Throw a specific error or return a default response for the UI layer
         throw error;

@@ -54,9 +54,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getOrdersByUser(Long userId) {
-        return null;
-    }
+    public Page<OrderDTO> getOrdersByUser(Long userId , Pageable pageable, OrderStatus status , PaymentMethod paymentMethod , String search) {
+            // * 1. Build the dynamic WHERE clause using the Specification class
+            Specification<Order> spec = OrderSpecification.filterByUser(userId, status, paymentMethod , search);
+
+            // * 2. Execute the single findAll method, passing the dynamic Specification
+            Page<Order> orderPage = orderRepository.findAll(spec, pageable);
+
+            // * 3. Map and return
+            return orderPage.map(orderMapper::toDTO);
+        }
 
     @Override
     public List<OrderDTO> getOrdersByStatus(OrderStatus orderStatus) {
