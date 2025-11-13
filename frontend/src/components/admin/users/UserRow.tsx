@@ -26,8 +26,8 @@ const UserRow: React.FC<UserRowProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleViewDetails = (user: User) => {
-    navigate("/user", { state: { user } });
+  const handleViewDetails = (id: number) => {
+    navigate(`/users/${id}`);
   };
 
   return (
@@ -84,7 +84,7 @@ const UserRow: React.FC<UserRowProps> = ({
       <td className="py-4 text-center">
         <Tooltip title="View Details" arrow placement="top">
           <IconButton
-            onClick={() => handleViewDetails(user)}
+            onClick={() => handleViewDetails(user.id)}
             size="small"
             color="info"
             aria-label={`View details for ${user.username}`}

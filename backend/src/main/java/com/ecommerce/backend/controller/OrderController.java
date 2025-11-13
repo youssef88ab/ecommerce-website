@@ -34,10 +34,18 @@ public class OrderController {
         return orderService.getOrdersCount();
     }
 
-    // * Get Order By Id
+    // * Get Order By ID
     @Transactional(readOnly = true)
     @GetMapping("/{id}")
     public OrderDTO getOrderById(@PathVariable Long id) {
         return orderService.getOrderById(id);
     }
+
+    // * Get Orders By User ID
+    @Transactional(readOnly = true)
+    @GetMapping("/user/{id}")
+    public Page<OrderDTO> getOrderByUserId(@PathVariable Long id , @PageableDefault(size = 20, sort = "id") Pageable pageable , @RequestParam(required = false) OrderStatus status , @RequestParam(required = false) PaymentMethod paymentMethod , @RequestParam(required = false) String search) {
+        return orderService.getOrdersByUser(id , pageable , status , paymentMethod , search);
+    }
+
 }
