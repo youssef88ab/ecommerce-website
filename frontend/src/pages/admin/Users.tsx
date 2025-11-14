@@ -94,19 +94,16 @@ export default function Users() {
                     title={"Total Utilisateurs"}
                     icon={faUsers}
                     data={usersCount}
-                    percentage={0.4}
                 />
                 <Metric
                     title={"Total Orders"}
                     icon={faShoppingCart}
                     data={1358}
-                    percentage={0.1}
                 />
                 <Metric
                     title={"Total Abonnements"}
                     icon={faClipboardList}
                     data={1400}
-                    percentage={-0.7}
                 />
             </div>
             <PageTitle title={'All Users'} icon={faUsers} />

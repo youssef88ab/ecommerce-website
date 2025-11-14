@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import PageTitle from "../../components/admin/PageTitle";
 import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
@@ -16,9 +15,6 @@ import {
     faTshirt,
     faPlus,
     faUpload,
-    faExchangeAlt,
-    faFileExport,
-    faFileExcel,
     faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -103,19 +99,16 @@ export default function Products() {
                     title={"Total Utilisateurs"}
                     icon={faUsers}
                     data={ProductsCount}
-                    percentage={0.4}
                 />
                 <Metric
                     title={"Total Orders"}
                     icon={faShoppingCart}
                     data={ProductsCount}
-                    percentage={0.1}
                 />
                 <Metric
                     title={"Total Abonnements"}
                     icon={faClipboardList}
                     data={1400}
-                    percentage={-0.7}
                 />
             </div>
             <PageTitle title={'All Products'} icon={faCreditCard} />

@@ -2,16 +2,11 @@ import AnimatedNumber from "./AnimatedNumber";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { motion } from "framer-motion";
-import {
-    faArrowTrendDown,
-    faArrowTrendUp,
-} from "@fortawesome/free-solid-svg-icons";
 import { metricVariants } from "../../variants/dashboardVariants";
 interface MetricProps {
     icon: IconProp;
     title: string;
     data: number;
-    percentage: number;
 }
 
 export default function Metric(probs: MetricProps) {
@@ -31,17 +26,6 @@ export default function Metric(probs: MetricProps) {
                     <div className="flex flex-row justify-start items-center gap-2">
                         <p className="text-black font-bold text-2xl">
                             <AnimatedNumber value={probs.data} />
-                        </p>
-                        <FontAwesomeIcon
-                            className={`text-2xl ${probs.percentage > 0 ? "text-green-600" : "text-red-600"
-                                }`}
-                            icon={probs.percentage > 0 ? faArrowTrendUp : faArrowTrendDown}
-                        />
-                        <p
-                            className={`font-bold ${probs.percentage > 0 ? "text-green-600" : "text-red-600"
-                                }`}
-                        >
-                            {probs.percentage} %
                         </p>
                     </div>
                 </div>

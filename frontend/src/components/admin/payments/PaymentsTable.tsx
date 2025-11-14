@@ -101,9 +101,6 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ payments }) => {
                             >
                                 <div className="flex flex-col items-center justify-center">
                                     <span className="text-lg font-medium">No Payments found</span>
-                                    <span className="text-sm text-gray-400 mt-1">
-                                        Add a new payment to get started
-                                    </span>
                                 </div>
                             </td>
                         </motion.tr>

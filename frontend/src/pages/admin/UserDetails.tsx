@@ -1,14 +1,12 @@
-import { DetailCard } from "../../components/admin/orders/DetailCard";
-import PageTitle from "../../components/admin/PageTitle";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import Metric from "../../components/admin/Metric";
 import OrdersTable from "../../components/admin/orders/OrdersTable";
-import { faUser, faShoppingBag, faDollarSign, faHistory, faMapPin, faCheck, faCreditCard, faSpinner, faTruckFast } from "@fortawesome/free-solid-svg-icons";
+import { faDollarSign, faHistory, faCheck, faCreditCard, faSpinner, faTruckFast, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Order, OrderPageResponse, User } from "../../types/components";
 import { getUserById } from "../../services/userService";
-import { getOrderById, getOrdersByUserId } from "../../services/orderService";
+import { getOrdersByUserId } from "../../services/orderService";
 import SearchBar from "../../components/admin/SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../../components/admin/Pagination";
@@ -18,9 +16,10 @@ import {
     faCcPaypal as faCcPaypalBrand,
     faCcMastercard as faCcMastercardBrand,
 } from "@fortawesome/free-brands-svg-icons";
+import { UserInfoCard } from "../../components/admin/UserInfoCard";
+
 
 export default function UserDetails() {
-
     // * Searching
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -28,7 +27,6 @@ export default function UserDetails() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const sort: string = "id,asc";
-
 
     // * Handle Search Change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,12 +49,10 @@ export default function UserDetails() {
         paymentMethod: ""
     });
 
-
     // * Handle Filter Change
     const handleFilterChange = (filterName: keyof typeof filters, value: string | number) => {
         setFilters((prev) => ({ ...prev, [filterName]: value.toString() }));
     };
-
 
     // * Get id From url 
     const { id } = useParams<{ id: string }>();
@@ -116,35 +112,26 @@ export default function UserDetails() {
 
     return (
         <DashboardLayout>
-            <PageTitle title={`${user?.username} | User Details`} icon={faUser} />
             {/* Metrics Row */}
             <div className="metrics grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                 <Metric
                     title="Total Orders"
                     data={0}
-                    icon={faShoppingBag}
-                    percentage={0}
+                    icon={faBoxArchive}
                 />
                 <Metric
                     title="Total Spent"
                     data={0}
                     icon={faDollarSign}
-                    percentage={0}
                 />
                 <Metric
                     title="Last Login"
                     data={0}
                     icon={faHistory}
-                    percentage={0}
                 />
             </div>
             <div className="flex flex-col gap-4">
-                <DetailCard title="User Info" icon={faUser}>
-                    <p className="font-semibold text-lg text-indigo-600 mb-1">{user?.username}</p>
-                </DetailCard>
-                <DetailCard title="Primary Address" icon={faMapPin}>
-                    <p className="font-medium text-gray-800">{ }</p>
-                </DetailCard>
+                <UserInfoCard user={user} />
                     <div className="flex flex-col items-center md:flex-row gap-4 mb-3">
                         <div className="w-full md:w-1/3">
                             <SearchBar

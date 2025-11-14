@@ -5,8 +5,8 @@ import type { User } from "../../../types/components";
 import React from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { showRole } from "../../../utils/functions";
 import { showRegistrationDateTime } from "../../../utils/functions";
+import { renderRole } from "../../../utils/functions";
 
 // ✅ Define component props type
 interface UserRowProps {
@@ -73,12 +73,8 @@ const UserRow: React.FC<UserRowProps> = ({
 
       {/* Role */}
       <td className="py-4 text-gray-600 text-center">
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${showRole(user.role) === "ADMIN"
-          ? "bg-gray-50 text-black"
-          : "bg-green-50 text-green-700"
-          }`}>
-          {showRole(user.role)}
-        </span> </td>
+      {renderRole(user?.role)}
+      </td>
 
       {/* View Button */}
       <td className="py-4 text-center">

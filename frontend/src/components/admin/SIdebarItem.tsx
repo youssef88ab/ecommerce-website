@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface SidebarItemProps {
-    icon: any; // Replace 'any' with the correct icon type if available, e.g. IconDefinition from FontAwesome
+    icon: any;
     label: string;
     collapsed: boolean;
     isActive: boolean;

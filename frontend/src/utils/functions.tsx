@@ -2,24 +2,21 @@ import {
     faCcPaypal,
     faCcVisa,
     faCcMastercard,
-    faApplePay,
 } from "@fortawesome/free-brands-svg-icons";
 import {
     faCreditCard,
-    faCheckCircle,
     faHourglassHalf,
     faTimesCircle,
     faUndoAlt,
     faCheck,
-    faTriangleExclamation,
-    faCircleCheck,
-    faCircle
+    faCircle,
+    faUser,
+    faBriefcase,
+    faShield,
+    faMars,
+    faVenus
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-export function showRole(role: string) {
-    return role.split('_')[1];
-}
 
 export function showRegistrationDateTime(dateString: string): string {
     const date = new Date(dateString);
@@ -31,6 +28,106 @@ export function showRegistrationDateTime(dateString: string): string {
         minute: "2-digit",
     });
 }
+
+export function showRole(role: string) {
+    return role.split('_')[1];
+}
+
+export const renderDateTime = (dateString: string | undefined) => {
+    if (!dateString) return 'N/A';
+
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+    });
+};
+
+export const renderGender = (gender: string | undefined) => {
+    if (!gender) { return 'N/A'; }
+
+    const genderConfig = {
+        MALE: { 
+            icon: faMars, 
+            textColor: 'text-white', 
+            bgColor: 'bg-blue-500',
+            label: 'Male' 
+        },
+        FEMALE: { 
+            icon: faVenus, 
+            textColor: 'text-white', 
+            bgColor: 'bg-pink-500',
+            label: 'Female' 
+        },
+        M: { 
+            icon: faMars, 
+            textColor: 'text-white', 
+            bgColor: 'bg-blue-500',
+            label: 'Male' 
+        },
+        F: { 
+            icon: faVenus, 
+            textColor: 'text-white', 
+            bgColor: 'bg-pink-500',
+            label: 'Female' 
+        },
+        Male: { 
+            icon: faMars, 
+            textColor: 'text-white', 
+            bgColor: 'bg-blue-500',
+            label: 'Male' 
+        },
+        Female: { 
+            icon: faVenus, 
+            textColor: 'text-white', 
+            bgColor: 'bg-pink-500',
+            label: 'Female' 
+        }
+    };
+
+    const config = genderConfig[gender as keyof typeof genderConfig] || { 
+        icon: faUser, 
+        textColor: 'text-white', 
+        bgColor: 'bg-gray-500',
+        label: gender || 'Unknown' 
+    };
+
+    return (
+        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold ${config.bgColor} ${config.textColor}`}>
+            <FontAwesomeIcon icon={config.icon} />
+            {config.label}
+        </span>
+    );
+};
+
+export const renderRole = (role: string | undefined) => {
+    if (!role) return 'N/A';
+
+    const roleValue = showRole(role);
+
+    const roleIcons = {
+        ADMIN: faShield,
+        CUSTOMER: faUser
+    };
+
+    const roleIcon = roleIcons[roleValue as keyof typeof roleIcons] || faBriefcase;
+    
+    return (
+        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+            roleValue === "ADMIN" 
+                ? "bg-gray-50 text-black" 
+                : "bg-green-50 text-green-700"
+        }`}>
+            <FontAwesomeIcon icon={roleIcon} />
+            {roleValue}
+        </span>
+    );
+};
+
 
 export const renderPaymentDate = (date: string) => {
     return new Date(date).toLocaleString("en-US", {

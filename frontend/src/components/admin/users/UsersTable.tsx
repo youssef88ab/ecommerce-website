@@ -84,9 +84,6 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }) => {
               >
                 <div className="flex flex-col items-center justify-center">
                   <span className="text-lg font-medium">No Users found</span>
-                  <span className="text-sm text-gray-400 mt-1">
-                    Add a new user to get started
-                  </span>
                 </div>
               </td>
             </motion.tr>
