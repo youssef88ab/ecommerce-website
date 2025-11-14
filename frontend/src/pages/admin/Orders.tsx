@@ -101,19 +101,16 @@ export default function Orders() {
                     title={"Total Utilisateurs"}
                     icon={faUsers}
                     data={ordersCount}
-                    percentage={0.4}
                 />
                 <Metric
                     title={"Total Orders"}
                     icon={faShoppingCart}
                     data={ordersCount}
-                    percentage={0.1}
                 />
                 <Metric
                     title={"Total Abonnements"}
                     icon={faClipboardList}
                     data={1400}
-                    percentage={-0.7}
                 />
             </div>
             <PageTitle title={"All Orders"} icon={faCartShopping} />

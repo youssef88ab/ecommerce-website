@@ -6,7 +6,6 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import FilterByButton from "../../components/admin/FilterByButton";
 import {
     faCreditCard,
-    faCircleCheck,
     faClock,
     faCircleXmark,
     faMoneyBillTransfer,
@@ -103,19 +102,16 @@ export default function Payments() {
                     title={"Total Utilisateurs"}
                     icon={faUsers}
                     data={paymentsCount}
-                    percentage={0.4}
                 />
                 <Metric
                     title={"Total Orders"}
                     icon={faShoppingCart}
                     data={paymentsCount}
-                    percentage={0.1}
                 />
                 <Metric
                     title={"Total Abonnements"}
                     icon={faClipboardList}
                     data={1400}
-                    percentage={-0.7}
                 />
             </div>
             <PageTitle title={'All Payments'} icon={faCreditCard} />
