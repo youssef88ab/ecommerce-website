@@ -129,14 +129,43 @@ export async function getUsersCount(
     }
 }
 
-/** Get COunt of users who orders 
+/** Get Count of users who orders 
  * @returns number of counts 
  * @throws An error if the network request fails or the response status is not OK.
  */
 
-
 export async function getUsersWhOrdered() : Promise<number> {
     const url = new URL(`${BASE_URL}/users-who-ordered`);
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+             // Throw an error with details from the API response if possible
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        const data: number = await response.json(); 
+        return data;
+    }
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+/** Get Totalspent of user by is 
+ * @param id id of user 
+ * @returns total spent of user 
+ * @throws An error if the network request fails or the response status is not OK.
+ */
+
+export async function getTotalSpentByUserid(id: number) : Promise<number> {
+    const url = new URL(`${BASE_URL}/totalspent/${id}`);
 
     try {
         const response = await fetch(url);

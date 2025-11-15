@@ -1,11 +1,11 @@
 import DashboardLayout from "../../layouts/DashboardLayout";
 import Metric from "../../components/admin/Metric";
 import OrdersTable from "../../components/admin/orders/OrdersTable";
-import { faDollarSign, faHistory, faCheck, faCreditCard, faSpinner, faTruckFast, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
+import { faDollarSign, faCheck, faCreditCard, faSpinner, faTruckFast, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Order, OrderPageResponse, User } from "../../types/components";
-import { getUserById } from "../../services/userService";
+import { getTotalSpentByUserid, getUserById } from "../../services/userService";
 import { getOrdersByUserId } from "../../services/orderService";
 import SearchBar from "../../components/admin/SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,6 @@ import {
     faCcMastercard as faCcMastercardBrand,
 } from "@fortawesome/free-brands-svg-icons";
 import { UserInfoCard } from "../../components/admin/UserInfoCard";
-
 
 export default function UserDetails() {
     // * Searching
@@ -110,24 +109,44 @@ export default function UserDetails() {
         loadOrders();
     } , [page, rowsPerPage, filters, searchTerm] );
 
+    const [totalSpent , setTotalSpent] = useState(0);
+
+     // * Load Total spent of  
+    useEffect(() => {
+        const loadTotalSpentByUserId = async () => {
+            // * If no id 
+            if (!id) return;
+            // * Parse id from strign to num 
+            const numericId = Number(id);
+            if (isNaN(numericId)) {
+                console.error("Invalid ID");
+                return;
+            }
+            // * Call API Service 
+            try {
+                const data = await getTotalSpentByUserid(numericId);
+                setTotalSpent(data);
+            } catch (error) {
+                console.error("Failed to load order", error);
+            }
+        };
+        loadTotalSpentByUserId();
+    }, [id]);
+
+
     return (
         <DashboardLayout>
             {/* Metrics Row */}
-            <div className="metrics grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div className="metrics grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
                 <Metric
                     title="Total Orders"
-                    data={0}
+                    data={orderPageResponse?.totalElements ?? 0}
                     icon={faBoxArchive}
                 />
                 <Metric
                     title="Total Spent"
-                    data={0}
+                    data={totalSpent}
                     icon={faDollarSign}
-                />
-                <Metric
-                    title="Last Login"
-                    data={0}
-                    icon={faHistory}
                 />
             </div>
             <div className="flex flex-col gap-4">

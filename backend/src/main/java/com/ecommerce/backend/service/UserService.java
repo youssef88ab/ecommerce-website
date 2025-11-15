@@ -36,4 +36,7 @@ public interface UserService {
 
     // * Get Number Of Users Who Ordered
     public Long countDistinctUsersWithOrders();
+
+    // * Get total Spent By User Id
+    public Long getTotalSpentByUserid(Long id);
 }

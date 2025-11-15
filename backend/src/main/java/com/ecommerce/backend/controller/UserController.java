@@ -78,4 +78,9 @@ public class UserController {
         return userService.countDistinctUsersWithOrders();
     }
 
+    // * Get total spent of user
+    @GetMapping("/totalspent/{id}")
+    public Long getTotalSpent(@PathVariable Long id) {
+        return userService.getTotalSpentByUserid(id);
+    }
 }
