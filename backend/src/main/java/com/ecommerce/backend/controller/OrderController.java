@@ -48,4 +48,9 @@ public class OrderController {
         return orderService.getOrdersByUser(id , pageable , status , paymentMethod , search);
     }
 
+    // * Get Order Count By User Id
+    @GetMapping("/user/count/{id}")
+    public Long getOrdersCountByUserId(@PathVariable Long id) {
+        return null ;
+    }
 }

@@ -8,8 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.YearMonth;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -53,7 +57,25 @@ public class UserController {
 
     // * Get Users Count
     @GetMapping("/count")
-    public Long getUsersCount() {
-        return userService.getUsersCount();
+    public Long getUsersCount(
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to)
+    {
+        if (from == null || to == null) {
+            YearMonth currentMonth = YearMonth.now();
+            from = currentMonth.atDay(1);
+            to = currentMonth.atEndOfMonth();
+        }
+
+        return userService.getUsersCount(from , to);
     }
+
+    // * Get Number Of Customers Who Ordered
+    @GetMapping("/users-who-ordered")
+    public Long getCustomersWhoOrdered() {
+        return userService.countDistinctUsersWithOrders();
+    }
+
 }

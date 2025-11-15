@@ -58,7 +58,7 @@ export async function fetchAllUsers(
 }
 
 /**
- * Get Order by ID from backend API.
+ * Get User by ID from backend API.
  * @param id the id of User.
  * @returns A promise that resolves to the structured UserPageResponse.
  * @throws An error if the network request fails or the response status is not OK.
@@ -91,9 +91,22 @@ export async function getUserById(id: number) : Promise<User> {
     }
 }
 
-export async function getUsersCount() {
+/**
+ * Get Count of users 
+ * @param from the start date 
+ * @param to the end date
+ * @returns A number of counts 
+ * @throws An error if the network request fails or the response status is not OK.
+ */ 
 
-    const url = BASE_URL + "/count" ; 
+export async function getUsersCount(
+    from?: string , 
+    to?: string
+) : Promise<number> {
+    const url = new URL(`${BASE_URL}/count`);
+
+    if (from) url.searchParams.append("from", from);
+    if (to) url.searchParams.append("to", to);
 
     try {
         const response = await fetch(url);
@@ -106,9 +119,38 @@ export async function getUsersCount() {
             );
         }
 
-        const length: number = await response.json(); 
-        console.log("Length : " + length);
-        return length;
+        const data: number = await response.json(); 
+        return data;
+    }
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+/** Get COunt of users who orders 
+ * @returns number of counts 
+ * @throws An error if the network request fails or the response status is not OK.
+ */
+
+
+export async function getUsersWhOrdered() : Promise<number> {
+    const url = new URL(`${BASE_URL}/users-who-ordered`);
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+             // Throw an error with details from the API response if possible
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        const data: number = await response.json(); 
+        return data;
     }
     catch (error) {
         console.error("Error during user fetch:", error);

@@ -83,4 +83,6 @@ public class OrderServiceImpl implements OrderService {
     public Long getOrdersCount() {
         return orderRepository.count();
     }
+
+    public Long getOrdersCountByUserId(Long id) { return null; }
 }
