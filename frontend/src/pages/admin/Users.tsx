@@ -19,7 +19,6 @@ import {
     faUser,
     faUserPlus,
     faDownload,
-    faPlus,
     faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "@mui/material/Button";
@@ -173,26 +172,6 @@ export default function Users() {
 
                     {/* Pagination + action buttons side by side */}
                     <div className="flex items-center gap-2 flex-wrap justify-end">
-                        {/* Add Product */}
-                        <Button
-                            variant="contained"
-                            size="small"
-                            color="primary"
-                            startIcon={<FontAwesomeIcon icon={faPlus} className="text-xs" />}
-                            sx={{
-                                textTransform: "none",
-                                fontSize: "0.75rem",
-                                fontWeight: 500,
-                                height: "36px",
-                                borderRadius: "6px",
-                                boxShadow: "0 1px 2px rgba(0,0,0,0.15)",
-                                "&:hover": {
-                                    boxShadow: "0 2px 4px rgba(0,0,0,0.25)",
-                                },
-                            }}
-                        >
-                            Add Product
-                        </Button>
 
                         {/* Bulk Upload */}
                         <Button

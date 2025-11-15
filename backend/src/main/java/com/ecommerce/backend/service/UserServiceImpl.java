@@ -133,4 +133,9 @@ public class UserServiceImpl implements UserService {
     public Long countDistinctUsersWithOrders() {
         return userRepository.countDistinctUsersWithOrders();
     }
+
+    @Override
+    public Long getTotalSpentByUserid(Long id) {
+        return userRepository.getTotalSpentByUserId(id);
+    }
 }

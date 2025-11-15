@@ -30,4 +30,8 @@ public interface UserRepository extends JpaRepository<User , Long> , JpaSpecific
 
     @Query("SELECT COUNT(DISTINCT u) FROM User u JOIN u.orders o")
     Long countDistinctUsersWithOrders();
+
+    @Query(value = "SELECT SUM(o.total_amount) FROM ecommerce.orders o WHERE o.user_id = :id", nativeQuery = true)
+    Long getTotalSpentByUserId(@Param("id") Long id);
+
 }
