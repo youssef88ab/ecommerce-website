@@ -54,7 +54,7 @@ const UserRow: React.FC<UserRowProps> = ({
       </td>
 
       {/* Phone */}
-      <td className="py-4 text-gray-600">{user.phone}</td>
+      <td className="py-4 text-gray-600 text-center">{user.phone}</td>
 
       {/* Gender */}
       <td className="py-4 text-center">
@@ -69,7 +69,7 @@ const UserRow: React.FC<UserRowProps> = ({
       </td>
 
       {/* Registration Date */}
-      <td className="py-4 text-gray-600">{showRegistrationDateTime(user.registrationDate)}</td>
+      <td className="py-4 text-gray-600 text-center">{showRegistrationDateTime(user.registrationDate)}</td>
 
       {/* Role */}
       <td className="py-4 text-gray-600 text-center">

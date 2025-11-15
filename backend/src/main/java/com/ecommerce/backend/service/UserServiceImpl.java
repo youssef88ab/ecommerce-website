@@ -15,6 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -111,5 +115,22 @@ public class UserServiceImpl implements UserService {
 
     // * Get Users Count
     @Override
-    public Long getUsersCount() { return userRepository.count(); }
+    public Long getUsersCount(LocalDate from , LocalDate to) {
+
+        // * Convert to start day
+        LocalDateTime fromDateTime = from.atStartOfDay();
+
+        // * Convert to end day
+        LocalDateTime toDateTime = to.atTime(LocalTime.MAX);
+
+        // * Convert Datetime to Timestamp
+        Timestamp fromTimestamp = Timestamp.valueOf(fromDateTime);
+        Timestamp toTimestamp = Timestamp.valueOf(toDateTime);
+
+        return userRepository.countUsersRegisteredBetween(fromTimestamp, toTimestamp);
+    }
+
+    public Long countDistinctUsersWithOrders() {
+        return userRepository.countDistinctUsersWithOrders();
+    }
 }

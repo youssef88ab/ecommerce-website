@@ -5,7 +5,7 @@ import PageTitle from "../../components/admin/PageTitle";
 import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
 import UsersTable from "../../components/admin/users/UsersTable";
-import { fetchAllUsers, getUsersCount } from "../../services/userService";
+import { fetchAllUsers, getUsersCount, getUsersWhOrdered } from "../../services/userService";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { UserPageResponse } from "../../types/components";
@@ -15,10 +15,14 @@ import {
     faMars,
     faVenus,
     faShoppingCart,
-    faClipboardList,
     faUserTie,
     faUser,
+    faUserPlus,
+    faDownload,
+    faPlus,
+    faUpload,
 } from "@fortawesome/free-solid-svg-icons";
+import Button from "@mui/material/Button";
 
 export default function Users() {
 
@@ -32,33 +36,57 @@ export default function Users() {
 
     const [userPageResponse, setUserPageResponse] = useState<UserPageResponse | undefined>(undefined);
 
-    const [users, setUsers] = useState<User[]>([]);
+    const [newUsersThisMonth, setNewUsersThisMonth] = useState(0);
 
-    useEffect(() => { if (userPageResponse) { setUsers(userPageResponse.content || []); } }, [userPageResponse]);
+    function formatDate(date: Date): string {
+        return date.toISOString().split("T")[0];
+    }
 
-    // * Total Users
-    const [usersCount, setUsersCount] = useState(0);
+    const today = new Date();
+    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const currentMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    const [usersWhoOrdered, setUsersWhoOrdered] = useState(0);
+
+    // * Load Users Count (this month)
     useEffect(() => {
-        const loadUsersCount = async () => {
+        const loadNewUsers = async () => {
             try {
-                const count = await getUsersCount();
-                setUsersCount(count);
+                const count = await getUsersCount(
+                    formatDate(currentMonthStart),
+                    formatDate(currentMonthEnd)
+                );
+                setNewUsersThisMonth(count);
             } catch (error) {
-                console.error("Failed to load user count:", error);
+                console.error("Failed to load new users:", error);
             }
         };
 
-        loadUsersCount();
-    });
+        loadNewUsers();
+    }, []);
+
+    // * Load Users Who Ordered
+    useEffect(() => {
+        const loadUsersWhoOrdered = async () => {
+            try {
+                const count = await getUsersWhOrdered();
+                setUsersWhoOrdered(count);
+            } catch (error) {
+                console.error("Failed to load new users:", error);
+            }
+        };
+
+        loadUsersWhoOrdered();
+    }, []);
 
     // * Handle Search Change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
-        setPage(0); 
+        setPage(0);
     };
 
     // * Handle Page Change 
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => { void event; setPage(newPage);};
+    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => { void event; setPage(newPage); };
 
     // * Handle Change Rows Per Page
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -87,23 +115,29 @@ export default function Users() {
         setPage(0);
     };
 
+    const users: User[] = userPageResponse?.content ?? [];
+
+    const usersCount = userPageResponse?.totalElements ?? 0;
+
     return (
         <DashboardLayout>
             <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
                 <Metric
-                    title={"Total Utilisateurs"}
+                    title="Total Users"
                     icon={faUsers}
                     data={usersCount}
                 />
+
                 <Metric
-                    title={"Total Orders"}
-                    icon={faShoppingCart}
-                    data={1358}
+                    title="New Users (This Month)"
+                    icon={faUserPlus}
+                    data={newUsersThisMonth}
                 />
+
                 <Metric
-                    title={"Total Abonnements"}
-                    icon={faClipboardList}
-                    data={1400}
+                    title="Customers Who Ordered"
+                    icon={faShoppingCart}
+                    data={usersWhoOrdered}
                 />
             </div>
             <PageTitle title={'All Users'} icon={faUsers} />
@@ -137,13 +171,80 @@ export default function Users() {
                         />
                     </div>
 
-                    <Pagination
-                        page={page}
-                        handleChangePage={handleChangePage}
-                        rowsPerPage={userPageResponse?.size ?? 0}
-                        handleChangeRowsPerPage={handleChangeRowsPerPage}
-                        count={userPageResponse?.totalElements ?? 0}
-                    />
+                    {/* Pagination + action buttons side by side */}
+                    <div className="flex items-center gap-2 flex-wrap justify-end">
+                        {/* Add Product */}
+                        <Button
+                            variant="contained"
+                            size="small"
+                            color="primary"
+                            startIcon={<FontAwesomeIcon icon={faPlus} className="text-xs" />}
+                            sx={{
+                                textTransform: "none",
+                                fontSize: "0.75rem",
+                                fontWeight: 500,
+                                height: "36px",
+                                borderRadius: "6px",
+                                boxShadow: "0 1px 2px rgba(0,0,0,0.15)",
+                                "&:hover": {
+                                    boxShadow: "0 2px 4px rgba(0,0,0,0.25)",
+                                },
+                            }}
+                        >
+                            Add Product
+                        </Button>
+
+                        {/* Bulk Upload */}
+                        <Button
+                            variant="contained"
+                            size="small"
+                            color="secondary"
+                            startIcon={<FontAwesomeIcon icon={faUpload} className="text-xs" />}
+                            sx={{
+                                textTransform: "none",
+                                fontSize: "0.75rem",
+                                fontWeight: 500,
+                                height: "36px",
+                                borderRadius: "6px",
+                                backgroundColor: "#8b5cf6", // purple-600
+                                "&:hover": {
+                                    backgroundColor: "#7c3aed", // purple-700
+                                },
+                            }}
+                        >
+                            Bulk Upload
+                        </Button>
+
+                        {/* Export */}
+                        <Button
+                            variant="contained"
+                            size="small"
+                            startIcon={<FontAwesomeIcon icon={faDownload} className="text-xs" />}
+                            sx={{
+                                textTransform: "none",
+                                fontSize: "0.75rem",
+                                fontWeight: 500,
+                                height: "36px",
+                                borderRadius: "6px",
+                                backgroundColor: "#16a34a", // green-600
+                                "&:hover": {
+                                    backgroundColor: "#15803d", // green-700
+                                },
+                            }}
+                        >
+                            Export
+                        </Button>
+
+                        {/* Pagination */}
+
+                        <Pagination
+                            page={page}
+                            handleChangePage={handleChangePage}
+                            rowsPerPage={userPageResponse?.size ?? 0}
+                            handleChangeRowsPerPage={handleChangeRowsPerPage}
+                            count={userPageResponse?.totalElements ?? 0}
+                        />
+                    </div>
                 </div>
             </div>
             {/* Users Table */}

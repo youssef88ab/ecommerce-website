@@ -63,7 +63,6 @@ export default function Orders() {
         setPage(0); // ! Reset page to 0 when search term changes
     };
 
-
     // * Handle Page Change 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => { void event; setPage(newPage); };
 

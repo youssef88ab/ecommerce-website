@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class UserSpecification {
-    // * Method to combine all specifications (filters and search)
+    // * combine all specifications (filters and search)
     public static Specification<User> filterBy(Gender gender, Role role, String search) {
         // * Starts with an empty specification, then combines using AND
         return (root, query, cb) -> {

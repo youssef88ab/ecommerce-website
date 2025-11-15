@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface UserService {
@@ -31,5 +32,8 @@ public interface UserService {
     void deleterUser(Long id);
 
     // * Get Users Count
-    Long getUsersCount();
+    Long getUsersCount(LocalDate from , LocalDate to);
+
+    // * Get Number Of Users Who Ordered
+    public Long countDistinctUsersWithOrders();
 }
