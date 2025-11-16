@@ -111,7 +111,7 @@ export default function UserDetails() {
 
     const [totalSpent , setTotalSpent] = useState(0);
 
-     // * Load Total spent of  
+    // * Load Total spent of  
     useEffect(() => {
         const loadTotalSpentByUserId = async () => {
             // * If no id 

@@ -14,16 +14,19 @@ import {
     faSpinner,
     faUsers,
     faShoppingCart,
-    faClipboardList,
     faTruckFast,
     faCheck,
     faCreditCard,
+    faPercent,
+    faDollarSign,
+    faDollar,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faCcVisa as faCcVisaBrand,
     faCcPaypal as faCcPaypalBrand,
     faCcMastercard as faCcMastercardBrand,
 } from "@fortawesome/free-brands-svg-icons";
+import { getTotalSpent } from "../../services/orderService";
 
 export default function Orders() {
     // * Searching
@@ -93,23 +96,34 @@ export default function Orders() {
         setFilters((prev) => ({ ...prev, [filterName]: value.toString() }));
     };
 
+    const [totalSpent , setTotalSpent] = useState(0);
+
+    // * Load Total spent of  
+        useEffect(() => {
+            const loadTotalSpent = async () => {
+                // * Call API Service 
+                try {
+                    const data = await getTotalSpent();
+                    setTotalSpent(data);
+                } catch (error) {
+                    console.error("Failed to load order", error);
+                }
+            };
+            loadTotalSpent();
+        }, []);
+
     return (
         <DashboardLayout>
-            <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
+            <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 my-5">
                 <Metric
-                    title={"Total Utilisateurs"}
+                    title={"Total Orders"}
                     icon={faUsers}
                     data={ordersCount}
                 />
                 <Metric
-                    title={"Total Orders"}
-                    icon={faShoppingCart}
-                    data={ordersCount}
-                />
-                <Metric
-                    title={"Total Abonnements"}
-                    icon={faClipboardList}
-                    data={1400}
+                    title={"Total Revenue"}
+                    icon={faDollar}
+                    data={totalSpent}
                 />
             </div>
             <PageTitle title={"All Orders"} icon={faCartShopping} />
