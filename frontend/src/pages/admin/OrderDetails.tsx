@@ -1,12 +1,10 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faShoppingBag,
     faTruck,
     faCreditCard,
     faUser,
-    faMapMarkerAlt,
-    faCalendarAlt,
     faPrint,
 } from "@fortawesome/free-solid-svg-icons";
 import DashboardLayout from "../../layouts/DashboardLayout";
@@ -15,7 +13,8 @@ import { useParams } from "react-router-dom";
 import { getOrderById } from "../../services/orderService";
 import type { Order } from "../../types/components";
 import { DetailCard } from "../../components/admin/orders/DetailCard";
-import { StatusBadge } from "../../components/admin/orders/StatusBadge";
+import OrderSummaryCard from "../../components/admin/orders/OrderSummaryCard";
+import { renderPaymentMethod } from "../../utils/functions";
 
 export default function OrderDetails() {
 
@@ -46,19 +45,6 @@ export default function OrderDetails() {
         loadOrder();
     }, [id]);
 
-    const formattedDate = useMemo(
-        () =>
-            order ? new Date(order.orderDate).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                })
-                : "",
-        [order?.orderDate]
-    );
-
     return (
         <DashboardLayout>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
@@ -74,9 +60,8 @@ export default function OrderDetails() {
                 </div>
             </div>
 
-
             {/* --- TOP DETAIL CARDS --- */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 <DetailCard title="Customer Information" icon={faUser}>
                     <p className="font-semibold text-indigo-600">{order?.user.username}</p>
                     <p>
@@ -91,123 +76,25 @@ export default function OrderDetails() {
                     <p>Phone: {order?.user.phone}</p>
                     <p>Customer ID: {order?.user.id}</p>
                 </DetailCard>
-
                 <DetailCard title="Shipping Address" icon={faTruck}>
                     <p className="font-medium">{order?.user.username}</p>
                 </DetailCard>
-
-                <DetailCard title="Billing Address" icon={faMapMarkerAlt}>
-                    <p className="font-medium">{order?.user.username}</p>
-                </DetailCard>
-
                 <DetailCard title="Payment Details" icon={faCreditCard}>
-                    <p>
-                        Method: <span className="font-semibold">{order?.payment.method}</span>
-                    </p>
-                    <p>Transaction ID: {order?.payment.id}</p>
+                    <p>Transaction ID: {order?.payment?.id}</p>
                     <p>
                         Total Paid:{" "}
                         <span className="font-bold text-green-600">
-                            ${order?.payment.amount.toFixed(2)}
+                            ${order?.payment?.amount?.toFixed(2)}
                         </span>
+                    </p>
+                    <p>
+                        Method: <span className="font-semibold">{renderPaymentMethod(order?.payment?.method ?? "")}</span>
                     </p>
                 </DetailCard>
             </div>
 
             {/* --- ORDER SUMMARY BELOW --- */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 mb-6">
-                <div className="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-1">Order Summary</h3>
-                        <p className="text-sm text-gray-500 flex items-center gap-2">
-                            <FontAwesomeIcon icon={faCalendarAlt} className="w-4 h-4" />
-                            Placed on:{" "}
-                            <span className="font-medium text-gray-700">{formattedDate}</span>
-                        </p>
-                    </div>
-                    <StatusBadge status={order?.status ?? "PROCESSING"} />
-                </div>
-
-                {/* ITEMS TABLE */}
-                <div className="mt-6 border-t pt-4">
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">
-                        Items Ordered ({order?.items.length})
-                    </h4>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Product
-                                    </th>
-                                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">
-                                        SKU
-                                    </th>
-                                    <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase">
-                                        Qty
-                                    </th>
-                                    <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase">
-                                        Price
-                                    </th>
-                                    <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase">
-                                        Total
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-100">
-                                {order?.items.map((item) => (
-                                    <tr
-                                        key={item.id}
-                                        className="hover:bg-gray-50 transition duration-100"
-                                    >
-                                        <td className="px-3 py-3 text-sm font-medium text-gray-900">
-                                            {item.productName}
-                                        </td>
-                                        <td className="px-3 py-3 text-sm text-gray-500">{item.productId}</td>
-                                        <td className="px-3 py-3 text-sm text-center text-gray-500">
-                                            {item.quantity}
-                                        </td>
-                                        <td className="px-3 py-3 text-sm text-right text-gray-500">
-                                            ${item.productPrice.toFixed(2)}
-                                        </td>
-                                        <td className="px-3 py-3 text-sm font-semibold text-gray-800 text-right">
-                                            ${(item.quantity * item.productPrice).toFixed(2)}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {/* TOTALS */}
-                <div className="mt-6 border-t pt-4 flex justify-end">
-                    <div className="w-full max-w-sm space-y-2 text-sm">
-                        <div className="flex justify-between">
-                            <span className="text-gray-600">Subtotal:</span>
-                            <span className="font-medium text-gray-800">
-                                ${order?.payment.amount.toFixed(2)}
-                            </span>
-                        </div>
-                        <div className="flex justify-between">
-                            <span className="text-gray-600">Shipping:</span>
-                            <span className="font-medium text-gray-800">
-                                ${0}
-                            </span>
-                        </div>
-                        <div className="flex justify-between">
-                            <span className="text-gray-600">Tax (6%):</span>
-                            <span className="font-medium text-gray-800">
-                                ${0}
-                            </span>
-                        </div>
-                        <div className="flex justify-between border-t pt-2 text-base font-bold text-gray-900">
-                            <span>ORDER TOTAL:</span>
-                            <span>${0}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <OrderSummaryCard order = {order} />
         </DashboardLayout>
     );
 
