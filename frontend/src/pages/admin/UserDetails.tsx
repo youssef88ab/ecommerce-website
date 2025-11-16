@@ -133,7 +133,6 @@ export default function UserDetails() {
         loadTotalSpentByUserId();
     }, [id]);
 
-
     return (
         <DashboardLayout>
             {/* Metrics Row */}
