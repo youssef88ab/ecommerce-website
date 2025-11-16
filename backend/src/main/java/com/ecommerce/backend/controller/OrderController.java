@@ -53,4 +53,10 @@ public class OrderController {
     public Long getOrdersCountByUserId(@PathVariable Long id) {
         return null ;
     }
+
+    // * Get total Spent
+    @GetMapping("/totalspent")
+    public Long getTotalSpent() {
+        return orderService.getTotalSpent();
+    }
 }

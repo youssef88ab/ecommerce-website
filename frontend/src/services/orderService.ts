@@ -162,3 +162,32 @@ export async function getOrdersByUserId(
         throw error;
     }
 }
+
+/** Get Totalspent 
+ * @returns total spent
+ * @throws An error if the network request fails or the response status is not OK.
+ */
+
+export async function getTotalSpent() : Promise<number> {
+    const url = new URL(`${BASE_URL}/totalspent`);
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+             // Throw an error with details from the API response if possible
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        const data: number = await response.json(); 
+        return data;
+    }
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
