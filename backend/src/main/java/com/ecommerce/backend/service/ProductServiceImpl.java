@@ -101,6 +101,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleterProduct(Long id) { productRepository.deleteById(id); }
 
+    @Override
+    public Long countoutofstock() {
+        return productRepository.countOutOfStock();
+    }
+
     // * Get Products Count
     public Long getProductsCount() { return productRepository.count(); }
+
+    public Long countLowStock() {
+        return productRepository.countLowStock();
+    }
 }

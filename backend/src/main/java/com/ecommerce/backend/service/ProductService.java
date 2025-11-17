@@ -28,4 +28,10 @@ public interface ProductService {
 
     // * Deleter Product
     void deleterProduct(Long id);
+
+    // * Count of stock products
+    public Long countoutofstock();
+
+    // * Count Low Stock
+    public Long countLowStock();
 }

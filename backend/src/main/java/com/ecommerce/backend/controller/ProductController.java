@@ -51,4 +51,14 @@ public class ProductController {
     // * Get Products Count
     @GetMapping("/count")
     public Long getProductsCount() { return  productService.getProductsCount(); }
+
+    @GetMapping("/count/outOfStock")
+    public Long countOutOfStock() {
+        return productService.countoutofstock();
+    }
+
+    @GetMapping("/count/lowStock")
+    public Long countLowStock() {
+        return productService.countLowStock();
+    }
 }
