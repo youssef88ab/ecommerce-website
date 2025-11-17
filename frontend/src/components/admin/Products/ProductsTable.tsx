@@ -31,19 +31,25 @@ const UsersTable: React.FC<ProductTableProbs> = ({ products }) => {
                             scope="col"
                             className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
                         >
-                            quantity
-                        </th>
-                        <th
-                            scope="col"
-                            className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
-                        >
                             category
                         </th>
                         <th
                             scope="col"
                             className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
                         >
+                            quantity
+                        </th>
+                        <th
+                            scope="col"
+                            className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
+                        >
                             stock level
+                        </th>
+                        <th
+                            scope="col"
+                            className="py-4 text-center text-sm font-semibold text-gray-600 uppercase tracking-wider"
+                        >
+                            price
                         </th>
                         <th
                             scope="col"

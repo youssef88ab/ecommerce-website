@@ -9,9 +9,6 @@ import {
     faClock,
     faCircleXmark,
     faMoneyBillTransfer,
-    faUsers,
-    faShoppingCart,
-    faClipboardList,
     faCheck,
     faPercent,
 } from "@fortawesome/free-solid-svg-icons";

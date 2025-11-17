@@ -248,8 +248,14 @@ export const renderProductStock = (stock: number) => {
         bg = "bg-green-100"
     }
 
-    else if (stock <= 15) {
+    else if (stock <= 15 && stock > 0) {
         label = 'LOW'
+        color = 'text-red-700'
+        bg = "bg-red-100"
+    }
+
+    else if (stock == 0) {
+        label = 'OUT OF STOCK'
         color = 'text-red-700'
         bg = "bg-red-100"
     }
