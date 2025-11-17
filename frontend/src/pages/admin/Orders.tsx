@@ -13,12 +13,9 @@ import {
     faCartShopping,
     faSpinner,
     faUsers,
-    faShoppingCart,
     faTruckFast,
     faCheck,
     faCreditCard,
-    faPercent,
-    faDollarSign,
     faDollar,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -119,11 +116,13 @@ export default function Orders() {
                     title={"Total Orders"}
                     icon={faUsers}
                     data={ordersCount}
+                    unit=""
                 />
                 <Metric
                     title={"Total Revenue"}
                     icon={faDollar}
                     data={totalSpent}
+                    unit="$"
                 />
             </div>
             <PageTitle title={"All Orders"} icon={faCartShopping} />

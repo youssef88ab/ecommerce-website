@@ -32,4 +32,7 @@ public interface PaymentService {
 
     // * Get Counts
     Long getPaymentsCount();
+
+    // * Get Success Rate
+    public Long getSuccessRate();
 }

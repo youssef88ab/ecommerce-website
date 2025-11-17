@@ -16,8 +16,8 @@ export async function fetchAllPayments(
     page: number = 0,
     size: number = 10,
     sort: string = "id,asc",
-    status: string ,
-    method: string, 
+    status: string,
+    method: string,
     searchTerm: string
 ): Promise<PaymentPageResponse> {
     const url = new URL(BASE_URL);
@@ -30,10 +30,10 @@ export async function fetchAllPayments(
         url.searchParams.append('status', status);
     }
     if (method) {
-        url.searchParams.append('method' , method);
+        url.searchParams.append('method', method);
     }
     if (searchTerm) {
-        url.searchParams.append('search', searchTerm); 
+        url.searchParams.append('search', searchTerm);
     }
 
     try {
@@ -59,20 +59,46 @@ export async function fetchAllPayments(
 
 export async function getPaymentsCount() {
 
-    const url = BASE_URL + "/count" ; 
+    const url = BASE_URL + "/count";
 
     try {
         const response = await fetch(url);
 
         if (!response.ok) {
-             // Throw an error with details from the API response if possible
+            // Throw an error with details from the API response if possible
             const errorBody = await response.json();
             throw new Error(
                 `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
             );
         }
 
-        const length: number = await response.json(); 
+        const length: number = await response.json();
+        console.log("Length : " + length);
+        return length;
+    }
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+export async function getSuccessRate(): Promise<number> {
+
+    const url = `${BASE_URL}/successRate`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            // Throw an error with details from the API response if possible
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        const length: number = await response.json();
         console.log("Length : " + length);
         return length;
     }

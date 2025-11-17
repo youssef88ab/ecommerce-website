@@ -36,4 +36,8 @@ public class PaymentServiceImpl implements  PaymentService {
     public Long getPaymentsCount() {
         return paymentRepository.count();
     }
+
+    public Long getSuccessRate() {
+        return (paymentRepository.successfulPayments()/paymentRepository.count()) * 100;
+    }
 }

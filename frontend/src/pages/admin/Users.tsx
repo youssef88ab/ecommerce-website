@@ -125,18 +125,21 @@ export default function Users() {
                     title="Total Users"
                     icon={faUsers}
                     data={usersCount}
+                    unit=""
                 />
 
                 <Metric
                     title="New Users (This Month)"
                     icon={faUserPlus}
                     data={newUsersThisMonth}
+                    unit=""
                 />
 
                 <Metric
                     title="Customers Who Ordered"
                     icon={faShoppingCart}
                     data={usersWhoOrdered}
+                    unit=""
                 />
             </div>
             <PageTitle title={'All Users'} icon={faUsers} />

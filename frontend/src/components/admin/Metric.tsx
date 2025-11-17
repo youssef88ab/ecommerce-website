@@ -7,6 +7,7 @@ interface MetricProps {
     icon: IconProp;
     title: string;
     data: number;
+    unit: string
 }
 
 export default function Metric(probs: MetricProps) {
@@ -25,7 +26,7 @@ export default function Metric(probs: MetricProps) {
                     </div>
                     <div className="flex flex-row justify-start items-center gap-2">
                         <p className="text-black font-bold text-2xl">
-                            <AnimatedNumber value={probs.data} />
+                            <AnimatedNumber value={probs.data} /> {probs.unit}
                         </p>
                     </div>
                 </div>

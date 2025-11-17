@@ -13,6 +13,7 @@ import {
     faShoppingCart,
     faClipboardList,
     faCheck,
+    faPercent,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faCcVisa as faCcVisaBrand,
@@ -23,7 +24,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Payment, PaymentPageResponse } from "../../types/components";
 import Metric from "../../components/admin/Metric";
-import { fetchAllPayments, getPaymentsCount } from "../../services/paymentsService";
+import { fetchAllPayments, getPaymentsCount, getSuccessRate } from "../../services/paymentsService";
 import PaymentsTable from "../../components/admin/payments/PaymentsTable";
 
 export default function Payments() {
@@ -56,7 +57,7 @@ export default function Payments() {
             }
         };
         loadPaymentsCount();
-    });
+    }, []);
 
     // * Handle Search Change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,23 +96,32 @@ export default function Payments() {
         setFilters((prev) => ({ ...prev, [filterName]: value.toString() }));
     };
 
+    // * Load Succes Rate 
+
+    const [successRate , setSuccessRate] = useState(0);
+
+    useEffect(() => {
+        const loadSuccesRate = async () => { 
+            const data = await getSuccessRate();
+            setSuccessRate(data);
+        };
+        loadSuccesRate();
+    }, []);
+
     return (
         <DashboardLayout>
-            <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
+            <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 my-5">
                 <Metric
-                    title={"Total Utilisateurs"}
-                    icon={faUsers}
+                    title={"Total Payments"}
+                    icon={faCreditCard}
                     data={paymentsCount}
+                    unit=""
                 />
                 <Metric
-                    title={"Total Orders"}
-                    icon={faShoppingCart}
-                    data={paymentsCount}
-                />
-                <Metric
-                    title={"Total Abonnements"}
-                    icon={faClipboardList}
-                    data={1400}
+                    title={"Success Rate (%)"}
+                    icon={faPercent}
+                    data={successRate}
+                    unit="%"
                 />
             </div>
             <PageTitle title={'All Payments'} icon={faCreditCard} />
