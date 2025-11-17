@@ -99,16 +99,19 @@ export default function Products() {
                     title={"Total Utilisateurs"}
                     icon={faUsers}
                     data={ProductsCount}
+                    unit=""
                 />
                 <Metric
                     title={"Total Orders"}
                     icon={faShoppingCart}
                     data={ProductsCount}
+                    unit=""
                 />
                 <Metric
                     title={"Total Abonnements"}
                     icon={faClipboardList}
                     data={1400}
+                    unit=""
                 />
             </div>
             <PageTitle title={'All Products'} icon={faCreditCard} />

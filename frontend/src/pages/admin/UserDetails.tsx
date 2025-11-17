@@ -141,11 +141,13 @@ export default function UserDetails() {
                     title="Total Orders"
                     data={orderPageResponse?.totalElements ?? 0}
                     icon={faBoxArchive}
+                    unit=""
                 />
                 <Metric
                     title="Total Spent"
                     data={totalSpent}
                     icon={faDollarSign}
+                    unit=""
                 />
             </div>
             <div className="flex flex-col gap-4">

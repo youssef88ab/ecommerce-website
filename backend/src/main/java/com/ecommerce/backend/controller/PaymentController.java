@@ -1,10 +1,8 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.dto.PaymentDTO;
-import com.ecommerce.backend.enums.Gender;
 import com.ecommerce.backend.enums.PaymentMethod;
 import com.ecommerce.backend.enums.PaymentStatus;
-import com.ecommerce.backend.enums.Role;
 import com.ecommerce.backend.service.PaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,5 +26,10 @@ public class PaymentController {
     @GetMapping("/count")
     public Long getCounts() {
         return  paymentService.getPaymentsCount();
+    }
+
+    @GetMapping("/successRate")
+    public Long getSuccessRate() {
+        return paymentService.getSuccessRate();
     }
 }
