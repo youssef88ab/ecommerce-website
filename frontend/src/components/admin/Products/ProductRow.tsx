@@ -1,16 +1,14 @@
+import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import { IconButton, Tooltip } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import type { Product } from "../../../types/components";
 import type { Variants, Transition } from "framer-motion";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import type { Product, User } from "../../../types/components";
-import React from "react";
-import { IconButton, Tooltip } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { renderProductStock, showRole } from "../../../utils/functions";
-import { showRegistrationDateTime } from "../../../utils/functions";
+import { renderProductStock } from "../../../utils/functions";
 
-// ✅ Define component props type
 interface ProductRowProps {
     product: Product;
     variants?: Variants;
@@ -65,6 +63,8 @@ const UserRow: React.FC<ProductRowProps> = ({
 
             {/* Stock Status */}
             <td className="py-4 text-center text-gray-600">{renderProductStock(product.stock)}</td>
+
+            <td className="py-4 text-center text-gray-600">${product.price}</td>
 
             {/* View Button */}
             <td className="py-4 text-center">

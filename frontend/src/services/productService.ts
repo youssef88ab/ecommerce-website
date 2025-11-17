@@ -26,10 +26,10 @@ export async function fetchAllProducts(
     url.searchParams.append("sort", sort);
 
     if (category) {
-        url.searchParams.append('category' , category);
+        url.searchParams.append('category', category);
     }
     if (searchTerm) {
-        url.searchParams.append('search', searchTerm); 
+        url.searchParams.append('search', searchTerm);
     }
 
     try {
@@ -55,20 +55,72 @@ export async function fetchAllProducts(
 
 export async function getProductsCount() {
 
-    const url = BASE_URL + "/count" ; 
+    const url = BASE_URL + "/count";
 
     try {
         const response = await fetch(url);
 
         if (!response.ok) {
-             // Throw an error with details from the API response if possible
+            // Throw an error with details from the API response if possible
             const errorBody = await response.json();
             throw new Error(
                 `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
             );
         }
 
-        const length: number = await response.json(); 
+        const length: number = await response.json();
+        console.log("Length : " + length);
+        return length;
+    }
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+export async function getOutOfStockCount() {
+
+    const url = `${BASE_URL}/count/outOfStock`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            // Throw an error with details from the API response if possible
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        const length: number = await response.json();
+        console.log("Length : " + length);
+        return length;
+    }
+    catch (error) {
+        console.error("Error during user fetch:", error);
+        // Throw a specific error or return a default response for the UI layer
+        throw error;
+    }
+}
+
+export async function getLowOfStockCount() {
+
+    const url = `${BASE_URL}/count/lowStock`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            // Throw an error with details from the API response if possible
+            const errorBody = await response.json();
+            throw new Error(
+                `HTTP Error ${response.status}: ${errorBody.message || "Unknown error"}`
+            );
+        }
+
+        const length: number = await response.json();
         console.log("Length : " + length);
         return length;
     }

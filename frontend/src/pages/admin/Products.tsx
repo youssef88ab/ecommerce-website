@@ -6,9 +6,6 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import FilterByButton from "../../components/admin/FilterByButton";
 import {
     faCreditCard,
-    faUsers,
-    faShoppingCart,
-    faClipboardList,
     faMobileAlt,
     faBook,
     faCouch,
@@ -16,11 +13,14 @@ import {
     faPlus,
     faUpload,
     faDownload,
+    faShoppingBag,
+    faBoxOpen,
+    faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Product, ProductPageResponse } from "../../types/components";
 import Metric from "../../components/admin/Metric";
-import { fetchAllProducts, getProductsCount } from "../../services/productService";
+import { fetchAllProducts, getLowOfStockCount, getOutOfStockCount, getProductsCount } from "../../services/productService";
 import ProductsTable from "../../components/admin/Products/ProductsTable";
 import { Button } from "@mui/material";
 
@@ -55,7 +55,37 @@ export default function Products() {
             }
         };
         loadProductsCount();
-    });
+    } , []);
+
+    // * Load out of stock 
+    const [outOfStockCount , setOutOfStockCount] = useState(0); 
+
+    useEffect(() => {
+        const loadOutOfStockCount = async () => {
+            try {
+                const count = await getOutOfStockCount();
+                setOutOfStockCount(count);
+            } catch (error) {
+                console.error("Failed to load Products count:", error);
+            }
+        };
+        loadOutOfStockCount();
+    } , []);
+
+    // * Load Low Stock Count
+        const [lowStockCount , setLowStockCount] = useState(0); 
+
+    useEffect(() => {
+        const loadlowStockCount = async () => {
+            try {
+                const count = await getLowOfStockCount();
+                setLowStockCount(count);
+            } catch (error) {
+                console.error("Failed to load Products count:", error);
+            }
+        };
+        loadlowStockCount();
+    } , []);
 
     // * Handle Search Change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,21 +126,21 @@ export default function Products() {
         <DashboardLayout>
             <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
                 <Metric
-                    title={"Total Utilisateurs"}
-                    icon={faUsers}
+                    title={"Total Products"}
+                    icon={faShoppingBag}
                     data={ProductsCount}
                     unit=""
                 />
                 <Metric
-                    title={"Total Orders"}
-                    icon={faShoppingCart}
-                    data={ProductsCount}
+                    title={"Out Of Stock"}
+                    icon={faBoxOpen}
+                    data={outOfStockCount}
                     unit=""
                 />
                 <Metric
-                    title={"Total Abonnements"}
-                    icon={faClipboardList}
-                    data={1400}
+                    title={"Low Stock"}
+                    icon={faExclamationCircle}
+                    data={lowStockCount}
                     unit=""
                 />
             </div>
