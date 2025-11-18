@@ -1,257 +1,122 @@
-import React, { useEffect, useState } from "react";
+import {useEffect} from "react";
+import type {Product} from "../../types/components";
 import PageTitle from "../../components/admin/PageTitle";
 import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
+import ProductsTable from "../../components/admin/Products/ProductsTable";
 import DashboardLayout from "../../layouts/DashboardLayout";
-import FilterByButton from "../../components/admin/FilterByButton";
 import {
-    faCreditCard,
-    faMobileAlt,
-    faBook,
-    faCouch,
-    faTshirt,
-    faPlus,
-    faUpload,
-    faDownload,
-    faShoppingBag,
     faBoxOpen,
     faExclamationCircle,
+    faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { Product, ProductPageResponse } from "../../types/components";
-import Metric from "../../components/admin/Metric";
-import { fetchAllProducts, getLowOfStockCount, getOutOfStockCount, getProductsCount } from "../../services/productService";
-import ProductsTable from "../../components/admin/Products/ProductsTable";
-import { Button } from "@mui/material";
+import FilterByButton from "../../components/admin/FilterByButton";
 
+// * Custom hooks and components
+import {useProductsData, useProductsFilters} from "../../hooks/useProducts";
+import {SORT_OPTIONS, CATEGORY_FILTERS} from "../../utils/productsConstants.tsx";
+import {fetchAllProducts} from "../../services/productService.ts";
+import SortByButton from "../../components/admin/SortByButton.tsx";
+import Metric from "../../components/admin/Metric.tsx";
 
 export default function Products() {
+    const {
+        productPageResponse,
+        setProductPageResponse,
+        productsCount,
+        outOfStockCount,
+        lowStockCount
+    } = useProductsData();
+    const {
+        searchTerm,
+        page,
+        rowsPerPage,
+        sort,
+        filters,
+        handleSearchChange,
+        handleSortChangeWrapper,
+        handleFilterChange,
+        handleChangePage,
+        handleChangeRowsPerPage
+    } = useProductsFilters();
 
-    // * Searching
-    const [searchTerm, setSearchTerm] = useState("");
-
-    // * Pagination
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const sort: string = "id,asc";
-
-    const [ProductPageResponse, setProductsPageResponse] = useState<ProductPageResponse | undefined>(undefined);
-
-    const [Products, setProducts] = useState<Product[]>([]);
-
-    useEffect(() => { if (ProductPageResponse) { setProducts(ProductPageResponse.content || []); } }, [ProductPageResponse]);
-
-    // * Total Products
-    const [ProductsCount, setProductsCount] = useState(0);
-
-    // * Load Products Count 
-    useEffect(() => {
-        const loadProductsCount = async () => {
-            try {
-                const count = await getProductsCount();
-                setProductsCount(count);
-            } catch (error) {
-                console.error("Failed to load Products count:", error);
-            }
-        };
-        loadProductsCount();
-    } , []);
-
-    // * Load out of stock 
-    const [outOfStockCount , setOutOfStockCount] = useState(0); 
-
-    useEffect(() => {
-        const loadOutOfStockCount = async () => {
-            try {
-                const count = await getOutOfStockCount();
-                setOutOfStockCount(count);
-            } catch (error) {
-                console.error("Failed to load Products count:", error);
-            }
-        };
-        loadOutOfStockCount();
-    } , []);
-
-    // * Load Low Stock Count
-        const [lowStockCount , setLowStockCount] = useState(0); 
-
-    useEffect(() => {
-        const loadlowStockCount = async () => {
-            try {
-                const count = await getLowOfStockCount();
-                setLowStockCount(count);
-            } catch (error) {
-                console.error("Failed to load Products count:", error);
-            }
-        };
-        loadlowStockCount();
-    } , []);
-
-    // * Handle Search Change
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
-        setPage(0); // ! Reset page to 0 when search term changes
-    };
-
-    // * Handle Page Change 
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => { void event; setPage(newPage); };
-
-    // * Handle Change Rows Per Page
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    // * Filter Options
-    const [filters, setFilters] = useState({
-        category: "",
-    });
-
-    // * Load Products 
+    // * Load products data
     useEffect(() => {
         const loadProducts = async () => {
             const data = await fetchAllProducts(page, rowsPerPage, sort, filters.category, searchTerm);
-            setProductsPageResponse(data);
+            setProductPageResponse(data);
         };
         loadProducts();
-    }, [page, rowsPerPage, filters, searchTerm]);
+    }, [page, rowsPerPage, sort, filters, searchTerm, setProductPageResponse]);
 
-
-    // * Handle Filter Change
-    const handleFilterChange = (filterName: keyof typeof filters, value: string | number) => {
-        setFilters((prev) => ({ ...prev, [filterName]: value.toString() }));
-    };
+    const products: Product[] = productPageResponse?.content ?? [];
+    const totalProducts = productPageResponse?.totalElements ?? 0;
 
     return (
         <DashboardLayout>
             <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
-                <Metric
-                    title={"Total Products"}
-                    icon={faShoppingBag}
-                    data={ProductsCount}
-                    unit=""
-                />
-                <Metric
-                    title={"Out Of Stock"}
-                    icon={faBoxOpen}
-                    data={outOfStockCount}
-                    unit=""
-                />
-                <Metric
-                    title={"Low Stock"}
-                    icon={faExclamationCircle}
-                    data={lowStockCount}
-                    unit=""
-                />
+                    <Metric
+                        title={"Total Products"}
+                        icon={faShoppingBag}
+                        data={productsCount}
+                        unit=""
+                    />
+                    <Metric
+                        title={"Out Of Stock"}
+                        icon={faBoxOpen}
+                        data={outOfStockCount}
+                        unit=""
+                    />
+                    <Metric
+                        title={"Low Stock"}
+                        icon={faExclamationCircle}
+                        data={lowStockCount}
+                        unit=""
+                    />
             </div>
-            <PageTitle title={'All Products'} icon={faCreditCard} />
+
+            <PageTitle title="All Products" icon={faShoppingBag}/>
+
             <div className="flex flex-col items-center md:flex-row gap-4 mb-3">
-                {/* Search bar */}
                 <div className="w-full md:w-1/3">
                     <SearchBar
                         searchTerm={searchTerm}
                         onSearchChange={handleSearchChange}
-                        placeholder="Search Products by ID, customer name or email..."
+                        placeholder="Search products by name, ID, or description..."
                     />
                 </div>
 
-                {/* Filters + pagination + action buttons */}
-                <div className="flex-1 flex flex-wrap items-center justify-between gap-2">
-                    {/* Filter */}
-                    <FilterByButton
-                        label="Category"
-                        value={filters.category}
-                        onChange={(value) => handleFilterChange("category", value)}
-                        options={[
-                            { value: "ELECTRONICS", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faMobileAlt} className="text-blue-500" /> Electronics</span> },
-                            { value: "CLOTHING", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faTshirt} className="text-pink-500" /> Clothing</span> },
-                            { value: "HOME", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faCouch} className="text-green-500" /> Home</span> },
-                            { value: "BOOKS", label: <span className="flex items-center gap-2"><FontAwesomeIcon icon={faBook} className="text-yellow-500" /> Books</span> },
-                        ]}
-                        data-testid="category-filter-trigger"
-                    />
-
-                    {/* Pagination + action buttons side by side */}
-                    <div className="flex items-center gap-2 flex-wrap justify-end">
-                        {/* Add Product */}
-                        <Button
-                            variant="contained"
-                            size="small"
-                            color="primary"
-                            startIcon={<FontAwesomeIcon icon={faPlus} className="text-xs" />}
-                            sx={{
-                                textTransform: "none",
-                                fontSize: "0.75rem",
-                                fontWeight: 500,
-                                height: "36px",
-                                borderRadius: "6px",
-                                boxShadow: "0 1px 2px rgba(0,0,0,0.15)",
-                                "&:hover": {
-                                    boxShadow: "0 2px 4px rgba(0,0,0,0.25)",
-                                },
-                            }}
-                        >
-                            Add Product
-                        </Button>
-
-                        {/* Bulk Upload */}
-                        <Button
-                            variant="contained"
-                            size="small"
-                            color="secondary"
-                            startIcon={<FontAwesomeIcon icon={faUpload} className="text-xs" />}
-                            sx={{
-                                textTransform: "none",
-                                fontSize: "0.75rem",
-                                fontWeight: 500,
-                                height: "36px",
-                                borderRadius: "6px",
-                                backgroundColor: "#8b5cf6", // purple-600
-                                "&:hover": {
-                                    backgroundColor: "#7c3aed", // purple-700
-                                },
-                            }}
-                        >
-                            Bulk Upload
-                        </Button>
-
-                        {/* Export */}
-                        <Button
-                            variant="contained"
-                            size="small"
-                            startIcon={<FontAwesomeIcon icon={faDownload} className="text-xs" />}
-                            sx={{
-                                textTransform: "none",
-                                fontSize: "0.75rem",
-                                fontWeight: 500,
-                                height: "36px",
-                                borderRadius: "6px",
-                                backgroundColor: "#16a34a", // green-600
-                                "&:hover": {
-                                    backgroundColor: "#15803d", // green-700
-                                },
-                            }}
-                        >
-                            Export
-                        </Button>
-
-                        {/* Pagination */}
-                        <Pagination
-                            page={page}
-                            handleChangePage={handleChangePage}
-                            rowsPerPage={ProductPageResponse?.size ?? 0}
-                            handleChangeRowsPerPage={handleChangeRowsPerPage}
-                            count={ProductPageResponse?.totalElements ?? 0}
+                <div className="flex-1 flex flex-wrap gap-1 items-center justify-between">
+                    <div className="flex">
+                        <SortByButton
+                            label="Sort by"
+                            value={sort}
+                            onChange={handleSortChangeWrapper}
+                            options={SORT_OPTIONS}
+                        />
+                        <FilterByButton
+                            label="Category"
+                            value={filters.category}
+                            onChange={(value) => handleFilterChange("category", value)}
+                            options={CATEGORY_FILTERS}
+                            data-testid="category-filter-trigger"
                         />
                     </div>
 
+                    <div className="flex items-center gap-2 flex-wrap justify-end">
+
+                        <Pagination
+                            page={page}
+                            handleChangePage={handleChangePage}
+                            rowsPerPage={productPageResponse?.size ?? 0}
+                            handleChangeRowsPerPage={handleChangeRowsPerPage}
+                            count={totalProducts}
+                        />
+                    </div>
                 </div>
             </div>
 
-            {/* Products Table */}
-            <div className="">
-                <ProductsTable products={Products} />
-            </div>
+            <ProductsTable products={products}/>
         </DashboardLayout>
     );
 }
