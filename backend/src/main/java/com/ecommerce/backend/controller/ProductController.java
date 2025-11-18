@@ -23,16 +23,17 @@ public class ProductController {
     {
         return productService.getAllProducts(pageable , category , search);
     }
+
+    // * Create Product
+    @PostMapping
+    public ProductDTO postProduct(@RequestBody ProductDTO productDTO) {
+        return productService.createProduct(productDTO);
+    }
+
     // * Get Product By Name
     @GetMapping("/{name}")
     public ProductDTO getProduct(@PathVariable String name) {
         return productService.getProductByName(name);
-    }
-
-    // * Add Product
-    @PostMapping()
-    public ProductDTO addProduct(@PathVariable ProductDTO product) {
-        return productService.addProduct(product);
     }
 
     // * Update Product

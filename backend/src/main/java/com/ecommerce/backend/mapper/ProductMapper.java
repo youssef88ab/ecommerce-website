@@ -1,7 +1,10 @@
 package com.ecommerce.backend.mapper;
 
 import com.ecommerce.backend.dto.ProductDTO;
+import com.ecommerce.backend.model.Category;
 import com.ecommerce.backend.model.Product;
+import com.ecommerce.backend.repository.CategoryRepository;
+import com.ecommerce.backend.service.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Component;
 public class ProductMapper {
 
     private final CategoryMapper categoryMapper ;
+    private final CategoryServiceImpl categoryService;
+    private final CategoryRepository categoryRepository;
 
     public Product toEntity(ProductDTO productDTO) {
 
@@ -25,9 +30,14 @@ public class ProductMapper {
         product.setPrice(productDTO.getPrice());
         product.setStock(productDTO.getStock());
         product.setDescription(productDTO.getDescription());
+
+        // * Convert category name to managed Category entity
         if (productDTO.getCategory() != null) {
-            product.setCategory(categoryMapper.toEntity(productDTO.getCategory()));
+            Category managedCategory = categoryRepository.findByName(productDTO.getCategory())
+                    .orElseThrow(() -> new RuntimeException("Category not found: " + productDTO.getCategory()));
+            product.setCategory(managedCategory);
         }
+
 
         return product;
     }
@@ -46,8 +56,9 @@ public class ProductMapper {
         productDTO.setPrice(product.getPrice());
         productDTO.setStock(product.getStock());
         productDTO.setDescription(product.getDescription());
+        // * Convert Category entity to category name string
         if (product.getCategory() != null) {
-            productDTO.setCategory(categoryMapper.toDTO(product.getCategory()));
+            productDTO.setCategory(product.getCategory().getName());
         }
 
         return  productDTO;

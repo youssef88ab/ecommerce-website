@@ -1,4 +1,4 @@
-import type { ProductPageResponse } from "../types/components";
+import type {Product, ProductPageResponse} from "../types/components";
 
 // * Api Url
 const BASE_URL = "http://localhost:8080/api/products";
@@ -71,8 +71,7 @@ export async function getProductsCount() {
         const length: number = await response.json();
         console.log("Length : " + length);
         return length;
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Error during user fetch:", error);
         // Throw a specific error or return a default response for the UI layer
         throw error;
@@ -97,8 +96,7 @@ export async function getOutOfStockCount() {
         const length: number = await response.json();
         console.log("Length : " + length);
         return length;
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Error during user fetch:", error);
         // Throw a specific error or return a default response for the UI layer
         throw error;
@@ -123,10 +121,34 @@ export async function getLowOfStockCount() {
         const length: number = await response.json();
         console.log("Length : " + length);
         return length;
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Error during user fetch:", error);
         // Throw a specific error or return a default response for the UI layer
         throw error;
     }
 }
+
+export const createProduct = async (product: Product): Promise<Product> => {
+
+    const url = `${BASE_URL}`;
+    console.log("product " , product);
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create product');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+    }
+};
