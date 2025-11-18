@@ -21,7 +21,7 @@ public class Order {
     private Timestamp orderDate = Timestamp.from(Instant.now());
 
     @Column(nullable = false)
-    private double totalAmount;
+    private double ;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.PENDING;
