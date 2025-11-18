@@ -44,12 +44,12 @@ export default function Users() {
     const totalUsers = userPageResponse?.totalElements ?? 0;
 
     const handleBulkUpload = () => {
-        // Implement bulk upload logic
+        // ! Implement bulk upload logic
         console.log("Bulk upload clicked");
     };
 
     const handleExport = () => {
-        // Implement export logic
+        // ! Implement export logic
         console.log("Export clicked");
     };
 

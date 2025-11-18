@@ -12,7 +12,7 @@ export const useUsersData = () => {
         return date.toISOString().split("T")[0];
     }, []);
 
-    // Load metrics
+    // * Load metrics
     useEffect(() => {
         const loadMetrics = async () => {
             try {
