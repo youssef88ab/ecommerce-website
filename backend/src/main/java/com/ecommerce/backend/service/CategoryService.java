@@ -2,6 +2,7 @@ package com.ecommerce.backend.service;
 
 import com.ecommerce.backend.dto.CategoryDTO;
 import com.ecommerce.backend.dto.ProductDTO;
+import com.ecommerce.backend.model.Category;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CategoryService {
     CategoryDTO getCategoryById(Long categoryId);
 
     // * Retrieves a category by its unique name.
-    CategoryDTO getCategoryByName(String name);
+    Category getCategoryByName(String name);
 
     // * Retrieves the entire catalog structure (often as a hierarchical tree).
     List<CategoryDTO> getAllCategories();

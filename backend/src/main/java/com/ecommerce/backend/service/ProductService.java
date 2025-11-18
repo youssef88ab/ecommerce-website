@@ -17,6 +17,9 @@ public interface ProductService {
     // * Get Product By Name
     ProductDTO getProductByName(String name);
 
+    // * Create Product 
+    ProductDTO createProduct(ProductDTO productDTO);
+    
     // * Get Product By ID
     ProductDTO getProductById(Long id);
 

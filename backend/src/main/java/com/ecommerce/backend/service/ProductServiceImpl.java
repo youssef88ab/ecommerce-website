@@ -1,10 +1,13 @@
 package com.ecommerce.backend.service;
 
+import com.ecommerce.backend.dto.CategoryDTO;
 import com.ecommerce.backend.dto.ProductDTO;
 import com.ecommerce.backend.mapper.CategoryMapper;
 import com.ecommerce.backend.mapper.ProductMapper;
+import com.ecommerce.backend.model.Category;
 import com.ecommerce.backend.model.Product;
 import com.ecommerce.backend.model.User;
+import com.ecommerce.backend.repository.CategoryRepository;
 import com.ecommerce.backend.repository.ProductRepository;
 import com.ecommerce.backend.specifications.ProductSpecification;
 import com.ecommerce.backend.specifications.UserSpecification;
@@ -26,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository ;
     private final ProductMapper productMapper;
     private final CategoryMapper categoryMapper;
+    private final CategoryRepository categoryRepository;
 
     // * Get All Products
     @Override
@@ -87,7 +91,8 @@ public class ProductServiceImpl implements ProductService {
             product.setPrice(updatedProduct.getPrice());
             product.setStock(updatedProduct.getStock());
             product.setName(updatedProduct.getDescription());
-            product.setCategory(categoryMapper.toEntity(updatedProduct.getCategory()));
+
+            // ! product.setCategory(categoryMapper.toEntity(updatedProduct.getCategory()));
 
             // * Save it & Convert back to dto
             return productMapper.toDTO(productRepository.save(product));
@@ -109,7 +114,31 @@ public class ProductServiceImpl implements ProductService {
     // * Get Products Count
     public Long getProductsCount() { return productRepository.count(); }
 
+    // * Get Low Stock Products Count
     public Long countLowStock() {
         return productRepository.countLowStock();
+    }
+
+    @Transactional
+    @Override
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        // * Find the managed category entity by name
+        Category managedCategory = categoryRepository.findByName(productDTO.getCategory())
+                .orElseThrow(() -> new RuntimeException("Category not found: " + productDTO.getCategory()));
+
+        // * Create product with manual mapping
+        Product product = new Product();
+        product.setId(null);
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setStock(productDTO.getStock());
+        product.setCategory(managedCategory); // Set managed entity
+
+        // * Save product
+        Product savedProduct = productRepository.save(product);
+
+        // * Convert back to DTO
+        return productMapper.toDTO(savedProduct);
     }
 }

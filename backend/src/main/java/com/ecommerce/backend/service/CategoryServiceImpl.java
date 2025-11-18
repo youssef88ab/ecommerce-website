@@ -2,14 +2,22 @@ package com.ecommerce.backend.service;
 
 import com.ecommerce.backend.dto.CategoryDTO;
 import com.ecommerce.backend.dto.ProductDTO;
+import com.ecommerce.backend.mapper.CategoryMapper;
+import com.ecommerce.backend.model.Category;
+import com.ecommerce.backend.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
+
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
+
     @Override
     public CategoryDTO createCategory(CategoryDTO category) {
         return null;
@@ -21,8 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO getCategoryByName(String name) {
-        return null;
+    public Category getCategoryByName(String name) {
+        return categoryRepository.findByName(name).orElse(null);
     }
 
     @Override
