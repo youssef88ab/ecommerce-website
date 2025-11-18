@@ -12,7 +12,6 @@ import FilterByButton from "../../components/admin/FilterByButton";
 import { useOrdersData, useOrdersFilters } from "../../hooks/useOrders";
 import { SORT_OPTIONS, STATUS_FILTERS, PAYMENT_METHOD_FILTERS } from "../../utils/ordersConstants";
 import { fetchAllOrders } from "../../services/orderService.ts";
-import { ActionButtons } from "../../components/admin/ActionButtons.tsx";
 import SortByButton from "../../components/admin/SortByButton.tsx";
 import Metric from "../../components/admin/Metric.tsx";
 
@@ -42,16 +41,6 @@ export default function Orders() {
 
     const orders: Order[] = orderPageResponse?.content ?? [];
     const totalOrders = orderPageResponse?.totalElements ?? 0;
-
-    const handleBulkUpload = () => {
-        // ! Implement bulk upload logic
-        console.log("Bulk upload clicked");
-    };
-
-    const handleExport = () => {
-        // ! Implement export logic
-        console.log("Export clicked");
-    };
 
     return (
         <DashboardLayout>
@@ -105,8 +94,6 @@ export default function Orders() {
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap justify-end">
-                        <ActionButtons onBulkUpload={handleBulkUpload} onExport={handleExport}/>
-
                         <Pagination
                             page={page}
                             handleChangePage={handleChangePage}

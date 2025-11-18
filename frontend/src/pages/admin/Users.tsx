@@ -5,16 +5,15 @@ import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
 import UsersTable from "../../components/admin/users/UsersTable";
 import DashboardLayout from "../../layouts/DashboardLayout";
-import {faUsers} from "@fortawesome/free-solid-svg-icons";
+import {faShoppingCart, faUserPlus, faUsers} from "@fortawesome/free-solid-svg-icons";
 import FilterByButton from "../../components/admin/FilterByButton";
 
 // * Custom hooks and components
 import {useUsersData, useUsersFilters} from "../../hooks/useUsers";
 import {SORT_OPTIONS, GENDER_FILTERS, ROLE_FILTERS} from "../../utils/usersConstants";
 import {fetchAllUsers} from "../../services/userService.ts";
-import {MetricsSection} from "../../components/admin/MetricsSection.tsx";
-import {ActionButtons} from "../../components/admin/ActionButtons.tsx";
 import SortByButton from "../../components/admin/SortByButton.tsx";
+import Metric from "../../components/admin/Metric.tsx";
 
 export default function Users() {
     const {userPageResponse, setUserPageResponse, newUsersThisMonth, usersWhoOrdered, usersCount} = useUsersData();
@@ -43,23 +42,30 @@ export default function Users() {
     const users: User[] = userPageResponse?.content ?? [];
     const totalUsers = userPageResponse?.totalElements ?? 0;
 
-    const handleBulkUpload = () => {
-        // ! Implement bulk upload logic
-        console.log("Bulk upload clicked");
-    };
-
-    const handleExport = () => {
-        // ! Implement export logic
-        console.log("Export clicked");
-    };
-
     return (
         <DashboardLayout>
-            <MetricsSection
-                totalUsers={usersCount}
-                newUsersThisMonth={newUsersThisMonth}
-                usersWhoOrdered={usersWhoOrdered}
-            />
+            <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
+                <Metric
+                    title="Total Users"
+                    icon={faUsers}
+                    data={usersCount}
+                    unit=""
+                />
+
+                <Metric
+                    title="New Users (This Month)"
+                    icon={faUserPlus}
+                    data={newUsersThisMonth}
+                    unit=""
+                />
+
+                <Metric
+                    title="Customers Who Ordered"
+                    icon={faShoppingCart}
+                    data={usersWhoOrdered}
+                    unit=""
+                />
+            </div>
 
             <PageTitle title="All Users" icon={faUsers}/>
 
@@ -95,8 +101,6 @@ export default function Users() {
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap justify-end">
-                        <ActionButtons onBulkUpload={handleBulkUpload} onExport={handleExport}/>
-
                         <Pagination
                             page={page}
                             handleChangePage={handleChangePage}
