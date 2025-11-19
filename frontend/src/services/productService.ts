@@ -152,3 +152,24 @@ export const createProduct = async (product: Product): Promise<Product> => {
         throw error;
     }
 };
+
+export const updateProduct = async (productData: Product): Promise<Product> => {
+
+    const url = `${BASE_URL}/${productData.id}`;
+
+    console.log("updated product " , productData);
+
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productData),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update product');
+    }
+
+    return response.json();
+};

@@ -76,23 +76,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductDTO updateProduct(Long id, ProductDTO updatedProduct) {
 
         // * Create Optional Product
-        Optional<Product> productOptional = productRepository.findByName(updatedProduct.getName());
+        Optional<Product> productOptional = productRepository.findById(id);
 
         // * if it exists
         if (productOptional.isPresent())
         {
-            // * Declare Product
-            Product product = productOptional.get();
-
             // * Update Product attributes from dto
-            product.setPrice(updatedProduct.getPrice());
-            product.setStock(updatedProduct.getStock());
-            product.setName(updatedProduct.getDescription());
-
-            // ! product.setCategory(categoryMapper.toEntity(updatedProduct.getCategory()));
+            Product product = productMapper.toEntity(updatedProduct);
 
             // * Save it & Convert back to dto
             return productMapper.toDTO(productRepository.save(product));

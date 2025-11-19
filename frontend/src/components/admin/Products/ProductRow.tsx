@@ -11,23 +11,29 @@ import { renderProductStock } from "../../../utils/functions";
 
 interface ProductRowProps {
     product: Product;
+    onEditProduct: (product: Product) => void;
     variants?: Variants;
     initial?: string | boolean;
     animate?: string | boolean;
     transition?: Transition;
 }
 
-const UserRow: React.FC<ProductRowProps> = ({
-    product,
-    variants,
-    initial,
-    animate,
-    transition,
-}) => {
+const ProductRow: React.FC<ProductRowProps> = ({
+                                                   product,
+                                                   onEditProduct,
+                                                   variants,
+                                                   initial,
+                                                   animate,
+                                                   transition,
+                                               }) => {
     const navigate = useNavigate();
 
     const handleViewDetails = (product: Product) => {
         navigate("/user", { state: { product } });
+    };
+
+    const handleEditClick = () => {
+        onEditProduct(product);
     };
 
     return (
@@ -55,7 +61,7 @@ const UserRow: React.FC<ProductRowProps> = ({
 
             {/* Category */}
             <td className="py-4 text-center text-sm font-medium text-gray-900">
-                {product.category.name}
+                {product.category}
             </td>
 
             {/* Quantity */}
@@ -85,10 +91,11 @@ const UserRow: React.FC<ProductRowProps> = ({
                 <div className="flex justify-center items-center gap-3">
                     <Tooltip title="Edit Product" arrow placement="top">
                         <IconButton
+                            onClick={handleEditClick}
                             size="small"
-                            color="default"
+                            color="primary"
                             aria-label="edit"
-                            className="hover:bg-gray-50 transition-colors duration-200"
+                            className="hover:bg-blue-50 transition-colors duration-200"
                         >
                             <EditIcon fontSize="small" />
                         </IconButton>
@@ -109,4 +116,4 @@ const UserRow: React.FC<ProductRowProps> = ({
     );
 };
 
-export default UserRow;
+export default ProductRow;
