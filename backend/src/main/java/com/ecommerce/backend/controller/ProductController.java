@@ -24,6 +24,12 @@ public class ProductController {
         return productService.getAllProducts(pageable , category , search);
     }
 
+    // * Get Product By Id
+    @GetMapping("/{id}")
+    public ProductDTO getProductById(@PathVariable Long id){
+        return productService.getProductById(id);
+    }
+
     // * Create Product
     @PostMapping
     public ProductDTO postProduct(@RequestBody ProductDTO productDTO) {
@@ -31,7 +37,7 @@ public class ProductController {
     }
 
     // * Get Product By Name
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ProductDTO getProduct(@PathVariable String name) {
         return productService.getProductByName(name);
     }

@@ -8,9 +8,10 @@ import ProductRow from "./ProductRow";
 interface ProductsTableProps {
     products: Product[];
     onEditProduct: (product: Product) => void;
+    onDeleteProduct: (product: Product) => void;
 }
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ products, onEditProduct }) => {
+const ProductsTable: React.FC<ProductsTableProps> = ({ products, onEditProduct, onDeleteProduct  }) => {
     return (
         <motion.div
             variants={tableVariants as Variants}
@@ -73,6 +74,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products, onEditProduct }
                             key={product.id}
                             product={product}
                             onEditProduct={onEditProduct}
+                            onDeleteProduct={onDeleteProduct}
                             variants={rowVariants}
                             initial="hidden"
                             animate="visible"

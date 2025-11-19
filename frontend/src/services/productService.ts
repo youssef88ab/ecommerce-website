@@ -11,14 +11,7 @@ const BASE_URL = "http://localhost:8080/api/products";
  * @returns A promise that resolves to the structured UserPageResponse.
  * @throws An error if the network request fails or the response status is not OK.
  */
-
-export async function fetchAllProducts(
-    page: number = 0,
-    size: number = 10,
-    sort: string = "id,asc",
-    category: string,
-    searchTerm: string
-): Promise<ProductPageResponse> {
+export async function fetchAllProducts( page: number = 0,  size: number = 10, sort: string = "id,asc", category: string, searchTerm: string): Promise<ProductPageResponse> {
     const url = new URL(BASE_URL);
 
     url.searchParams.append("page", page.toString());
@@ -52,6 +45,19 @@ export async function fetchAllProducts(
         throw error;
     }
 }
+
+export const fetchProductById = async (productId: number): Promise<Product> => {
+
+    const url = `${BASE_URL}/${productId}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch product');
+    }
+
+    return response.json();
+};
 
 export async function getProductsCount() {
 
@@ -131,7 +137,6 @@ export async function getLowOfStockCount() {
 export const createProduct = async (product: Product): Promise<Product> => {
 
     const url = `${BASE_URL}`;
-    console.log("product " , product);
 
     try {
         const response = await fetch(url, {
@@ -157,8 +162,6 @@ export const updateProduct = async (productData: Product): Promise<Product> => {
 
     const url = `${BASE_URL}/${productData.id}`;
 
-    console.log("updated product " , productData);
-
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -173,3 +176,19 @@ export const updateProduct = async (productData: Product): Promise<Product> => {
 
     return response.json();
 };
+
+export const deleteProduct = async (productId: number): Promise<void> => {
+
+    const  url = `${BASE_URL}/${productId}`;
+
+    const response = await fetch(url , {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json' ,
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to Delete Product');
+    }
+}
