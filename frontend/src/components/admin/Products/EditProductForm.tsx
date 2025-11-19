@@ -1,114 +1,47 @@
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faPlus,
-    faTimes,
     faTag,
+    faAlignLeft,
     faDollar,
     faBox,
     faList,
+    faTimes,
     faImage,
-    faAlignLeft,
+    faCloudUpload,
     faUpload,
-    faCloudUpload
+    faEdit
 } from "@fortawesome/free-solid-svg-icons";
-import {useState, useRef, type ChangeEvent, type FormEvent, type DragEvent, type MouseEvent} from "react";
-import type {Product} from "../../../types/components.ts";
+import type { Product } from "../../../types/components";
 
-interface CreateProductFormProps {
-    showCreateForm: boolean;
-    setShowCreateForm: (show: boolean) => void;
-    createdProduct: Product;
-    handleCreateChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-    handleCreateSubmit: (e: FormEvent) => void;
+interface EditProductFormProps {
+    showEditForm: boolean;
+    editingProduct: Product | null;
+    handleEditChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+    handleEditSubmit: (e: React.FormEvent) => void;
+    handleCancelEdit: () => void;
 }
 
-export default function CreateProductForm({
-                                              showCreateForm,
-                                              setShowCreateForm,
-                                              createdProduct,
-                                              handleCreateChange,
-                                              handleCreateSubmit,
-                                          }: CreateProductFormProps) {
-
-    // * States
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    // * Handle Image Change
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = (e: ProgressEvent<FileReader>) => {
-                    const result = e.target?.result;
-                    if (typeof result === 'string') {
-                        setImagePreview(result);
-                        // * Update the form data with the base64 image
-                        handleCreateChange({
-                            target: {
-                                name: 'imageUrl',
-                                value: result
-                            }
-                        } as ChangeEvent<HTMLInputElement>);
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    };
-
-    const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setIsDragging(true);
-    };
-
-    const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setIsDragging(false);
-    };
-
-    const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-            // Create a synthetic event to reuse handleImageChange
-            const syntheticEvent = {
-                target: {
-                    files
-                }
-            } as ChangeEvent<HTMLInputElement>;
-            handleImageChange(syntheticEvent);
-        }
-    };
-
-    const handleImageClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const removeImage = () => {
-        setImagePreview(null);
-        handleCreateChange({
-            target: {
-                name: 'imageUrl',
-                value: ''
-            }
-        } as ChangeEvent<HTMLInputElement>);
-    };
+const EditProductForm: React.FC<EditProductFormProps> = ({
+                                                             showEditForm,
+                                                             editingProduct,
+                                                             handleEditChange,
+                                                             handleEditSubmit,
+                                                             handleCancelEdit
+                                                         }) => {
+    if (!showEditForm || !editingProduct) return null;
 
     return (
         <AnimatePresence>
-            {showCreateForm && (
+            {showEditForm && (
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className="fixed inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70 backdrop-blur-sm flex justify-center items-center z-50 p-4"
-                    onClick={(e: MouseEvent<HTMLDivElement>) => {
-                        if (e.target === e.currentTarget) setShowCreateForm(false);
+                    onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                        if (e.target === e.currentTarget) handleCancelEdit();
                     }}
                 >
                     <motion.div
@@ -117,17 +50,17 @@ export default function CreateProductForm({
                         exit={{ scale: 0.9, opacity: 0, y: 20 }}
                         transition={{ duration: 0.4, ease: "easeOut" }}
                         className="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
-                        onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+                        onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
                     >
                         <div className="flex justify-between items-center mb-6">
                             <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                                <div className="p-2 bg-green-100 rounded-lg">
-                                    <FontAwesomeIcon icon={faPlus} className="text-green-600 text-lg" />
+                                <div className="p-2 bg-blue-100 rounded-lg">
+                                    <FontAwesomeIcon icon={faEdit} className="text-blue-600 text-lg" />
                                 </div>
-                                Create New Product
+                                Edit Product
                             </h3>
                             <button
-                                onClick={() => setShowCreateForm(false)}
+                                onClick={handleCancelEdit}
                                 className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
                                 aria-label="Close"
                             >
@@ -135,7 +68,7 @@ export default function CreateProductForm({
                             </button>
                         </div>
 
-                        <form onSubmit={handleCreateSubmit} className="space-y-6">
+                        <form onSubmit={handleEditSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
                                 {/* Left Column - Image Upload - Full Height */}
                                 <div className="lg:col-span-1 flex flex-col h-full">
@@ -147,66 +80,28 @@ export default function CreateProductForm({
 
                                         {/* Image Upload Area - Takes full available height */}
                                         <div
-                                            className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all duration-300 flex flex-col justify-center items-center flex-1 min-h-[300px] ${
-                                                isDragging
-                                                    ? 'border-blue-400 bg-blue-50 scale-105'
-                                                    : imagePreview
-                                                        ? 'border-green-200 bg-green-50'
-                                                        : 'border-gray-300 hover:border-gray-400 bg-gray-50'
-                                            }`}
-                                            onDragOver={handleDragOver}
-                                            onDragLeave={handleDragLeave}
-                                            onDrop={handleDrop}
-                                            onClick={handleImageClick}
+                                            className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all duration-300 flex flex-col justify-center items-center flex-1 min-h-[300px] border-gray-300 hover:border-gray-400 bg-gray-50`}
                                         >
-                                            <input
-                                                type="file"
-                                                ref={fileInputRef}
-                                                onChange={handleImageChange}
-                                                accept="image/*"
-                                                className="hidden"
-                                            />
-
-                                            {imagePreview ? (
-                                                <div className="relative w-full h-full flex items-center justify-center">
-                                                    <img
-                                                        src={imagePreview}
-                                                        alt="Preview"
-                                                        className="max-w-full max-h-64 object-contain rounded-lg shadow-md"
+                                            <div className="space-y-3">
+                                                <div className="p-4 bg-white rounded-full inline-block">
+                                                    <FontAwesomeIcon
+                                                        icon={faCloudUpload}
+                                                        className="text-4xl text-gray-400"
                                                     />
-                                                    <button
-                                                        type="button"
-                                                        onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                                                            e.stopPropagation();
-                                                            removeImage();
-                                                        }}
-                                                        className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition-colors"
-                                                    >
-                                                        <FontAwesomeIcon icon={faTimes} size="xs" />
-                                                    </button>
                                                 </div>
-                                            ) : (
-                                                <div className="space-y-3">
-                                                    <div className="p-4 bg-white rounded-full inline-block">
-                                                        <FontAwesomeIcon
-                                                            icon={faCloudUpload}
-                                                            className="text-4xl text-gray-400"
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-medium text-gray-700">
-                                                            Drag & drop your image here
-                                                        </p>
-                                                        <p className="text-xs text-gray-500 mt-1">
-                                                            or click to browse
-                                                        </p>
-                                                    </div>
-                                                    <div className="text-xs text-gray-400 flex items-center justify-center gap-1">
-                                                        <FontAwesomeIcon icon={faUpload} size="xs" />
-                                                        PNG, JPG, WEBP up to 5MB
-                                                    </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-gray-700">
+                                                        Product Image
+                                                    </p>
+                                                    <p className="text-xs text-gray-500 mt-1">
+                                                        Current image displayed in table
+                                                    </p>
                                                 </div>
-                                            )}
+                                                <div className="text-xs text-gray-400 flex items-center justify-center gap-1">
+                                                    <FontAwesomeIcon icon={faUpload} size="xs" />
+                                                    PNG, JPG, WEBP up to 5MB
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -222,8 +117,8 @@ export default function CreateProductForm({
                                             <input
                                                 type="text"
                                                 name="name"
-                                                value={createdProduct.name}
-                                                onChange={handleCreateChange}
+                                                value={editingProduct.name}
+                                                onChange={handleEditChange}
                                                 className="w-full border border-gray-300 px-3 py-3 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all text-black"
                                                 placeholder="e.g. iPhone 15 Pro"
                                                 required
@@ -238,8 +133,8 @@ export default function CreateProductForm({
                                         </label>
                                         <textarea
                                             name="description"
-                                            value={createdProduct.description}
-                                            onChange={handleCreateChange}
+                                            value={editingProduct.description}
+                                            onChange={handleEditChange}
                                             rows={3}
                                             className="w-full border border-gray-300 px-3 py-3 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none text-black"
                                             placeholder="Enter detailed product description..."
@@ -257,8 +152,8 @@ export default function CreateProductForm({
                                                 <input
                                                     type="number"
                                                     name="price"
-                                                    value={createdProduct.price}
-                                                    onChange={handleCreateChange}
+                                                    value={editingProduct.price}
+                                                    onChange={handleEditChange}
                                                     step="0.01"
                                                     min="0"
                                                     className="w-full border border-gray-300 px-3 py-3 pl-8 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-black"
@@ -276,8 +171,8 @@ export default function CreateProductForm({
                                             <input
                                                 type="number"
                                                 name="stock"
-                                                value={createdProduct.stock}
-                                                onChange={handleCreateChange}
+                                                value={editingProduct.stock}
+                                                onChange={handleEditChange}
                                                 min="0"
                                                 className="w-full border border-gray-300 px-3 py-3 rounded-lg focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all text-black"
                                                 placeholder="0"
@@ -291,8 +186,8 @@ export default function CreateProductForm({
                                             </label>
                                             <select
                                                 name="category"
-                                                value={createdProduct.category}
-                                                onChange={handleCreateChange}
+                                                value={editingProduct.category}
+                                                onChange={handleEditChange}
                                                 className="w-full border border-gray-300 px-3 py-3 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all bg-white text-black"
                                                 required
                                             >
@@ -303,6 +198,8 @@ export default function CreateProductForm({
                                                 <option value="BOOKS">Books</option>
                                                 <option value="SPORTS">Sports</option>
                                                 <option value="BEAUTY">Beauty</option>
+                                                <option value="TOYS">Toys</option>
+                                                <option value="OTHER">Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -312,7 +209,7 @@ export default function CreateProductForm({
                             <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
                                 <button
                                     type="button"
-                                    onClick={() => setShowCreateForm(false)}
+                                    onClick={handleCancelEdit}
                                     className="w-full sm:w-auto px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200 font-medium"
                                 >
                                     Cancel
@@ -321,7 +218,7 @@ export default function CreateProductForm({
                                     type="submit"
                                     className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                 >
-                                    Create Product
+                                    Update Product
                                 </button>
                             </div>
                         </form>
@@ -330,4 +227,6 @@ export default function CreateProductForm({
             )}
         </AnimatePresence>
     );
-}
+};
+
+export default EditProductForm;

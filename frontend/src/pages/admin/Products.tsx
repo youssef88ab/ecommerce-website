@@ -15,10 +15,11 @@ import FilterByButton from "../../components/admin/FilterByButton";
 // * Custom hooks and components
 import {useProductsData, useProductsFilters} from "../../hooks/useProducts";
 import {SORT_OPTIONS, CATEGORY_FILTERS} from "../../utils/productsConstants.tsx";
-import {createProduct, fetchAllProducts} from "../../services/productService.ts";
+import {createProduct, fetchAllProducts, updateProduct} from "../../services/productService.ts";
 import SortByButton from "../../components/admin/SortByButton.tsx";
 import Metric from "../../components/admin/Metric.tsx";
 import CreateProductForm from "../../components/admin/Products/CreateProductForm.tsx";
+import EditProductForm from "../../components/admin/Products/EditProductForm.tsx";
 
 export default function Products() {
     const {
@@ -54,13 +55,15 @@ export default function Products() {
     const totalProducts = productPageResponse?.totalElements ?? 0;
 
     const [showCreateForm, setShowCreateForm] = useState(false);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
     const [createdProduct, setCreatedProduct] = useState<Product>({
-        id: 0 ,
-        name: "" ,
-        description: "" ,
-        price: 0 ,
-        stock: 0 ,
+        id: 0,
+        name: "",
+        description: "",
+        price: 0,
+        stock: 0,
         category: ""
     });
 
@@ -110,7 +113,65 @@ export default function Products() {
         }
     };
 
-    // Update your handleAddProduct function
+    // Edit product handlers
+    const handleEditProduct = (product: Product) => {
+        setEditingProduct({...product});
+        setShowEditForm(true);
+    };
+
+    const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const {name, value} = e.target;
+        setEditingProduct(prev => prev ? {
+            ...prev,
+            [name]: value
+        } : null);
+    };
+
+    const handleEditSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!editingProduct) return;
+
+        try {
+            const productData: Product = {
+                id: editingProduct.id,
+                name: editingProduct.name || "",
+                description: editingProduct.description || "",
+                price: parseFloat(editingProduct.price?.toString() || "0"),
+                stock: parseInt(editingProduct.stock?.toString() || "0"),
+                category: editingProduct.category,
+            };
+
+            // * Validate required fields
+            if (!productData.name || !productData.price || !productData.stock || !productData.category) {
+                alert("Please fill in all required fields");
+                return;
+            }
+
+            // * Call the API to update the product
+            const updatedProduct = await updateProduct(productData);
+
+            console.log("Product updated successfully:", updatedProduct);
+
+            // * Refresh the products list
+            const data = await fetchAllProducts(page, rowsPerPage, sort, filters.category, searchTerm);
+            setProductPageResponse(data);
+
+            // * Reset form and close
+            setEditingProduct(null);
+            setShowEditForm(false);
+
+        } catch (error) {
+            console.error("Error updating product:", error);
+            alert("Failed to update product. Please try again.");
+        }
+    };
+
+    const handleCancelEdit = () => {
+        setEditingProduct(null);
+        setShowEditForm(false);
+    };
+
     const handleAddProduct = () => {
         setShowCreateForm(true);
     };
@@ -185,7 +246,10 @@ export default function Products() {
                 </div>
             </div>
 
-            <ProductsTable products={products}/>
+            <ProductsTable
+                products={products}
+                onEditProduct={handleEditProduct}
+            />
 
             <CreateProductForm
                 showCreateForm={showCreateForm}
@@ -193,6 +257,14 @@ export default function Products() {
                 createdProduct={createdProduct}
                 handleCreateChange={handleCreateChange}
                 handleCreateSubmit={handleCreateSubmit}
+            />
+
+            <EditProductForm
+                showEditForm={showEditForm}
+                editingProduct={editingProduct}
+                handleEditChange={handleEditChange}
+                handleEditSubmit={handleEditSubmit}
+                handleCancelEdit={handleCancelEdit}
             />
         </DashboardLayout>
     );
