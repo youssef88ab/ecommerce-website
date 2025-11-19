@@ -57,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
 
     // * Get Product By ID
     @Override
+    @Transactional
     public ProductDTO getProductById(Long id) {
         return productRepository.findById(id).map(productMapper::toDTO).orElse(null);
     }

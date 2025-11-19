@@ -12,6 +12,7 @@ import { renderProductStock } from "../../../utils/functions";
 interface ProductRowProps {
     product: Product;
     onEditProduct: (product: Product) => void;
+    onDeleteProduct: (product: Product) => void;
     variants?: Variants;
     initial?: string | boolean;
     animate?: string | boolean;
@@ -21,6 +22,7 @@ interface ProductRowProps {
 const ProductRow: React.FC<ProductRowProps> = ({
                                                    product,
                                                    onEditProduct,
+                                                   onDeleteProduct,
                                                    variants,
                                                    initial,
                                                    animate,
@@ -29,12 +31,16 @@ const ProductRow: React.FC<ProductRowProps> = ({
     const navigate = useNavigate();
 
     const handleViewDetails = (product: Product) => {
-        navigate("/user", { state: { product } });
+        navigate(`/products/${product.id}`);
     };
 
     const handleEditClick = () => {
         onEditProduct(product);
     };
+
+    const  handleDeleteClick = () => {
+        onDeleteProduct(product);
+    }
 
     return (
         <motion.tr
@@ -102,6 +108,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
                     </Tooltip>
                     <Tooltip title="Delete Product" arrow placement="top">
                         <IconButton
+                            onClick={handleDeleteClick}
                             size="small"
                             color="error"
                             aria-label="delete"

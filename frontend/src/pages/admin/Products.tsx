@@ -15,11 +15,12 @@ import FilterByButton from "../../components/admin/FilterByButton";
 // * Custom hooks and components
 import {useProductsData, useProductsFilters} from "../../hooks/useProducts";
 import {SORT_OPTIONS, CATEGORY_FILTERS} from "../../utils/productsConstants.tsx";
-import {createProduct, fetchAllProducts, updateProduct} from "../../services/productService.ts";
+import {createProduct, deleteProduct, fetchAllProducts, updateProduct} from "../../services/productService.ts";
 import SortByButton from "../../components/admin/SortByButton.tsx";
 import Metric from "../../components/admin/Metric.tsx";
 import CreateProductForm from "../../components/admin/Products/CreateProductForm.tsx";
 import EditProductForm from "../../components/admin/Products/EditProductForm.tsx";
+import DeleteConfirmationModal from "../../components/DeleteConfirmationModal.tsx";
 
 export default function Products() {
     const {
@@ -176,6 +177,43 @@ export default function Products() {
         setShowCreateForm(true);
     };
 
+    // * Delete Product
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+
+    // Delete product handlers
+    const handleDeleteClick = (product: Product) => {
+        setProductToDelete(product);
+        setShowDeleteModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!productToDelete) return;
+
+        try {
+            await deleteProduct(productToDelete.id);
+            console.log("Product deleted successfully:", productToDelete.id);
+
+            // Refresh the products list
+            const data = await fetchAllProducts(page, rowsPerPage, sort, filters.category, searchTerm);
+            setProductPageResponse(data);
+
+            // Close modal and reset
+            setShowDeleteModal(false);
+            setProductToDelete(null);
+
+        } catch (error) {
+            console.error("Error deleting product:", error);
+            alert("Failed to delete product. Please try again.");
+        }
+    };
+
+    const handleCancelDelete = () => {
+        setShowDeleteModal(false);
+        setProductToDelete(null);
+    };
+
+
     return (
         <DashboardLayout>
             <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 my-5">
@@ -249,6 +287,7 @@ export default function Products() {
             <ProductsTable
                 products={products}
                 onEditProduct={handleEditProduct}
+                onDeleteProduct={handleDeleteClick}
             />
 
             <CreateProductForm
@@ -265,6 +304,14 @@ export default function Products() {
                 handleEditChange={handleEditChange}
                 handleEditSubmit={handleEditSubmit}
                 handleCancelEdit={handleCancelEdit}
+            />
+
+            <DeleteConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={handleCancelDelete}
+                onConfirm={handleConfirmDelete}
+                title="Delete Product"
+                message={`Are you sure you want to delete "${productToDelete?.name}"? This action cannot be undone and all product data will be permanently lost.`}
             />
         </DashboardLayout>
     );
