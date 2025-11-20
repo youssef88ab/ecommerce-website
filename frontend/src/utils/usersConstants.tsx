@@ -1,7 +1,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faIdCard, faSortAlphaUp, faSortAlphaDown,
-    faMars, faVenus, faUserTie, faUser
+    faMars, faVenus, faUserTie, faUser, faUsers, faUserPlus, faShoppingCart
 } from "@fortawesome/free-solid-svg-icons";
 import type {JSX} from "react";
 
@@ -10,6 +10,13 @@ const createSortOption = (value: string, label: JSX.Element, direction: "asc" | 
     label,
     direction
 });
+
+// * Constants for metrics
+export const USERS_METRICS = [
+    { title: "Total Users", icon: faUsers, dataKey: "usersCount" as const },
+    { title: "New Users (This Month)", icon: faUserPlus, dataKey: "newUsersThisMonth" as const },
+    { title: "Customers Who Ordered", icon: faShoppingCart, dataKey: "usersWhoOrdered" as const },
+];
 
 export const SORT_OPTIONS = [
     createSortOption(

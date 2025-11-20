@@ -3,7 +3,7 @@ import {
     faSpinner,
     faTruckFast,
     faCheck,
-    faCreditCard, faIdCard, faDollar,
+    faCreditCard, faIdCard, faDollar, faBox,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faCcVisa as faCcVisaBrand,
@@ -18,6 +18,12 @@ const createSortOption = (value: string, label: JSX.Element, direction: "asc" | 
     label,
     direction
 });
+
+// * Constants for metrics
+export const ORDERS_METRICS = [
+    { title: "Total Orders", icon: faBox, dataKey: "ordersCount" as const },
+    { title: "Total Spent", icon: faDollar, dataKey: "totalSpent" as const },
+];
 
 export const SORT_OPTIONS = [
     createSortOption(
