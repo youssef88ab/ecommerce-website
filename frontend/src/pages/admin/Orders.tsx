@@ -5,16 +5,15 @@ import SearchBar from "../../components/admin/SearchBar";
 import Pagination from "../../components/admin/Pagination";
 import OrdersTable from "../../components/admin/orders/OrdersTable";
 import DashboardLayout from "../../layouts/DashboardLayout";
-import {faCartShopping, faDollar, faUsers} from "@fortawesome/free-solid-svg-icons";
+import {faCartShopping} from "@fortawesome/free-solid-svg-icons";
 import FilterByButton from "../../components/admin/FilterByButton";
 
 // * Custom hooks and components
 import { useOrdersData, useOrdersFilters } from "../../hooks/useOrders";
-import { SORT_OPTIONS, STATUS_FILTERS, PAYMENT_METHOD_FILTERS } from "../../utils/ordersConstants";
+import {SORT_OPTIONS, STATUS_FILTERS, PAYMENT_METHOD_FILTERS, ORDERS_METRICS} from "../../utils/ordersConstants";
 import { fetchAllOrders } from "../../services/orderService.ts";
 import SortByButton from "../../components/admin/SortByButton.tsx";
 import Metric from "../../components/admin/Metric.tsx";
-
 export default function Orders() {
     const { orderPageResponse, setOrderPageResponse, ordersCount, totalSpent } = useOrdersData();
     const {
@@ -42,21 +41,21 @@ export default function Orders() {
     const orders: Order[] = orderPageResponse?.content ?? [];
     const totalOrders = orderPageResponse?.totalElements ?? 0;
 
+    // * Metric data mapping
+    const metricData = { ordersCount, totalSpent};
+
     return (
         <DashboardLayout>
             <div className="metrics grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 my-5">
-                <Metric
-                    title={"Total Orders"}
-                    icon={faUsers}
-                    data={ordersCount}
-                    unit=""
-                />
-                <Metric
-                    title={"Total Revenue"}
-                    icon={faDollar}
-                    data={totalSpent}
-                    unit="$"
-                />
+                {ORDERS_METRICS.map((metric) => (
+                    <Metric
+                        key={metric.title}
+                        title={metric.title}
+                        icon={metric.icon}
+                        data={metricData[metric.dataKey]}
+                        unit=""
+                    />
+                ))}
             </div>
 
             <PageTitle title="All Orders" icon={faCartShopping}/>
